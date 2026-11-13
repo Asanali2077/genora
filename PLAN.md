@@ -18,11 +18,11 @@
 - [x] Zod-схемы + валидация при импорте (`npm run config:check`)
 - [x] Демо «Lumi — AI-коуч привычек» заполнен полностью
 
-## T3. Supabase
-- [ ] Миграции в `/supabase/migrations`: `profiles`, `quiz_responses`, `ai_results`, `events`, `subscriptions`
-- [ ] RLS-политики; анонимный гость + email magic link
-- [ ] Клиенты server/browser, seed-скрипт
-- [ ] Если CLI недоступен: единый SQL-файл для SQL Editor
+## T3. Supabase ✅ (код готов; живая проверка — когда появятся ключи)
+- [x] Миграции в `/supabase/migrations/0001_init.sql` (единый файл для SQL Editor): `profiles`, `quiz_responses`, `ai_results`, `events`, `subscriptions`
+- [x] RLS-политики; анонимный гость (`ensureGuest`) + email magic link (`sendMagicLink`)
+- [x] Клиенты browser/admin, слой `lib/store.ts` с in-memory fallback, `npm run seed`
+- [x] Без ключей приложение работает на in-memory + встроенном seed
 
 **Готово, когда:** гость создаётся, строки пишутся и читаются под RLS; чужие данные недоступны; seed отрабатывает. (Нужны ключи Supabase.)
 
