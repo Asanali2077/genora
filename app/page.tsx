@@ -15,7 +15,7 @@ export default function Home() {
       <h1 className="text-balance text-4xl font-extrabold leading-[1.05] sm:text-6xl text-glow">{loc(landing.heroTitle)}</h1>
       <p className="max-w-xl text-lg text-muted-foreground">{loc(landing.heroSub)}</p>
       <div>
-        <Button size="lg" className="tap rounded-full px-8 text-base" render={<Link href="/quiz" />}>
+        <Button size="lg" className="tap rounded-full px-8 text-base" nativeButton={false} render={<Link href="/quiz" />}>
           {t("landing.ctaPrimary")}
         </Button>
       </div>
