@@ -20,11 +20,21 @@ test("full funnel", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   await expect(page.getByText("Доступно в Премиуме").first()).toBeVisible();
 
-  await page.getByRole("link", { name: "Открыть всё" }).click();
+  await page.getByText("Открыть всё", { exact: true }).click();
   await expect(page).toHaveURL(/\/paywall/);
   await page.getByRole("button", { name: /Начать бесплатный период|Открыть мой план/ }).click();
   await page.waitForURL(/\/result/, { timeout: 10_000 });
   await expect(page.getByText("Доступно в Премиуме")).toHaveCount(0);
+});
+
+test("admin: login → funnel and unit economics", async ({ page }) => {
+  await page.goto("/admin");
+  await page.getByLabel("Пароль").fill("lumi-demo");
+  await page.getByRole("button", { name: "Войти" }).click();
+  await expect(page.getByRole("heading", { name: "Воронка" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Юнит-экономика" })).toBeVisible();
+  await expect(page.getByText("LTV / CAC")).toBeVisible();
+  await page.screenshot({ path: "test-results/admin.png", fullPage: true });
 });
 
 test("paywall variant b via query", async ({ page }) => {

@@ -85,9 +85,9 @@ const raw: AppConfig = {
     },
   },
   econ: {
-    cac: 4.5,
+    cac: 2.5,
     crToTrial: 0.22,
-    crTrialToPaid: 0.45,
+    crTrialToPaid: 0.5,
     monthlyPrice: 9.99,
     monthlyChurn: 0.12,
     grossMargin: 0.8,
