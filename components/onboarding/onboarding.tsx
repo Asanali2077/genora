@@ -112,8 +112,18 @@ export function Onboarding() {
         <div className="space-y-4">
           {draft.children.map((c, i) => (
             <div key={i} className="flex items-end gap-3">
-              <div className="flex-1">
-                <NumberInput id={`kid-${i}`} label={`Child ${i + 1}: birth year`} value={c.birthYear} min={2008} max={2026} onChange={(v) => set({ children: draft.children.map((x, j) => (j === i ? { ...x, birthYear: v } : x)) })} />
+              <label className="block flex-1">
+                <span className="text-sm font-semibold text-ink">First name</span>
+                <input
+                  value={c.name}
+                  maxLength={40}
+                  placeholder={`Child ${i + 1}`}
+                  onChange={(e) => set({ children: draft.children.map((x, j) => (j === i ? { ...x, name: e.target.value } : x)) })}
+                  className="field mt-2"
+                />
+              </label>
+              <div className="w-32">
+                <NumberInput id={`kid-${i}`} label="Birth year" value={c.birthYear} min={2008} max={2026} onChange={(v) => set({ children: draft.children.map((x, j) => (j === i ? { ...x, birthYear: v } : x)) })} />
               </div>
               {draft.children.length > 1 && (
                 <Button size="lg" variant="outline" onClick={() => set({ children: draft.children.filter((_, j) => j !== i) })} aria-label={`Remove child ${i + 1}`}>

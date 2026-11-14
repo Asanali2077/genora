@@ -10,6 +10,7 @@ import { TAX_YEAR } from "@/lib/engine/tax-2026";
 import { TrackView } from "@/components/track-view";
 import { Locked } from "@/components/app/locked";
 import { DateChip } from "@/components/app/date-chip";
+import { KidCards } from "@/components/family/kid-cards";
 import { Button } from "@/components/ui/button";
 import { CountUp, Stagger, StaggerItem } from "@/components/motion";
 
@@ -29,6 +30,8 @@ export default async function OverviewPage() {
   const best = plan?.result.optimal;
   const firstAlloc = best?.allocation.find((a) => a.election > 0);
   const monthName = new Date().toLocaleString("en-US", { month: "long", timeZone: "UTC" });
+
+  const nextGap = (coverage.result?.assignments ?? []).find((a) => a.date >= today);
 
   // Real upcoming events from the family's own plan.
   const events: Event[] = [
@@ -60,6 +63,11 @@ export default async function OverviewPage() {
         {best ? <>Your family gets <CountUp value={best.total} className="marker tabular" /> back in {TAX_YEAR}.</> : "Your family money overview"}
       </h1>
       {plan && plan.result.foundMoney > 0 && <p className="mt-3 text-lg text-muted-foreground">{usd(plan.result.foundMoney)} of it is money you were leaving on the table.</p>}
+
+      <section aria-labelledby="kids" className="mt-9 max-w-6xl">
+        <h2 id="kids" className="font-heading text-lg font-bold text-ink">Your kids</h2>
+        <div className="mt-4"><KidCards profile={household.profile} nextGap={nextGap} /></div>
+      </section>
 
       {!pro ? (
         <div className="mt-8 max-w-4xl"><Locked title="Unlock the full plan" body="School-break radar, the claim vault with forfeiture alerts, ready-to-send paperwork and partner access are part of the Genora plan." /></div>
