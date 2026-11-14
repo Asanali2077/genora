@@ -2,10 +2,12 @@ import Link from "next/link";
 import { landing } from "@/config/site";
 import { LiveCalculator } from "@/components/landing/live-calculator";
 import { Button } from "@/components/ui/button";
+import { TrackView } from "@/components/track-view";
 
 export default function Home() {
   return (
     <>
+      <TrackView name="landing_view" />
       <section className="mx-auto grid w-full max-w-5xl gap-10 px-4 pb-16 pt-10 md:grid-cols-[1.1fr_1fr] md:items-center md:pt-16">
         <div>
           <h1 className="text-4xl font-extrabold leading-[1.05] sm:text-5xl">{landing.heroTitle}</h1>
