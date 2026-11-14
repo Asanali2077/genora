@@ -2,6 +2,7 @@
 
 Format: 5 minutes pitch, 2 minutes Q&A (Business Cup 2.0 final). Live demo on https://businesscup.vercel.app.
 Slides: https://claude.ai/artifact/JrXoMgJW63ZPSZQp9dmxz9 (13 slides; speaker notes carry this script and the Q&A; export as PDF or PowerPoint from the deck's Share menu).
+Russian deck (16 slides, product / market research / competitor ads / creatives / unit economics / go-to-market / roadmap): https://claude.ai/artifact/43wWVB2e9F65SFHwgxx1Wb
 
 **One line:** Genora is the family budget that knows the rules.
 
