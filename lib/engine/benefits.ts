@@ -58,6 +58,9 @@ export type BenefitsResult = {
 
 const round = (n: number) => Math.round(n);
 
+/** "You" → "your", "Sam" → "Sam's". */
+export const possessive = (label: string) => (label.toLowerCase() === "you" ? "your" : `${label}'s`);
+
 function ageAtYearEnd(birthYear: number) {
   return TAX_YEAR - birthYear;
 }
@@ -180,7 +183,7 @@ export function analyzeBenefits(profile: Profile): BenefitsResult {
   if (excessOverLimit > 0) {
     warnings.push({
       id: "cap_exceeded",
-      message: `Both parents' elections plus backup care exceed the $${DCFSA_HOUSEHOLD_LIMIT.toLocaleString()} household limit. The excess becomes taxable wages.`,
+      message: `Both parents' elections plus backup care exceed the $${DCFSA_HOUSEHOLD_LIMIT.toLocaleString("en-US")} household limit. The excess becomes taxable wages.`,
       amount: excessOverLimit,
     });
   }
@@ -206,7 +209,7 @@ export function analyzeBenefits(profile: Profile): BenefitsResult {
     for (const a of optimal.allocation.filter((x) => x.election > 0)) {
       actions.push({
         id: `elect_${a.parent}`,
-        title: `Elect $${a.election.toLocaleString()} in ${a.parent}'s Dependent Care FSA`,
+        title: `Elect $${a.election.toLocaleString("en-US")} in ${possessive(a.parent)} Dependent Care FSA`,
         detail: "Set it at open enrollment, or mid-year after a qualifying change such as a new provider or a cost change.",
         impact: foundMoney,
         when: "Open enrollment (Nov–Dec) or within 30 days of a qualifying event",
@@ -216,7 +219,7 @@ export function analyzeBenefits(profile: Profile): BenefitsResult {
       actions.push({
         id: "drop_fsa",
         title: "Skip the Dependent Care FSA and claim the tax credit instead",
-        detail: `At your income the credit pays ${Math.round(optimal.careCreditRate * 100)}% of up to $${capByKids.toLocaleString()} of care, which beats the FSA.`,
+        detail: `At your income the credit pays ${Math.round(optimal.careCreditRate * 100)}% of up to $${capByKids.toLocaleString("en-US")} of care, which beats the FSA.`,
         impact: foundMoney,
         when: "Open enrollment",
       });
@@ -225,20 +228,20 @@ export function analyzeBenefits(profile: Profile): BenefitsResult {
   if (optimal.careCredit > 0) {
     actions.push({
       id: "claim_credit",
-      title: `Claim $${optimal.careCredit.toLocaleString()} Child and Dependent Care Credit`,
+      title: `Claim $${optimal.careCredit.toLocaleString("en-US")} Child and Dependent Care Credit`,
       detail: "File Form 2441 with each provider's name, address and taxpayer ID (or keep a signed Form W-10).",
       impact: optimal.careCredit,
       when: "Tax season (Jan–Apr)",
     });
   }
   for (const x of oneTimeExtras) {
-    actions.push({ id: x.id, title: `Elect the $${x.amount.toLocaleString()} ${x.label}`, detail: "One-time federal deposit for children born 2025–2028.", impact: x.amount, when: "With your 2026 return" });
+    actions.push({ id: x.id, title: `Elect the $${x.amount.toLocaleString("en-US")} ${x.label}`, detail: "One-time federal deposit for children born 2025–2028.", impact: x.amount, when: "With your 2026 return" });
   }
 
   const math: MathLine[] = [
     { label: "Household AGI (estimate)", value: round(agi), formula: "sum of earned income + other income" },
     { label: "Eligible childcare expenses", value: round(eligible), formula: "daycare + preschool + after-school + nanny + day camp (children under 13)", source: SOURCES.pub503 },
-    { label: "DCFSA room this year", value: round(dcfsaHeadroom), formula: `min($${DCFSA_HOUSEHOLD_LIMIT.toLocaleString()}, lower earner's income) − backup care`, source: SOURCES.dcfsa },
+    { label: "DCFSA room this year", value: round(dcfsaHeadroom), formula: `min($${DCFSA_HOUSEHOLD_LIMIT.toLocaleString("en-US")}, lower earner's income) − backup care`, source: SOURCES.dcfsa },
     { label: "Marginal federal rate", value: marginalRate(agi, status), formula: "2026 brackets after standard deduction", source: SOURCES.brackets },
     { label: "Care credit rate at your AGI", value: optimal.careCreditRate, formula: "50% → 35% → 20% by AGI (§21)", source: SOURCES.cdcc },
     { label: "Credit expense cap", value: capByKids, formula: "$3,000 one child / $6,000 two or more, minus FSA dollars", source: SOURCES.cdcc },
