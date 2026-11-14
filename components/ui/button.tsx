@@ -12,7 +12,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "border-transparent bg-pine text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_1px_2px_rgba(15,92,77,0.35),0_6px_16px_-8px_rgba(15,92,77,0.6)] hover:bg-[#0b4c40]",
+          "border-transparent bg-pine text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_1px_2px_rgba(15,92,77,0.35),0_6px_16px_-8px_rgba(15,92,77,0.6)] hover:-translate-y-px hover:bg-[#0b4c40]",
         outline:
           "border-ink/15 bg-white text-ink shadow-[0_1px_2px_rgba(23,42,38,0.06)] hover:border-pine/60 hover:text-pine aria-expanded:border-pine",
         secondary: "border-transparent bg-pine/[0.08] text-pine hover:bg-pine/[0.14]",

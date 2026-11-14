@@ -160,4 +160,20 @@ describe("Benefits Stack Optimizer", () => {
     expect(r.childTaxCredit).toBe(4_400 - 20 * 50); // $20k over the $400k threshold
     expect(r.oneTimeExtras[0]?.amount).toBe(1_000);
   });
+  it("treats elections above the $7,500 cap as taxable wages, not forfeited money", () => {
+    const r = analyzeBenefits(
+      profile({
+        state: "WA",
+        parents: [
+          { label: "A", earnedIncome: 140_000, employerOffersDcfsa: true, currentElection: 5_000 },
+          { label: "B", earnedIncome: 90_000, employerOffersDcfsa: true, currentElection: 5_000 },
+        ],
+        children: [{ birthYear: 2018 }, { birthYear: 2024 }],
+        childcare: { daycare: 22_000 },
+      }),
+    );
+    expect(r.current.forfeitLoss).toBe(0);
+    expect(r.current.total).toBe(r.optimal.total); // the excess earns no tax break, but nothing is lost
+    expect(r.warnings.find((w) => w.id === "cap_exceeded")?.amount).toBe(2_500);
+  });
 });

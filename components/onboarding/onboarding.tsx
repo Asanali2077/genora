@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import { AnimatePresence, motion } from "framer-motion";
 import { ProfileSchema, type CareCategory } from "@/lib/domain/profile";
 import { analyzeBenefits } from "@/lib/engine/benefits";
 import { STATE_RATES } from "@/lib/engine/tax-2026";
@@ -224,10 +225,12 @@ export function Onboarding() {
         </div>
       </div>
 
-      <section className="mt-8" aria-labelledby="step-title">
+      <AnimatePresence mode="wait" initial={false}>
+      <motion.section key={step} className="mt-8" aria-labelledby="step-title" initial={{ opacity: 0, x: 28 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -28 }} transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}>
         <h1 id="step-title" className="text-[2rem] font-extrabold leading-[1.1] text-ink">{steps[step].title}</h1>
         <div className="mt-6">{steps[step].body}</div>
-      </section>
+      </motion.section>
+      </AnimatePresence>
 
       {error && <p role="alert" className="mt-6 rounded-lg bg-destructive/10 p-3 text-sm text-destructive">{error}</p>}
 

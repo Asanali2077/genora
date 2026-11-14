@@ -1,3 +1,5 @@
+import { GrowBar } from "@/components/motion";
+
 const usd = (n: number) => `$${Math.round(n).toLocaleString("en-US")}`;
 
 /** Now vs. best plan as two bars — the same visual language as the landing page. */
@@ -17,7 +19,7 @@ export function CompareBars({ now, best }: { now: number; best: number }) {
               <span className="font-heading text-xl font-extrabold text-ink tabular">{usd(r.value)}</span>
             </div>
             <div className="mt-2 h-3 rounded-full bg-[#e6eeeb]">
-              <div className={`h-full rounded-full ${r.tone}`} style={{ width: `${(r.value / max) * 100}%` }} />
+              <GrowBar className={`h-full rounded-full ${r.tone}`} pct={(r.value / max) * 100} delay={r.strong ? 0.35 : 0.1} />
             </div>
           </div>
         ))}

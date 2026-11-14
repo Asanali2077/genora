@@ -11,6 +11,7 @@ import { TrackView } from "@/components/track-view";
 import { Locked } from "@/components/app/locked";
 import { DateChip } from "@/components/app/date-chip";
 import { Button } from "@/components/ui/button";
+import { CountUp, Stagger, StaggerItem } from "@/components/motion";
 
 export const metadata: Metadata = { title: "Overview — Genora" };
 export const dynamic = "force-dynamic";
@@ -56,7 +57,7 @@ export default async function OverviewPage() {
       <TrackView name="dashboard_view" props={{ pro }} />
       <p className="text-sm font-semibold text-pine">{monthName} at home</p>
       <h1 className="mt-2 max-w-3xl font-heading text-[2.2rem] font-bold leading-[1.05] tracking-[-0.03em] text-ink md:text-[3rem]">
-        {best ? <>Your family gets <span className="marker tabular">{usd(best.total)}</span> back in {TAX_YEAR}.</> : "Your family money overview"}
+        {best ? <>Your family gets <CountUp value={best.total} className="marker tabular" /> back in {TAX_YEAR}.</> : "Your family money overview"}
       </h1>
       {plan && plan.result.foundMoney > 0 && <p className="mt-3 text-lg text-muted-foreground">{usd(plan.result.foundMoney)} of it is money you were leaving on the table.</p>}
 
@@ -69,9 +70,9 @@ export default async function OverviewPage() {
               <h2 id="upcoming" className="font-heading text-lg font-bold text-ink">Coming up</h2>
               <Link href="/app/coverage" className="text-sm font-semibold text-pine hover:underline">Full calendar</Link>
             </header>
-            <ol className="ledger">
+            <Stagger as="ol" className="ledger">
               {events.map((e) => (
-                <li key={`${e.date}-${e.title}`}>
+                <StaggerItem as="li" key={`${e.date}-${e.title}`}>
                   <Link href={e.href} className="flex items-center gap-4 px-5 py-3.5 transition-colors hover:bg-ink/[0.02] sm:px-6">
                     <DateChip iso={e.date} tone={e.tone} />
                     <span className="min-w-0 flex-1">
@@ -79,14 +80,14 @@ export default async function OverviewPage() {
                       <span className="block truncate text-sm text-muted-foreground">{e.detail}</span>
                     </span>
                   </Link>
-                </li>
+                </StaggerItem>
               ))}
               {!coverage.result && (
                 <li className="px-5 py-4 text-sm text-muted-foreground sm:px-6">
                   Add your school calendar to see every no-school day here. <Link href="/app/coverage" className="font-semibold text-pine">Plan school breaks</Link>
                 </li>
               )}
-            </ol>
+            </Stagger>
           </section>
 
           <div className="space-y-6">

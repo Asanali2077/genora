@@ -91,26 +91,32 @@ type Ctx = {
   capByKids: number;
   backup: number;
   stateRate: number;
+  headroom: number; // tax-free FSA room: min($7,500, lower earner) − backup care
 };
 
-function evaluate(ctx: Ctx, election: number, usable: number): Scenario {
-  const { profile, agi, eligible, lowerEarned, capByKids, backup, stateRate } = ctx;
+function evaluate(ctx: Ctx, election: number): Scenario {
+  const { profile, agi, eligible, lowerEarned, capByKids, backup, stateRate, headroom } = ctx;
   const status = profile.filingStatus;
   const allocation = allocateElection(profile, election);
   const allocated = allocation.reduce((s, a) => s + a.election, 0);
-  const effective = Math.min(allocated, usable); // dollars actually reimbursed
-  const forfeited = allocated - effective;
 
-  const federalSaved = federalTaxOnAgi(agi, status) - federalTaxOnAgi(agi - allocated, status);
+  // Above the household limit, FSA dollars are taxable wages: no tax saving, but the money is not lost.
+  const taxFreeShare = allocated > 0 ? Math.min(1, headroom / allocated) : 1;
+  const taxFree = allocated * taxFreeShare;
+  // Election above the childcare actually paid can't be reimbursed and is forfeited.
+  const reimbursable = Math.min(allocated, Math.max(0, eligible - backup));
+  const forfeited = allocated - reimbursable;
+
+  const federalSaved = federalTaxOnAgi(agi, status) - federalTaxOnAgi(agi - taxFree, status);
   const fica = allocation.reduce((s, a) => {
     const p = profile.parents.find((x) => x.label === a.parent)!;
-    return s + ficaSaved(a.election, p.earnedIncome);
+    return s + ficaSaved(a.election * taxFreeShare, p.earnedIncome);
   }, 0);
-  const stateSaved = allocated * stateRate;
+  const stateSaved = taxFree * stateRate;
 
-  const excluded = effective + backup;
+  const excluded = Math.min(taxFree, reimbursable) + backup;
   const creditBase = Math.max(0, Math.min(capByKids, eligible, lowerEarned) - excluded);
-  const rate = careCreditRate(agi - allocated, status);
+  const rate = careCreditRate(agi - taxFree, status);
   const careCredit = ctx.capByKids > 0 ? creditBase * rate : 0;
 
   // Forfeited dollars were taken from the paycheck: the family loses them (net of the taxes they avoided).
@@ -150,19 +156,19 @@ export function analyzeBenefits(profile: Profile): BenefitsResult {
 
   const dcfsaHeadroom = anyOffers ? Math.max(0, Math.min(DCFSA_HOUSEHOLD_LIMIT, lowerEarned) - backup) : 0;
   const usable = Math.max(0, Math.min(dcfsaHeadroom, eligible - backup));
-  const ctx: Ctx = { profile, agi, eligible, lowerEarned, capByKids, backup, stateRate };
+  const ctx: Ctx = { profile, agi, eligible, lowerEarned, capByKids, backup, stateRate, headroom: dcfsaHeadroom };
 
   const currentElection = profile.parents.reduce((s, p) => s + p.currentElection, 0);
-  const current = evaluate(ctx, currentElection, usable);
+  const current = evaluate(ctx, currentElection);
 
   // Brute-force search over elections in $50 steps: exact on the piecewise-linear objective at this resolution.
-  let optimal = evaluate(ctx, 0, usable);
+  let optimal = evaluate(ctx, 0);
   for (let e = 50; e <= usable; e += 50) {
-    const s = evaluate(ctx, e, usable);
+    const s = evaluate(ctx, e);
     if (s.total > optimal.total) optimal = s;
   }
   if (usable > 0 && usable % 50 !== 0) {
-    const s = evaluate(ctx, usable, usable);
+    const s = evaluate(ctx, usable);
     if (s.total > optimal.total) optimal = s;
   }
 

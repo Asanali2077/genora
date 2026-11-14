@@ -7,6 +7,7 @@ import { PlanBreakdown, ShowMath } from "@/components/plan/plan-breakdown";
 import { possessive } from "@/lib/engine/benefits";
 import { CompareBars } from "@/components/plan/compare-bars";
 import { WhatIf } from "@/components/plan/what-if";
+import { CountUp, Reveal } from "@/components/motion";
 import { TrackView } from "@/components/track-view";
 import { Button } from "@/components/ui/button";
 
@@ -31,11 +32,11 @@ export default async function BenefitsPage() {
       <p className="text-muted-foreground">Your 2026 childcare money plan</p>
       {big ? (
         <h1 className="mt-2 font-heading text-[2.3rem] font-bold leading-[1.05] tracking-[-0.03em] text-ink sm:text-[3.2rem]">
-          You&apos;re leaving <span className="marker tabular">{usd(r.foundMoney)}</span> a year on the table.
+          You&apos;re leaving <CountUp value={r.foundMoney} className="marker tabular" /> a year on the table.
         </h1>
       ) : (
         <h1 className="mt-2 font-heading text-[2.3rem] font-bold leading-[1.05] tracking-[-0.03em] text-ink sm:text-[3.2rem]">
-          Your setup is close to the best plan: <span className="marker tabular">{usd(r.optimal.total)}</span> back this year.
+          Your setup is close to the best plan: <CountUp value={r.optimal.total} className="marker tabular" /> back this year.
         </h1>
       )}
       <p className="mt-4 text-lg text-muted-foreground">
@@ -89,7 +90,7 @@ export default async function BenefitsPage() {
         </ol>
       </section>
 
-      <div className="mt-8"><WhatIf profile={household.profile} baseline={r.optimal.total} /></div>
+      <Reveal className="mt-8"><WhatIf profile={household.profile} baseline={r.optimal.total} /></Reveal>
 
       <div className="mt-8"><ShowMath result={r} /></div>
 

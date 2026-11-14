@@ -144,3 +144,4 @@ insert into storage.buckets (id, name, public) values ('receipts', 'receipts', f
 create policy receipts_storage_rw on storage.objects for all
   using (bucket_id = 'receipts' and public.is_household_member(((storage.foldername(name))[1])::uuid))
   with check (bucket_id = 'receipts' and public.is_household_member(((storage.foldername(name))[1])::uuid));
+ 

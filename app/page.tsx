@@ -2,6 +2,9 @@ import Link from "next/link";
 import { Lock, Timer, FileCheck } from "lucide-react";
 import { compare, faq, landing } from "@/config/site";
 import { LiveCalculator } from "@/components/landing/live-calculator";
+import { HeroGrid } from "@/components/landing/hero-grid";
+import { SampleButton } from "@/components/landing/sample-button";
+import { Reveal } from "@/components/motion";
 import { ClaimsFragment, CompareFragment, YearFragment } from "@/components/landing/fragments";
 import { Button } from "@/components/ui/button";
 import { TrackView } from "@/components/track-view";
@@ -18,23 +21,24 @@ export default function Home() {
     <>
       <TrackView name="landing_view" />
       <section className="relative overflow-hidden bg-[#0b3b32] text-white">
+        <HeroGrid />
         <div className="relative mx-auto grid w-full max-w-6xl gap-12 px-4 pb-20 pt-12 md:grid-cols-[1.25fr_1fr] md:items-center md:gap-14 md:pb-24 md:pt-20">
-          <div>
+          <Reveal y={24}>
             <h1 className="font-heading text-[2.5rem] font-bold leading-[1.02] tracking-[-0.035em] sm:text-[3.6rem]">{landing.heroTitle}</h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/75">{landing.heroSub}</p>
             <div className="mt-9 flex flex-wrap items-center gap-3">
               <Button size="lg" className="bg-marigold text-ink shadow-[inset_0_1px_0_rgba(255,255,255,0.4),0_8px_24px_-10px_rgba(242,183,5,0.7)] hover:bg-[#ffc61a]" nativeButton={false} render={<Link href="/start" />}>
                 {landing.cta}
               </Button>
-              <Button size="lg" variant="ghost" className="text-white/80 hover:bg-white/10 hover:text-white" nativeButton={false} render={<Link href="#how" />}>How it works</Button>
+              <SampleButton dark />
             </div>
             <ul className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/65">
               {TRUST.map(({ icon: Icon, text }) => (
                 <li key={text} className="inline-flex items-center gap-2"><Icon className="size-4 text-marigold" aria-hidden />{text}</li>
               ))}
             </ul>
-          </div>
-          <LiveCalculator />
+          </Reveal>
+          <Reveal delay={0.15} y={32}><LiveCalculator /></Reveal>
         </div>
       </section>
 
@@ -43,13 +47,13 @@ export default function Home() {
           {landing.pillars.map((p, i) => {
             const Fragment = FRAGMENTS[i];
             return (
-              <div key={p.title} className="grid items-center gap-8 md:grid-cols-2 md:gap-16">
+              <Reveal key={p.title} className="grid items-center gap-8 md:grid-cols-2 md:gap-16">
                 <div className={i % 2 ? "md:order-2" : ""}>
                   <h2 className="text-3xl font-extrabold leading-tight text-ink">{p.title}</h2>
                   <p className="mt-3 max-w-md text-lg leading-relaxed text-muted-foreground">{p.body}</p>
                 </div>
                 <div className={i % 2 ? "md:order-1" : ""}><Fragment /></div>
-              </div>
+              </Reveal>
             );
           })}
         </div>
