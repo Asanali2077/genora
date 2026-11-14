@@ -38,5 +38,5 @@ After each phase: lint → build → tests → browser check → commit → push
 - [x] Vercel production deploy connected to GitHub
 
 ## P8. Pitch
-- [ ] Slides: problem, user, demo path, engine, unit economics, $100M path, why now
+- [x] Slides: problem, user, demo path, engine, unit economics, $100M path, why now (13-slide deck on claude.ai, speaker notes with timing and Q&A)
 - [ ] Rehearsal + Q&A answers

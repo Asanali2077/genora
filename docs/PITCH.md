@@ -1,6 +1,7 @@
 # Genora — 5-minute pitch + Q&A
 
 Format: 5 minutes pitch, 2 minutes Q&A (Business Cup 2.0 final). Live demo on https://businesscup.vercel.app.
+Slides: https://claude.ai/artifact/JrXoMgJW63ZPSZQp9dmxz9 (13 slides; speaker notes carry this script and the Q&A; export as PDF or PowerPoint from the deck's Share menu).
 
 **One line:** Genora is the family budget that knows the rules.
 
