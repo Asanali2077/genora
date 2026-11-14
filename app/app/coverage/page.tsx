@@ -1,7 +1,6 @@
-import { redirect } from "next/navigation";
 import type { Metadata } from "next";
-import { getUser } from "@/lib/supabase/server";
-import { getHousehold } from "@/lib/services/household";
+import { requireHousehold } from "@/lib/services/access";
+import { Locked } from "@/components/app/locked";
 import { getLatestCoverage } from "@/lib/services/coverage";
 import { SAMPLE_CALENDAR } from "@/lib/ai/tasks/school-calendar";
 import { Radar } from "@/components/coverage/radar";
@@ -10,10 +9,7 @@ export const metadata: Metadata = { title: "School-break radar — Genora" };
 export const dynamic = "force-dynamic";
 
 export default async function CoveragePage() {
-  const { sb, user } = await getUser();
-  if (!user) redirect("/start");
-  const household = await getHousehold(sb, user.id);
-  if (!household) redirect("/start");
+  const { sb, household, pro } = await requireHousehold();
   const { calendar, result } = await getLatestCoverage(sb, household.id);
   const today = new Date().toISOString().slice(0, 10);
 
@@ -24,7 +20,11 @@ export default async function CoveragePage() {
         Every day the kids are home while you both work, covered at the lowest cost: your spare PTO goes to the most expensive days, and the rest goes to FSA-eligible care.
       </p>
       <div className="mt-8">
-        <Radar initialClosures={calendar?.days ?? []} initialResult={result} sample={SAMPLE_CALENDAR} today={today} />
+        {pro ? (
+          <Radar initialClosures={calendar?.days ?? []} initialResult={result} sample={SAMPLE_CALENDAR} today={today} />
+        ) : (
+          <Locked title="Plan every school break" body="Paste the school calendar and Genora finds every uncovered day, then splits both parents' PTO and FSA-eligible camps at the lowest cost. Included in the Genora plan." />
+        )}
       </div>
     </div>
   );
