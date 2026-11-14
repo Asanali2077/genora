@@ -48,6 +48,7 @@ export function AppShell({ parents, pro, children }: { parents: string[]; pro: b
             <Link
               key={href}
               href={href}
+              prefetch
               aria-current={active(href) ? "page" : undefined}
               className={cn(
                 "flex h-10 items-center gap-3 rounded-[10px] px-3 text-[15px] font-medium transition-colors",
@@ -94,7 +95,7 @@ export function AppShell({ parents, pro, children }: { parents: string[]; pro: b
         {/* Mobile tab bar */}
         <nav aria-label="App" className="fixed inset-x-0 bottom-0 print:hidden z-30 grid grid-cols-5 border-t border-ink/10 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden">
           {NAV.map(({ href, label, icon: Icon }) => (
-            <Link key={href} href={href} aria-current={active(href) ? "page" : undefined} className={cn("flex h-16 flex-col items-center justify-center gap-1 text-[11px] font-semibold", active(href) ? "text-pine" : "text-ink/50")}>
+            <Link key={href} href={href} prefetch aria-current={active(href) ? "page" : undefined} className={cn("flex h-16 flex-col items-center justify-center gap-1 text-[11px] font-semibold", active(href) ? "text-pine" : "text-ink/50")}>
               <Icon className="size-5" aria-hidden />
               {label.split(" ")[0]}
             </Link>
