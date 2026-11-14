@@ -1,34 +1,45 @@
-# Lumi starter — конфиг-управляемая заготовка подписочного AI-продукта
+# Genora — the money engine for the childcare years
 
-Квиз-онбординг → персональный AI-результат → пейволл → подписка → админка с воронкой и юнит-экономикой.
-Демо-продукт: «Lumi — AI-коуч привычек». Вся кейс-специфика живёт в `/config`.
+**Live:** https://businesscup.vercel.app · Business Cup 2.0 · Track: Money
 
-## Быстрый старт (Windows / PowerShell)
-```powershell
-npm install
-copy .env.example .env.local    # заполнить при необходимости; DEMO_MODE=true работает без ключей
-npm run dev                     # http://localhost:3000
+Working US parents lose money on childcare in two ways: they pick the wrong tax benefit (only ~5% of eligible employees use a Dependent Care FSA, and in 2026 the FSA limit rose to $7,500 while the care credit changed), and they pay last-minute prices for school breaks nobody planned for. Genora fixes both with a deterministic 2026 tax engine, a school-break planner and an FSA claim tracker.
+
+## What a family gets
+| Feature | What it does | Where the value comes from |
+|---|---|---|
+| **Benefits optimizer** | Tests every Dependent Care FSA split across both parents' employers against the Child & Dependent Care Credit, adds the Child Tax Credit and Trump Account deposit, warns about the $7,500 household cap and forfeiture | `lib/engine/benefits.ts` + `lib/engine/tax-2026.ts` (every constant has a source link) |
+| **School-break radar** | Paste the district calendar → AI extracts no-school days → the engine finds every uncovered weekday and assigns spare PTO to the most expensive days, the rest to FSA-eligible day camps or sitters | `lib/engine/coverage.ts` ("PTO Tetris") |
+| **Claim vault** | Snap a receipt → AI reads provider, amount, service dates → tracks claimed vs elected, projects forfeiture to the deadline (incl. grace period), flags missing provider tax IDs, builds the Form 2441 summary | `lib/engine/claims.ts` |
+| **Family money pulse** | Dashboard with money back this year, FSA risk, next no-school days and seasonal prompts (open enrollment, camp booking, tax season) | `app/app/page.tsx` |
+
+**AI extracts, rules compute.** Gemini only turns messy input (calendars, receipt photos) into Zod-validated data. Every dollar figure is computed by pure, unit-tested code; if AI is unavailable, every flow has a manual path.
+
+## Architecture
 ```
-Страницы: `/` лендинг · `/quiz` · `/result` · `/paywall` (`?v=a|b`) · `/r/<shareId>` шаринг · `/admin` · `/api/health`.
+app/            routes: landing, /start (onboarding), /reveal, /pricing, /app (pulse, coverage, claims), /admin, /api/*
+components/     UI by feature
+config/         product copy, pricing, unit-economics assumptions
+lib/engine/     pure 2026 rules: tax-2026, benefits, coverage, claims, economics
+lib/ai/         provider registry (Gemini default; paid providers disabled unless ALLOW_PAID_AI=true) + extraction tasks
+lib/services/   orchestration: engine + AI + Supabase
+lib/supabase/   browser, server (user session, RLS) and service-role clients
+supabase/       migrations: households, members, benefit_plans, receipts, school_calendars, coverage_plans, subscriptions, events — RLS by household membership, private receipts bucket
+tests/unit      Vitest: engine rules with hand-computed expectations
+tests/e2e       Playwright: landing → onboarding → reveal → pricing → dashboard → receipt (passes against production)
+```
+Stack: Next.js 16 · TypeScript strict · Tailwind 4 · Supabase (Auth anonymous sessions, Postgres, Storage) · Gemini · Vitest · Playwright · Vercel. Free tiers only.
 
-## Переменные окружения
-См. `.env.example`. Минимум для демо: `DEMO_MODE=true`, `ADMIN_PASSWORD`.
-Для реального AI: `DEMO_MODE=false`, `ANTHROPIC_API_KEY`, `AI_MODEL` (по умолчанию `claude-sonnet-5-5`); альтернатива — `AI_PROVIDER=gemini` + `GEMINI_API_KEY`.
-Для БД: ключи Supabase, затем выполнить `supabase/migrations/0001_init.sql` в SQL Editor и (опц.) `npm run seed`.
-Без Supabase всё работает на in-memory хранилище (данные пропадают при перезапуске).
+## Run locally
+```bash
+npm install
+cp .env.example .env.local   # Supabase URL + keys, GEMINI_API_KEY, ADMIN_PASSWORD
+npm run dev                  # http://localhost:3000
+npm test                     # engine unit tests
+npx playwright test          # end-to-end (BASE_URL=https://businesscup.vercel.app to test production)
+```
+Database: run `supabase/migrations/*.sql` in the Supabase SQL editor and enable Anonymous sign-ins.
 
-## Структура
-| Путь | Что там |
-|---|---|
-| `config/` | бренд, квиз, тарифы, AI-промпт и схема, mock-ответы, copy ru/en — ЕДИНСТВЕННОЕ место кейс-специфики |
-| `lib/ai/` | провайдеры anthropic/gemini/mock, Zod, таймаут, retry, fallback |
-| `lib/store.ts` | события, квиз, результаты, подписки (Supabase или in-memory) |
-| `lib/econ.ts`, `lib/funnel.ts`, `lib/seed.ts` | юнит-экономика, воронка, демо-данные |
-| `app/`, `components/` | UI без хардкод-текстов |
-| `.claude/commands/` | `/adapt-case`, `/econ`, `/pitch`, `/creative`, `/ship` |
-| `tests/` | Playwright smoke |
+## Business
+Pricing: $99/year or $12/month per household (both parents). Base case: blended CAC ≈ $31, LTV ≈ $132, LTV:CAC ≈ 4.3; ≈ 855K households for $100M ARR. Assumptions, sources and risks: `docs/STRATEGY.md`, `docs/RESEARCH.md`. Live funnel and model: `/admin`.
 
-## Команды
-`npm run dev | build | lint | config:check | seed` · `npx playwright test`
-
-Подробный сценарий хакатона — в `HACKATHON_RUNBOOK.md`.
+*Educational estimates based on 2026 federal rules, not tax advice. Checkout is a labelled demo; no card is charged.*
