@@ -18,12 +18,12 @@ export default async function PaperworkPage() {
 
   return (
     <>
-      <PageHeader title="Paperwork" sub="Letters written from your family's numbers: send them to HR and your childcare providers in one click." />
+      <PageHeader title="Letters & forms" sub="Letters written from your family's numbers: send them to HR and your childcare providers in one click." />
       <div className="px-5 py-8 md:px-10">
         {pro ? (
           <Letters letters={letters} />
         ) : (
-          <Locked title="Let Genora write the paperwork" body="Open-enrollment elections for each parent, mid-year change requests and taxpayer ID requests to providers, filled in with your numbers." />
+          <Locked href="/app/paperwork" title="Let Genora write the paperwork" body="Open-enrollment elections for each parent, mid-year change requests and taxpayer ID requests to providers, filled in with your numbers." />
         )}
       </div>
     </>

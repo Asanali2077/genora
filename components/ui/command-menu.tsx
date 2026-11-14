@@ -3,29 +3,24 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-  CalendarDays, Camera, ChartNoAxesCombined, CornerDownLeft, FileSearch, FileText, Landmark, LayoutGrid,
-  LifeBuoy, MessageCircleQuestion, Receipt, Search, Settings2, UserPlus, Wallet,
-} from "lucide-react";
+import { CalendarDays, Camera, CornerDownLeft, FileSearch, LifeBuoy, MessageCircleQuestion, Search, UserPlus, Wallet } from "lucide-react";
+import { ALL_ITEMS, findNav } from "@/config/nav";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
 type Item = { id: string; group: "Jump to" | "Do"; label: string; hint?: string; href: string; icon: React.ComponentType<{ className?: string }>; keywords: string };
 
-const ITEMS: Item[] = [
-  { id: "overview", group: "Jump to", label: "Overview", href: "/app", icon: LayoutGrid, keywords: "home dashboard pulse" },
-  { id: "budget", group: "Jump to", label: "Budget forecast", hint: "Next 12 months", href: "/app/budget", icon: ChartNoAxesCombined, keywords: "money cash flow month forecast" },
-  { id: "benefits", group: "Jump to", label: "Benefits", hint: "FSA vs tax credit", href: "/app/benefits", icon: Landmark, keywords: "fsa credit tax optimizer" },
-  { id: "breaks", group: "Jump to", label: "School breaks", href: "/app/coverage", icon: CalendarDays, keywords: "calendar pto camp summer holiday" },
-  { id: "claims", group: "Jump to", label: "Claims", href: "/app/claims", icon: Receipt, keywords: "receipts fsa reimbursement forfeit" },
-  { id: "paperwork", group: "Jump to", label: "Paperwork", href: "/app/paperwork", icon: FileText, keywords: "letters hr w-10 email" },
-  { id: "family", group: "Jump to", label: "Family & partner", href: "/app/family", icon: Settings2, keywords: "kids profile settings partner" },
-  { id: "sos", group: "Do", label: "My kid is sick tomorrow", hint: "Care SOS", href: "/app/sos", icon: LifeBuoy, keywords: "sick closed daycare school emergency sitter" },
+const DO: Item[] = [
+  { id: "sos", group: "Do", label: "My kid is sick tomorrow", hint: "Sick day plan", href: "/app/sos", icon: LifeBuoy, keywords: "sick closed daycare school emergency sitter" },
   { id: "receipt", group: "Do", label: "Add a childcare receipt", href: "/app/claims", icon: Camera, keywords: "photo upload daycare invoice" },
   { id: "bills", group: "Do", label: "Update my monthly bills", href: "/app/budget", icon: Wallet, keywords: "rent mortgage groceries budget edit" },
-  { id: "scan", group: "Do", label: "Scan my employer benefits guide", href: "/app/benefits", icon: FileSearch, keywords: "pdf hr backup care" },
+  { id: "scan", group: "Do", label: "Scan my employer benefits guide", href: "/app/benefits#employer", icon: FileSearch, keywords: "pdf hr backup care" },
   { id: "calendar", group: "Do", label: "Plan the school calendar", href: "/app/coverage", icon: CalendarDays, keywords: "paste district calendar" },
   { id: "invite", group: "Do", label: "Invite my partner", href: "/app/family", icon: UserPlus, keywords: "spouse share" },
+];
+const ITEMS: Item[] = [
+  ...ALL_ITEMS.filter((n) => n.href !== "/app/ask").map((n) => ({ id: n.href, group: "Jump to" as const, label: n.label, hint: findNav(n.href)?.group?.label, href: n.href, icon: n.icon, keywords: `${n.keywords} ${n.question}` })),
+  ...DO,
 ];
 
 /** ⌘K / Ctrl+K command menu: jump anywhere, run common actions, or ask Genora anything. */
@@ -94,7 +89,7 @@ export function CommandMenu({ open, setOpen }: { open: boolean; setOpen: (v: boo
                 placeholder="Search, jump to a section, or ask Genora…"
                 aria-label="Search commands"
                 aria-controls="cmd-list"
-                aria-activedescendant={results[active] ? `cmd-${results[active].id}` : undefined}
+                aria-activedescendant={results[active] ? `cmd-${results[active].id.replace(/\W/g, "")}` : undefined}
                 className="h-14 flex-1 bg-transparent text-[15px] text-ink outline-none placeholder:text-ink/40"
               />
               <kbd className="rounded-md border border-ink/15 px-1.5 py-0.5 text-[11px] font-semibold text-ink/50">Esc</kbd>
@@ -105,7 +100,7 @@ export function CommandMenu({ open, setOpen }: { open: boolean; setOpen: (v: boo
                 <li key={item.id}>
                   {(i === 0 || results[i - 1].group !== item.group) && <p className="px-3 pb-1 pt-3 text-xs font-semibold text-ink/45">{item.group}</p>}
                   <button
-                    id={`cmd-${item.id}`}
+                    id={`cmd-${item.id.replace(/\W/g, "")}`}
                     role="option"
                     aria-selected={i === active}
                     type="button"

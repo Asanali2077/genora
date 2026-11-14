@@ -149,3 +149,21 @@ Every constant lives in `lib/engine/tax-2026.ts` with its source URL; every rule
 | P6 | Paywall, dashboard "Family Money Pulse", partner invite | 2 | end-to-end paid path |
 | P7 | Deploy, e2e, admin with real events | 1.5 | production URL |
 | P8 | Pitch, unit economics, creatives | 3 | slides + rehearsal |
+
+## Information architecture (UI)
+
+The app is organised by the questions a parent asks, not by the engines behind them. `config/nav.ts` is the single map: the sidebar, the mobile tab bar and menu sheet, the ⌘K / "/" command menu, page breadcrumbs and locked-screen previews all read from it.
+
+| Section | Screen | The question it answers |
+|---|---|---|
+| — | Today (`/app`) | What needs us this week, and are we okay? |
+| Money | Budget forecast | Will we have enough every month this year? |
+| Money | Taxes & benefits | FSA or tax credit — which split pays us most? |
+| Money | Claims & receipts (plan) | Are we claiming every FSA dollar before the deadline? |
+| Care | School breaks (plan) | Who is with the kids on every day off school? |
+| Care | Sick day plan | Kid sick tomorrow — cheapest way to cover it? |
+| Family | Kids & partner | Who's in the plan and what changes as kids grow? |
+| Family | Letters & forms (plan) | What exactly do I send HR and the daycare? |
+| — | Ask Genora | Anything, answered from the family's numbers. |
+
+Today is built around one list, "Needs you", produced by the pure `lib/engine/actions.ts` (`nextActions`, unit-tested): every action comes from a computed fact, carries the dollars at stake and a due date when there is one, and disappears when the fact changes. Next to it, three figures (take-home pay, money back from tax rules, lowest balance) each link to the screen that explains them. Long screens use sticky in-page section tabs (`components/app/section-tabs.tsx`); paid screens for free families show what they unlock instead of a dead end.

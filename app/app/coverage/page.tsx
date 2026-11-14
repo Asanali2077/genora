@@ -21,7 +21,7 @@ export default async function CoveragePage() {
         {pro ? (
           <Radar initialClosures={calendar?.days ?? []} initialResult={result} sample={SAMPLE_CALENDAR} today={today} />
         ) : (
-          <Locked title="Plan every school break" body="Paste the school calendar and Genora finds every uncovered day, then splits both parents' PTO and FSA-eligible camps at the lowest cost. Included in the Genora plan." />
+          <Locked href="/app/coverage" title="Plan every school break" body="Paste the school calendar and Genora finds every uncovered day, then splits both parents' PTO and FSA-eligible camps at the lowest cost. Included in the Genora plan." />
         )}
       </div>
     </>

@@ -15,12 +15,12 @@ export default async function ClaimsPage() {
 
   return (
     <>
-      <PageHeader title="Claims" sub="Every childcare payment you log brings FSA money back. Genora tracks it and warns you before anything is forfeited." />
+      <PageHeader title="Claims & receipts" sub="Every childcare payment you log brings FSA money back. Genora tracks it and warns you before anything is forfeited." />
       <div className="max-w-4xl px-5 py-8 md:px-10">
         {pro ? (
           <Vault summary={summary} receipts={receipts} recommended={recommended} />
         ) : (
-          <Locked title="Stop forfeiting FSA money" body="Snap receipts, track every dollar your FSA owes you, and get warned before the deadline. Included in the Genora plan." />
+          <Locked href="/app/claims" title="Stop forfeiting FSA money" body="Snap receipts, track every dollar your FSA owes you, and get warned before the deadline. Included in the Genora plan." />
         )}
       </div>
     </>
