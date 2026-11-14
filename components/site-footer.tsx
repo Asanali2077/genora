@@ -24,7 +24,7 @@ export function SiteFooter() {
         </div>
         <nav aria-label="Footer" className="grid grid-cols-2 gap-3 text-sm">
           {LINKS.map((l) => (
-            <Link key={l.href} href={l.href} className="text-white/75 hover:text-white">{l.label}</Link>
+            <Link key={l.href} href={l.href} prefetch={false} className="text-white/75 hover:text-white">{l.label}</Link>
           ))}
         </nav>
       </div>

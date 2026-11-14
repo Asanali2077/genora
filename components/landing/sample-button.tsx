@@ -32,7 +32,8 @@ export function SampleButton({ className, dark = false }: { className?: string; 
             fetch("/api/receipts", json({ fields: SAMPLE_RECEIPT, source: "manual" })),
           ]).catch(() => {});
           track("sample_family_opened");
-          router.push("/app/benefits");
+          router.refresh();
+      router.push("/app/benefits");
         } catch {
           setBusy(false);
           router.push("/start");

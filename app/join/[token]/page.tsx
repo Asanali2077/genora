@@ -22,6 +22,7 @@ export default function JoinPage({ params }: { params: Promise<{ token: string }
       const json = await res.json();
       if (!res.ok) throw new Error(json.error);
       track("partner_joined");
+      router.refresh();
       router.push("/app");
     } catch (e) {
       setError(e instanceof Error ? e.message : "We couldn't add you to this family.");

@@ -32,7 +32,7 @@ export function SiteHeader() {
             Pricing
           </Link>
           {inApp ? (
-            <Button size="sm" variant="outline" nativeButton={false} render={<Link href="/app" />}>My plan</Button>
+            <Button size="sm" variant="outline" nativeButton={false} render={<Link href="/app" prefetch={false} />}>My plan</Button>
           ) : (
             <Button size="sm" className={dark ? "bg-marigold text-ink hover:bg-[#ffc61a]" : undefined} nativeButton={false} render={<Link href="/start" />}>Find my money</Button>
           )}

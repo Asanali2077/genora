@@ -212,7 +212,8 @@ export function Onboarding() {
       const json = await res.json();
       if (!res.ok) throw new Error(json.error ?? "We couldn't save your plan.");
       track("quiz_complete", { found_money: json.foundMoney });
-      router.push("/reveal");
+      router.refresh();
+      router.push("/app/benefits");
     } catch (e) {
       setError(e instanceof Error ? e.message : "We couldn't save your plan.");
       setSaving(false);

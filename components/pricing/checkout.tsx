@@ -25,8 +25,8 @@ export function Checkout({ hasHousehold, foundMoney }: { hasHousehold: boolean; 
       const res = await fetch("/api/checkout", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ planId }) });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error);
-      router.push("/app");
       router.refresh();
+      router.push("/app");
     } catch (e) {
       setError(e instanceof Error ? e.message : "We couldn't start your plan.");
       setBusy(false);
