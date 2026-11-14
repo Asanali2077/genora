@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUp } from "lucide-react";
 import { Mark } from "@/components/brand/mark";
@@ -9,12 +9,13 @@ import { cn } from "@/lib/utils";
 
 type Msg = { role: "user" | "assistant"; text: string };
 
-export function AskChat({ suggestions }: { suggestions: string[] }) {
+export function AskChat({ suggestions, initialQuestion }: { suggestions: string[]; initialQuestion?: string }) {
   const [msgs, setMsgs] = useState<Msg[]>([]);
   const [follow, setFollow] = useState<string[]>(suggestions);
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
+  const asked = useRef(false);
 
   async function ask(q: string) {
     const question = q.trim();
@@ -36,6 +37,18 @@ export function AskChat({ suggestions }: { suggestions: string[] }) {
       setTimeout(() => endRef.current?.scrollIntoView({ behavior: "smooth", block: "end" }), 50);
     }
   }
+
+  // A question typed into the ⌘K menu arrives as ?q= and is asked once.
+  useEffect(() => {
+    if (!initialQuestion || asked.current) return;
+    // The flag is set inside the timer so a cancelled first run (Strict Mode) doesn't block the real one.
+    const id = setTimeout(() => {
+      asked.current = true;
+      void ask(initialQuestion);
+    }, 0);
+    return () => clearTimeout(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialQuestion]);
 
   return (
     <div className="panel flex min-h-[60vh] flex-col overflow-hidden">

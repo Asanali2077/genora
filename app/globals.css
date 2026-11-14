@@ -150,6 +150,32 @@
   }
 }
 
+@property --beam {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes beam {
+  to { --beam: 360deg; }
+}
+/* A light that travels around the border of the most important element on a screen. */
+.beam { position: relative; isolation: isolate; }
+.beam::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  padding: 2px;
+  background: conic-gradient(from var(--beam), transparent 70%, var(--marigold) 86%, #ffe58a 90%, transparent 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: beam 4.5s linear infinite;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) { .beam::before { animation: none; } }
+
 @keyframes ticker {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }

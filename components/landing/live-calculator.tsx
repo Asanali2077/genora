@@ -80,7 +80,7 @@ export function LiveCalculator() {
     best.election === 0 ? "Skip the FSA and take the tax credit" : best.careCredit > 0 ? `Split: ${usd(best.election)} FSA plus the credit` : `Put ${usd(best.election)} in the FSA`;
 
   return (
-    <section aria-labelledby="calc-title" className="panel p-5 sm:p-7">
+    <section aria-labelledby="calc-title" className="panel beam p-5 sm:p-7">
       <h2 id="calc-title" className="text-lg font-bold text-ink">{landing.calculatorTitle}</h2>
       <div className="mt-6 space-y-6">
         <Slider label="Household income" value={income} min={60_000} max={260_000} step={5_000} onChange={setIncome} />

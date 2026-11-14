@@ -34,7 +34,7 @@ export function Checkout({ hasHousehold, foundMoney }: { hasHousehold: boolean; 
   }
 
   return (
-    <div className="panel p-5 sm:p-6">
+    <div className="panel beam p-5 sm:p-6">
       <div role="radiogroup" aria-label="Plan" className="space-y-2.5">
         {pricing.plans.map((p) => {
           const on = p.id === planId;

@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import { usePathname } from "next/navigation";
-import { CalendarDays, ChartNoAxesCombined, FileText, Landmark, LayoutGrid, LifeBuoy, Lock, MessageCircleQuestion, Receipt, Settings2 } from "lucide-react";
+import { CommandMenu } from "@/components/ui/command-menu";
+import { CalendarDays, ChartNoAxesCombined, FileText, Landmark, Search, LayoutGrid, LifeBuoy, Lock, MessageCircleQuestion, Receipt, Settings2 } from "lucide-react";
 import { Mark } from "@/components/brand/mark";
 import { cn } from "@/lib/utils";
 
@@ -20,6 +22,7 @@ const initials = (label: string) => (label.toLowerCase() === "you" ? "Me" : labe
 
 export function AppShell({ parents, pro, children }: { parents: string[]; pro: boolean; children: React.ReactNode }) {
   const path = usePathname();
+  const [cmd, setCmd] = useState(false);
   const active = (href: string) => (href === "/app" ? path === "/app" : path.startsWith(href));
 
   return (
@@ -45,12 +48,18 @@ export function AppShell({ parents, pro, children }: { parents: string[]; pro: b
           </div>
         </Link>
 
-        <Link href="/app/sos" prefetch className="mt-4 flex items-center gap-3 rounded-[12px] bg-marigold px-3 py-2.5 text-ink transition-transform hover:-translate-y-px">
+        <Link href="/app/sos" prefetch className="beam mt-4 flex items-center gap-3 rounded-[12px] bg-marigold px-3 py-2.5 text-ink transition-transform hover:-translate-y-px">
           <LifeBuoy className="size-5" aria-hidden />
           <span className="text-sm font-bold leading-tight">Kid sick tomorrow?<span className="block text-xs font-medium text-ink/70">Find care in 10 seconds</span></span>
         </Link>
 
-        <nav aria-label="App" className="mt-6 space-y-1">
+        <button type="button" onClick={() => setCmd(true)} className="mt-4 flex h-10 w-full items-center gap-3 rounded-[10px] border border-white/10 bg-white/[0.04] px-3 text-sm text-white/60 transition-colors hover:border-white/25 hover:text-white">
+          <Search className="size-4" aria-hidden />
+          <span className="flex-1 text-left">Search or ask…</span>
+          <kbd className="rounded border border-white/20 px-1.5 text-[11px] font-semibold">⌘K</kbd>
+        </button>
+
+        <nav aria-label="App" className="mt-4 space-y-1">
           {NAV.map(({ href, label, icon: Icon, pro: needsPro }) => (
             <Link
               key={href}
@@ -93,11 +102,15 @@ export function AppShell({ parents, pro, children }: { parents: string[]; pro: b
           {!pro ? (
             <Link href="/pricing" className="rounded-full bg-marigold px-3 py-1.5 text-xs font-bold text-ink">Unlock</Link>
           ) : (
+            <span className="flex items-center gap-2">
+            <button type="button" onClick={() => setCmd(true)} aria-label="Search or ask" className="p-2 text-white/80"><Search className="size-5" /></button>
             <Link href="/app/sos" className="rounded-full bg-marigold px-3 py-1.5 text-xs font-bold text-ink">Kid sick?</Link>
+          </span>
           )}
         </header>
 
-        <main className="flex-1 pb-24 md:pb-10">{children}</main>
+        <div className="flex-1 pb-24 md:pb-10">{children}</div>
+        <CommandMenu open={cmd} setOpen={setCmd} />
 
         {/* Mobile tab bar */}
         <nav aria-label="App" className="fixed inset-x-0 bottom-0 print:hidden z-30 grid grid-cols-5 border-t border-ink/10 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden">

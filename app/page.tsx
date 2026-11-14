@@ -7,6 +7,7 @@ import { SampleButton } from "@/components/landing/sample-button";
 import { Reveal } from "@/components/motion";
 import { FactTicker, Magnetic, Spotlight } from "@/components/landing/effects";
 import { Story } from "@/components/landing/story";
+import { Bento } from "@/components/landing/bento";
 import { Button } from "@/components/ui/button";
 import { TrackView } from "@/components/track-view";
 
@@ -45,6 +46,7 @@ export default function Home() {
       <FactTicker />
 
       <Story />
+      <Bento />
 
       <section aria-labelledby="compare" className="mx-auto w-full max-w-5xl px-4 pb-4">
         <h2 id="compare" className="font-heading text-3xl font-bold tracking-[-0.02em] text-ink">{compare.title}</h2>

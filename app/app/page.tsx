@@ -84,7 +84,7 @@ export default async function OverviewPage() {
 
       <div className="mt-8 grid max-w-6xl gap-4 lg:grid-cols-[1fr_17rem]">
         <SavingsHero savings={savings} price={pricing.plans[0].price} />
-        <Link href="/app/sos" className="group flex flex-col justify-between rounded-[22px] bg-marigold p-6 text-ink transition-transform hover:-translate-y-0.5">
+        <Link href="/app/sos" className="beam group flex flex-col justify-between rounded-[22px] bg-marigold p-6 text-ink transition-transform hover:-translate-y-0.5">
           <LifeBuoy className="size-8" aria-hidden />
           <span>
             <span className="block font-heading text-2xl font-bold leading-tight">Kid sick tomorrow?</span>
