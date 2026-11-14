@@ -12,7 +12,7 @@ export const site = {
 export const landing = {
   heroTitle: "Your family is probably overpaying for childcare. Let's find out how much.",
   heroSub:
-    "Most parents who could use a Dependent Care FSA never do, and in 2026 the rules changed again. Genora checks both parents' benefits and tells you exactly what to elect.",
+    "For working parents in the US with kids under 13. Most who could use a Dependent Care FSA never do, and in 2026 the rules changed again. Genora checks both parents' benefits, plans every school break and keeps the money coming back all year.",
   calculatorTitle: "Try it with your numbers",
   calculatorNote: "Live result from the same 2026 engine the app uses. Assumes both employers offer a Dependent Care FSA and you only claim the credit today.",
   cta: "Find my money",
@@ -47,10 +47,18 @@ export const pricing = {
     { id: "monthly", name: "Monthly", price: 12, period: "month", perDay: 0.39, highlight: false, note: "Cancel anytime" },
   ],
   features: [
-    "Optimal FSA election for each parent, updated when anything changes",
-    "School-break radar with PTO planning for both parents",
-    "Claim vault with forfeiture alerts and a year-end Form 2441 summary",
-    "Partner access on the same plan",
+    "Best FSA election for each parent, recalculated whenever pay, kids or care costs change",
+    "Employer benefits scanner: backup care, FSA contributions and childcare discounts priced in dollars",
+    "Care SOS when a kid is sick or school is closed: cheapest way to cover it, messages ready",
+    "School-break radar with PTO planning for both parents, exported to your calendar",
+    "Claim vault with forfeiture alerts, plus HR and provider letters written for you",
+    "Ask Genora, partner access and a running total of what Genora found you",
+  ],
+  weekly: [
+    { when: "Every week", what: "Log daycare and camp receipts; see what your FSA still owes you." },
+    { when: "When a kid gets sick", what: "Open Care SOS: the cheapest way to cover the day, in seconds." },
+    { when: "Every school break", what: "The plan is already in your calendar: who covers which day." },
+    { when: "Every open enrollment", what: "Elect the right amount for next year, letters ready for HR." },
   ],
 } as const;
 

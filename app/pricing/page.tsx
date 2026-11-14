@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Calculator, CalendarDays, Camera, Users } from "lucide-react";
+import { Calculator, CalendarDays, Camera, FileSearch, LifeBuoy, Users } from "lucide-react";
 import { pricing } from "@/config/site";
 import { getUser } from "@/lib/supabase/server";
 import { getHousehold, getLatestPlan } from "@/lib/services/household";
@@ -9,7 +9,7 @@ import { TrackView } from "@/components/track-view";
 export const metadata: Metadata = { title: "Pricing — Genora" };
 export const dynamic = "force-dynamic";
 
-const ICONS = [Calculator, CalendarDays, Camera, Users];
+const ICONS = [Calculator, FileSearch, LifeBuoy, CalendarDays, Camera, Users];
 
 export default async function PricingPage() {
   const { sb, user } = await getUser();
@@ -35,6 +35,15 @@ export default async function PricingPage() {
             );
           })}
         </ul>
+        <h2 className="mt-12 font-heading text-xl font-bold text-ink">Why families keep Genora all year</h2>
+        <dl className="mt-4 space-y-3">
+          {pricing.weekly.map((w) => (
+            <div key={w.when} className="grid gap-1 sm:grid-cols-[11rem_1fr]">
+              <dt className="text-sm font-semibold text-pine">{w.when}</dt>
+              <dd className="text-sm text-ink/80">{w.what}</dd>
+            </div>
+          ))}
+        </dl>
       </div>
       <div className="md:pt-2">
         <Checkout hasHousehold={Boolean(household)} foundMoney={plan ? Number(plan.found_money) : null} />
