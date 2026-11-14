@@ -8,6 +8,10 @@ import { possessive } from "@/lib/engine/benefits";
 import { CompareBars } from "@/components/plan/compare-bars";
 import { WhatIf } from "@/components/plan/what-if";
 import { CountUp, Reveal } from "@/components/motion";
+import { OptimizerChart } from "@/components/plan/optimizer-chart";
+import { ProcessStrip } from "@/components/plan/process-strip";
+import { analyzeBenefits } from "@/lib/engine/benefits";
+import { buildLetters } from "@/lib/engine/paperwork";
 import { TrackView } from "@/components/track-view";
 import { Button } from "@/components/ui/button";
 
@@ -22,11 +26,13 @@ export default async function BenefitsPage() {
   if (!plan) redirect("/start");
 
   const r = plan.result;
+  // Fresh run for the visual layer (curve + scenario count) — same deterministic engine.
+  const live = analyzeBenefits(household.profile);
   const big = r.foundMoney >= 200;
   const [firstAction, ...moreActions] = r.actions;
 
   return (
-    <div className="mx-auto w-full max-w-3xl px-5 pb-20 pt-8 md:px-10 md:pt-12">
+    <div className="mx-auto w-full max-w-4xl px-5 pb-20 pt-8 md:px-10 md:pt-12">
       <TrackView name="savings_reveal_view" props={{ found_money: r.foundMoney }} />
 
       <p className="text-muted-foreground">Your 2026 childcare money plan</p>
@@ -46,6 +52,19 @@ export default async function BenefitsPage() {
       </p>
 
       <div className="mt-7"><CompareBars now={r.current.total} best={r.optimal.total} /></div>
+
+      <section aria-labelledby="how-built" className="mt-10">
+        <h2 id="how-built" className="font-heading text-xl font-bold text-ink">How Genora built this plan</h2>
+        <div className="mt-4"><ProcessStrip answers={11} scenarios={live.scenariosTested} best={live.optimal.total} letters={buildLetters(household.profile, live).length} /></div>
+      </section>
+
+      <Reveal className="mt-10">
+        <section aria-labelledby="decision" className="panel p-5 sm:p-6">
+          <h2 id="decision" className="font-heading text-xl font-bold text-ink">The decision, visualized</h2>
+          <p className="mt-1 text-sm text-muted-foreground">Each extra FSA dollar saves tax but shrinks the credit. The best point is where the curve peaks.</p>
+          <div className="mt-5"><OptimizerChart curve={live.curve} best={{ election: live.optimal.election, total: live.optimal.total }} current={{ election: live.current.election, total: live.current.total }} /></div>
+        </section>
+      </Reveal>
 
       {r.warnings.length > 0 && (
         <ul className="mt-6 space-y-2">

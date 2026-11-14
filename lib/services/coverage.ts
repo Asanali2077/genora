@@ -23,7 +23,8 @@ export function withSummer(closures: Closure[], lastDay: string | null, summerWe
 }
 
 export function computeCoverage(profile: Profile, closures: Closure[], settings: CoverageSettings, today: string): CoverageResult {
-  const kidsInCare = profile.children.filter((c) => TAX_YEAR - c.birthYear < 13).length;
+  // School breaks only affect school-age children (5–12); younger kids stay in daycare or preschool.
+  const kidsInCare = profile.children.filter((c) => TAX_YEAR - c.birthYear >= 5 && TAX_YEAR - c.birthYear < 13).length;
   const agi = profile.parents.reduce((s, p) => s + p.earnedIncome, 0) + profile.otherIncome;
   const working = profile.filingStatus === "mfj" ? profile.parents : profile.parents.slice(0, 1);
   return planCoverage({

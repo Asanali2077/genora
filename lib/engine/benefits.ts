@@ -49,6 +49,9 @@ export type BenefitsResult = {
   current: Scenario;
   optimal: Scenario;
   foundMoney: number;
+  /** Money back at each FSA election the optimizer tested (sampled every ) — the shape of the decision. */
+  curve: { election: number; total: number }[];
+  scenariosTested: number;
   childTaxCredit: number;
   oneTimeExtras: { id: string; label: string; amount: number }[];
   actions: Action[];
@@ -163,12 +166,18 @@ export function analyzeBenefits(profile: Profile): BenefitsResult {
 
   // Brute-force search over elections in $50 steps: exact on the piecewise-linear objective at this resolution.
   let optimal = evaluate(ctx, 0);
+  const curve = [{ election: 0, total: optimal.total }];
+  let scenariosTested = 1;
   for (let e = 50; e <= usable; e += 50) {
     const s = evaluate(ctx, e);
+    scenariosTested++;
+    if (e % 250 === 0) curve.push({ election: e, total: s.total });
     if (s.total > optimal.total) optimal = s;
   }
   if (usable > 0 && usable % 50 !== 0) {
     const s = evaluate(ctx, usable);
+    scenariosTested++;
+    curve.push({ election: usable, total: s.total });
     if (s.total > optimal.total) optimal = s;
   }
 
@@ -269,6 +278,8 @@ export function analyzeBenefits(profile: Profile): BenefitsResult {
     current,
     optimal,
     foundMoney: round(foundMoney),
+    curve,
+    scenariosTested,
     childTaxCredit: round(childTaxCredit),
     oneTimeExtras,
     actions,

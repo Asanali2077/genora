@@ -7,6 +7,7 @@ import { track } from "@/lib/analytics";
 import { Button } from "@/components/ui/button";
 import { MoneyInput, NumberInput } from "@/components/onboarding/fields";
 import { YearStrip } from "./year-strip";
+import { CostWaterfall } from "./cost-waterfall";
 
 const usd = (n: number) => `$${Math.round(n).toLocaleString("en-US")}`;
 const fmt = (iso: string) => new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
@@ -93,6 +94,7 @@ export function Radar({ initialClosures, initialResult, sample, today }: { initi
               </div>
             ))}
           </dl>
+          <CostWaterfall result={result} />
           <div className="panel p-5">
             <YearStrip assignments={result.assignments} from={today} />
           </div>

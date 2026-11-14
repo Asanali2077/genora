@@ -8,6 +8,7 @@ import type { StoredReceipt } from "@/lib/services/claims";
 import { track } from "@/lib/analytics";
 import { Button } from "@/components/ui/button";
 import { MoneyInput } from "@/components/onboarding/fields";
+import { UsageRing } from "./usage-ring";
 
 const usd = (n: number) => `$${Math.round(n).toLocaleString("en-US")}`;
 const fmt = (iso: string) => new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
@@ -142,7 +143,12 @@ export function Vault({ summary, receipts, recommended }: { summary: ClaimsResul
             ? "Elect it at open enrollment (or within 30 days of a qualifying change). Keep logging childcare receipts here: they become claims the day your FSA starts."
             : `Tracking your ${usd(summary.election)} election. ${summary.daysToDeadline} days left to submit claims.${summary.waiting > 0 ? ` ${usd(summary.waiting)} is ready to submit to your FSA administrator now.` : ""}`}
         </p>
-        {!recommended && <div className="panel mt-5 p-5"><PaceBar s={summary} /></div>}
+        {!recommended && (
+          <div className="panel mt-5 flex flex-col gap-6 p-5 sm:flex-row sm:items-center sm:p-6">
+            <UsageRing used={summary.logged} total={summary.election} />
+            <div className="flex-1"><PaceBar s={summary} /></div>
+          </div>
+        )}
         {summary.missingTin.length > 0 && (
           <p className="inset mt-4 border-l-4 border-marigold px-4 py-3 text-sm">
             Ask {summary.missingTin.join(", ")} for a taxpayer ID (or a signed Form W-10). You need it for FSA claims and Form 2441.
