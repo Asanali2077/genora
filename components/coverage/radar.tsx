@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CalendarPlus } from "lucide-react";
 import type { Closure, CoverageResult } from "@/lib/engine/coverage";
 import { track } from "@/lib/analytics";
 import { Button } from "@/components/ui/button";
@@ -95,6 +96,9 @@ export function Radar({ initialClosures, initialResult, sample, today }: { initi
           <div className="panel p-5">
             <YearStrip assignments={result.assignments} from={today} />
           </div>
+          <Button variant="outline" nativeButton={false} render={<a href="/api/coverage/ics" onClick={() => track("calendar_exported")} />}>
+            <CalendarPlus />Add the plan to my calendar
+          </Button>
         </section>
       )}
 

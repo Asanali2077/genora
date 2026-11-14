@@ -6,7 +6,7 @@ test("a family goes from the landing page to a paid plan with a logged receipt",
   await expect(page.getByRole("heading", { level: 1 })).toContainText("overpaying for childcare");
   await expect(page.getByText("Money this family leaves on the table")).toBeVisible(); // live engine on the landing page
 
-  await page.getByRole("button", { name: "Find my money" }).first().click();
+  await page.getByRole("main").getByRole("button", { name: "Find my money" }).first().click();
   await expect(page).toHaveURL(/\/start/);
   for (let step = 0; step < 6; step++) {
     if (step === 3) await page.fill("#care-daycare", "20000");
@@ -14,7 +14,7 @@ test("a family goes from the landing page to a paid plan with a logged receipt",
   }
   await page.getByRole("button", { name: "See my plan" }).click();
 
-  await expect(page).toHaveURL(/\/reveal/, { timeout: 30_000 });
+  await expect(page).toHaveURL(/\/app\/benefits/, { timeout: 30_000 });
   await expect(page.getByRole("heading", { name: "Now vs. the best plan" })).toBeVisible();
   await page.getByText("Show the math").click();
   await expect(page.getByText("Found money per year")).toBeVisible();
@@ -24,7 +24,7 @@ test("a family goes from the landing page to a paid plan with a logged receipt",
   await page.getByRole("button", { name: "Start the annual plan" }).click();
 
   await expect(page).toHaveURL(/\/app$/, { timeout: 30_000 });
-  await expect(page.getByRole("heading", { name: "FSA claims" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Coming up" })).toBeVisible();
 
   await page.goto("/app/claims");
   await page.getByRole("button", { name: "Enter by hand" }).click();

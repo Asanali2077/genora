@@ -1,10 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, Figtree } from "next/font/google";
+import { Familjen_Grotesk, Figtree } from "next/font/google";
 import "./globals.css";
 import { site } from "@/config/site";
 import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
 
-const display = Bricolage_Grotesque({ variable: "--font-display", subsets: ["latin"], weight: ["500", "700", "800"] });
+const display = Familjen_Grotesk({ variable: "--font-display", subsets: ["latin"], weight: ["500", "600", "700"] });
 const body = Figtree({ variable: "--font-body", subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -20,12 +21,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="flex min-h-full flex-col">
         <SiteHeader />
         <main className="flex flex-1 flex-col">{children}</main>
-        <footer className="border-t px-4 py-8 text-sm text-muted-foreground">
-          <div className="mx-auto max-w-5xl space-y-2">
-            <p>{site.disclaimer}</p>
-            <p>© {new Date().getFullYear()} {site.name}</p>
-          </div>
-        </footer>
+        <SiteFooter />
       </body>
     </html>
   );

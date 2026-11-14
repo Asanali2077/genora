@@ -1,10 +1,12 @@
-import { AppNav } from "@/components/app/app-nav";
+import { requireHousehold } from "@/lib/services/access";
+import { AppShell } from "@/components/app/shell";
 
-export default function AppLayout({ children }: LayoutProps<"/app">) {
+export default async function AppLayout({ children }: LayoutProps<"/app">) {
+  const { household, pro } = await requireHousehold();
+  const parents = household.profile.filingStatus === "mfj" ? household.profile.parents.map((p) => p.label) : [household.profile.parents[0].label];
   return (
-    <>
-      <AppNav />
+    <AppShell parents={parents} pro={pro}>
       {children}
-    </>
+    </AppShell>
   );
 }
