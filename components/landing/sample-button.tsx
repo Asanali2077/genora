@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Sparkles } from "lucide-react";
-import { SAMPLES } from "@/config/samples";
+import { SAMPLES, SAMPLE_CLOSURES, SAMPLE_LAST_DAY, SAMPLE_RECEIPT } from "@/config/samples";
 import { ensureSession } from "@/lib/supabase/browser";
 import { track } from "@/lib/analytics";
 import { Button } from "@/components/ui/button";
@@ -25,6 +25,12 @@ export function SampleButton({ className, dark = false }: { className?: string; 
           await ensureSession();
           const res = await fetch("/api/household", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ profile: SAMPLES[0].profile }) });
           if (!res.ok) throw new Error();
+          const json = (body: unknown) => ({ method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
+          // Fill the other sections too, so every screen shows real output for this family.
+          await Promise.all([
+            fetch("/api/coverage", json({ closures: SAMPLE_CLOSURES, lastDay: SAMPLE_LAST_DAY })),
+            fetch("/api/receipts", json({ fields: SAMPLE_RECEIPT, source: "manual" })),
+          ]).catch(() => {});
           track("sample_family_opened");
           router.push("/app/benefits");
         } catch {

@@ -28,3 +28,20 @@ export const SAMPLES: { id: string; name: string; profile: ProfileInput }[] = [
     profile: { filingStatus: "mfj", state: "IL", parents: [{ label: "You", earnedIncome: 72_000, employerOffersDcfsa: false, currentElection: 0 }, { label: "Partner", earnedIncome: 48_000, employerOffersDcfsa: false, currentElection: 0 }], children: [{ name: "Noah", birthYear: 2025 }], childcare: { daycare: 15_000 } },
   },
 ];
+
+/** The sample district calendar, already structured, so the one-click demo needs no AI call. */
+export const SAMPLE_CLOSURES = [
+  { start: "2026-09-07", end: "2026-09-07", label: "Labor Day" },
+  { start: "2026-10-09", end: "2026-10-09", label: "Teacher professional development" },
+  { start: "2026-10-12", end: "2026-10-12", label: "Indigenous Peoples' Day" },
+  { start: "2026-11-11", end: "2026-11-11", label: "Veterans Day" },
+  { start: "2026-11-23", end: "2026-11-27", label: "Thanksgiving break" },
+  { start: "2026-12-21", end: "2027-01-01", label: "Winter break" },
+  { start: "2027-01-18", end: "2027-01-18", label: "Martin Luther King Jr. Day" },
+  { start: "2027-02-15", end: "2027-02-19", label: "Mid-winter break" },
+  { start: "2027-03-12", end: "2027-03-12", label: "Teacher workday" },
+  { start: "2027-04-05", end: "2027-04-09", label: "Spring break" },
+  { start: "2027-05-31", end: "2027-05-31", label: "Memorial Day" },
+];
+export const SAMPLE_LAST_DAY = "2027-06-10";
+export const SAMPLE_RECEIPT = { provider: "Little Oaks Early Learning", category: "daycare", amount: 1640, serviceFrom: "2026-10-01", serviceTo: "2026-10-31", providerTinLast4: "8826" } as const;
