@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Calculator, CalendarDays, Camera, FileSearch, LifeBuoy, Users } from "lucide-react";
+import { Calculator, CalendarDays, Camera, ChartNoAxesCombined, FileSearch, LifeBuoy, Users } from "lucide-react";
 import { pricing } from "@/config/site";
 import { getUser } from "@/lib/supabase/server";
 import { getHousehold, getLatestPlan } from "@/lib/services/household";
@@ -9,7 +9,7 @@ import { TrackView } from "@/components/track-view";
 export const metadata: Metadata = { title: "Pricing — Genora" };
 export const dynamic = "force-dynamic";
 
-const ICONS = [Calculator, FileSearch, LifeBuoy, CalendarDays, Camera, Users];
+const ICONS = [ChartNoAxesCombined, Calculator, FileSearch, LifeBuoy, CalendarDays, Camera, Users];
 
 export default async function PricingPage() {
   const { sb, user } = await getUser();

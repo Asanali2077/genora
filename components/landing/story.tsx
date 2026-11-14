@@ -9,7 +9,7 @@ const ease = [0.22, 1, 0.36, 1] as const;
 
 const STEPS = [
   { kicker: "3 minutes", title: "Tell Genora about your family", body: "Pay, kids, childcare costs and what each employer offers. No bank login, no SSN." },
-  { kicker: "Instant", title: "See the money you're missing", body: "A 2026 tax engine tests every FSA split across both jobs and shows the rule behind each number." },
+  { kicker: "Instant", title: "See the money you're missing", body: "A 12-month forecast with 2026 tax rules, benefits and credits built in — and the money you're leaving on the table, with the rule behind each number." },
   { kicker: "All year", title: "Plan every day without school", body: "Paste the district calendar. PTO goes to the most expensive days, FSA-eligible camps cover the rest." },
   { kicker: "Every week", title: "Never lose a dollar or a workday", body: "Snap receipts before money is forfeited, and when a kid gets sick, get the cheapest way to cover it in seconds." },
 ];

@@ -2,6 +2,8 @@
 
 Format: 5 minutes pitch, 2 minutes Q&A (Business Cup 2.0 final). Live demo on https://businesscup.vercel.app.
 
+**One line:** Genora is the family budget that knows the rules.
+
 ## 1. The pain (0:00–0:40) — Who do we sell to? (15%)
 - Maria, 34, product manager in California; husband Dan, 37, nurse. Mia is 3 (daycare $20k/yr), Leo is 8 (school + after-school).
 - Childcare is their biggest new bill: $13,184 per child per year on average (Child Care Aware, 2025).
@@ -10,7 +12,8 @@ Format: 5 minutes pitch, 2 minutes Q&A (Business Cup 2.0 final). Live demo on ht
 
 ## 2. The product, live (0:40–2:40) — Does it work? (40%)
 1. Landing → "See a sample family" (or 11 questions, 3 minutes). Show the live calculator running the real engine.
-2. Benefits: "You're leaving $674 a year on the table." Process strip: 11 answers → 2026 rules → 151 scenarios → best plan. Optimizer curve: hover the peak. "Every number has its IRS rule — show the math."
+2. Budget forecast: the next 12 months with what ordinary budgets miss — take-home after 2026 taxes, FSA savings every paycheck, tax credits in April, school breaks, sick season, holidays. Click a month for the breakdown; stress-test "daycare +10%" or "a month without pay".
+2a. Benefits: "You're leaving $674 a year on the table." Process strip: 11 answers → 2026 rules → 151 scenarios → best plan. Optimizer curve: hover the peak. "Every number has its IRS rule — show the math."
 3. Benefits scanner: "Try a sample guide" → in ~9 s Gemini reads the HR guide → "Found $2,100 a year": 10 backup-care days + $500 employer FSA contribution.
 4. School breaks: paste the district calendar → 78 weekdays without school → PTO goes to the most expensive days, camps cover the rest → cost waterfall → "Add to my calendar".
 5. Care SOS: "Leo is sick tomorrow" → best option ranked by real cost, messages to partner and manager ready.

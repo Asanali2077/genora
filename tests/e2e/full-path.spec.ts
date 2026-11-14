@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 // The whole paid path against the real database: landing → onboarding → reveal → pricing → dashboard → claims.
 test("a family goes from the landing page to a paid plan with a logged receipt", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("overpaying for childcare");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("knows the rules");
   await expect(page.getByText("Money this family leaves on the table")).toBeVisible(); // live engine on the landing page
 
   await page.getByRole("main").getByRole("button", { name: "Find my money" }).first().click();
@@ -33,4 +33,11 @@ test("a family goes from the landing page to a paid plan with a logged receipt",
   await page.getByRole("button", { name: "Save receipt" }).click();
   await expect(page.getByText("Little Oaks Early Learning").first()).toBeVisible({ timeout: 15_000 });
   await expect(page.getByRole("heading", { name: "Form 2441 summary" })).toBeVisible();
+
+  await page.goto("/app/budget");
+  await page.fill("#b-housing", "2400");
+  await page.fill("#b-groceries", "1100");
+  await page.getByRole("button", { name: "Save budget" }).click();
+  await expect(page.getByRole("heading", { name: /Your next 12 months/ })).toBeVisible({ timeout: 15_000 });
+  await expect(page.getByRole("heading", { name: "What the rules do to your budget" })).toBeVisible();
 });

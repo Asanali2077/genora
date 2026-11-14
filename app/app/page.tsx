@@ -14,6 +14,7 @@ import { KidCards } from "@/components/family/kid-cards";
 import { SavingsHero } from "@/components/app/savings-hero";
 import { lifeEvents, savingsSummary, valueBenefits } from "@/lib/engine/family";
 import { pricing } from "@/config/site";
+import { forecastBudget, hasBudget } from "@/lib/engine/budget";
 import { LifeBuoy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CountUp, Stagger, StaggerItem } from "@/components/motion";
@@ -45,6 +46,8 @@ export default async function OverviewPage() {
     ],
     pricing.plans[0].price,
   );
+  const forecast = forecastBudget(household.profile, { today, coverage: coverage.result?.assignments, ptoUsed: coverage.result?.ptoUsed });
+  const budgetReady = hasBudget(household.profile);
   const life = lifeEvents(household.profile, today, { gracePeriod: household.profile.gracePeriod });
 
   // Real upcoming events from the family's own plan.
@@ -89,6 +92,25 @@ export default async function OverviewPage() {
           </span>
         </Link>
       </div>
+
+      <Link href="/app/budget" className="panel mt-4 flex max-w-6xl flex-wrap items-center justify-between gap-4 p-5 transition-transform hover:-translate-y-0.5 sm:p-6">
+        <div>
+          <p className="text-sm font-semibold text-muted-foreground">Budget forecast · next 12 months</p>
+          <p className="mt-1 font-heading text-2xl font-bold text-ink">
+            {!budgetReady
+              ? `Take-home pay ${usd(forecast.monthlyTakeHome)} a month. Add your bills to see the year.`
+              : forecast.shortfallMonths > 0
+                ? `Money gets tight in ${forecast.lowest.label}: ${usd(forecast.bufferNeeded)} short.`
+                : `You stay ahead all year. Lowest point ${usd(forecast.lowest.balance)} in ${forecast.lowest.label}.`}
+          </p>
+        </div>
+        <span className="flex h-10 items-end gap-1" aria-hidden>
+          {forecast.months.map((m) => {
+            const max = Math.max(1, ...forecast.months.map((x) => Math.abs(x.net)));
+            return <span key={m.ym} className={`w-2 rounded-sm ${m.net >= 0 ? "bg-pine" : "bg-[#d9694f]"}`} style={{ height: `${Math.max(12, (Math.abs(m.net) / max) * 100)}%` }} />;
+          })}
+        </span>
+      </Link>
 
       <section aria-labelledby="kids" className="mt-9 max-w-6xl">
         <h2 id="kids" className="font-heading text-lg font-bold text-ink">Your kids</h2>

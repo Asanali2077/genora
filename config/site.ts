@@ -2,17 +2,17 @@
 
 export const site = {
   name: "Genora",
-  tagline: "The money engine for the childcare years",
+  tagline: "The family budget that knows the rules",
   description:
-    "Genora runs both parents' childcare benefits in 3 minutes, plans every school break at the lowest cost, and makes sure every childcare dollar comes back pre-tax.",
+    "Genora forecasts a working family's next 12 months with what ordinary budgets miss: 2026 tax rules, childcare benefits, school breaks, sick season, holidays and each child's milestones.",
   disclaimer:
     "Educational estimates based on 2026 federal rules, not tax advice. Confirm elections with your plan administrator or a tax professional.",
 } as const;
 
 export const landing = {
-  heroTitle: "Your family is probably overpaying for childcare. Let's find out how much.",
+  heroTitle: "The family budget that knows the rules.",
   heroSub:
-    "For working parents in the US with kids under 13. Most who could use a Dependent Care FSA never do, and in 2026 the rules changed again. Genora checks both parents' benefits, plans every school break and keeps the money coming back all year.",
+    "For working parents in the US. Genora forecasts your next 12 months with everything ordinary budgets miss — 2026 tax rules, childcare benefits, school breaks, sick season and holidays — and finds the money you're leaving on the table.",
   calculatorTitle: "Try it with your numbers",
   calculatorNote: "Live result from the same 2026 engine the app uses. Assumes both employers offer a Dependent Care FSA and you only claim the credit today.",
   cta: "Find my money",
@@ -47,6 +47,7 @@ export const pricing = {
     { id: "monthly", name: "Monthly", price: 12, period: "month", perDay: 0.39, highlight: false, note: "Cancel anytime" },
   ],
   features: [
+    "12-month budget forecast with taxes, benefits, school breaks, sick season and holidays built in, plus stress tests",
     "Best FSA election for each parent, recalculated whenever pay, kids or care costs change",
     "Employer benefits scanner: backup care, FSA contributions and childcare discounts priced in dollars",
     "Care SOS when a kid is sick or school is closed: cheapest way to cover it, messages ready",

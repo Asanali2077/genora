@@ -32,6 +32,22 @@ export const EmployerBenefitSchema = z.object({
 });
 export type EmployerBenefit = z.infer<typeof EmployerBenefitSchema>;
 
+/** Household budget inputs for the 12-month forecast. Monthly amounts unless noted. */
+export const BudgetSchema = z.object({
+  housing: money.default(0),
+  groceries: money.default(0),
+  transport: money.default(0),
+  utilities: money.default(0),
+  insurance: money.default(0),
+  debt: money.default(0),
+  other: money.default(0),
+  savings: money.default(0), // cash on hand today
+  holidays: money.default(0), // yearly: winter holiday gifts, food, travel (Nov–Dec)
+  vacation: money.default(0), // yearly: summer trip (July)
+  backToSchool: money.default(0), // yearly: clothes, supplies, electronics (August)
+});
+export type Budget = z.infer<typeof BudgetSchema>;
+
 export const ProfileSchema = z.object({
   filingStatus: z.enum(["mfj", "single", "hoh"]),
   state: z.string().length(2).toUpperCase(),
@@ -43,6 +59,7 @@ export const ProfileSchema = z.object({
   gracePeriod: z.boolean().default(false),
   trumpAccountElected: z.boolean().default(false),
   employerBenefits: z.array(EmployerBenefitSchema).max(25).default([]),
+  budget: BudgetSchema.prefault({}),
 });
 export type Profile = z.infer<typeof ProfileSchema>;
 export type ProfileInput = z.input<typeof ProfileSchema>;

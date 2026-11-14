@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CalendarDays, FileText, Landmark, LayoutGrid, LifeBuoy, Lock, MessageCircleQuestion, Receipt, Settings2 } from "lucide-react";
+import { CalendarDays, ChartNoAxesCombined, FileText, Landmark, LayoutGrid, LifeBuoy, Lock, MessageCircleQuestion, Receipt, Settings2 } from "lucide-react";
 import { Mark } from "@/components/brand/mark";
 import { cn } from "@/lib/utils";
 
 const NAV = [
   { href: "/app", label: "Overview", icon: LayoutGrid, pro: false },
+  { href: "/app/budget", label: "Budget", icon: ChartNoAxesCombined, pro: false },
   { href: "/app/benefits", label: "Benefits", icon: Landmark, pro: false },
   { href: "/app/coverage", label: "School breaks", icon: CalendarDays, pro: true },
   { href: "/app/claims", label: "Claims", icon: Receipt, pro: true },
@@ -100,7 +101,7 @@ export function AppShell({ parents, pro, children }: { parents: string[]; pro: b
 
         {/* Mobile tab bar */}
         <nav aria-label="App" className="fixed inset-x-0 bottom-0 print:hidden z-30 grid grid-cols-5 border-t border-ink/10 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden">
-          {NAV.filter((n) => n.href !== "/app/paperwork").map(({ href, label, icon: Icon }) => (
+          {NAV.filter((n) => !["/app/paperwork", "/app/ask"].includes(n.href)).map(({ href, label, icon: Icon }) => (
             <Link key={href} href={href} prefetch aria-current={active(href) ? "page" : undefined} className={cn("flex h-16 flex-col items-center justify-center gap-1 text-[11px] font-semibold", active(href) ? "text-pine" : "text-ink/50")}>
               <Icon className="size-5" aria-hidden />
               {label.split(" ")[0]}

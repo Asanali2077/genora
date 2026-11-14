@@ -5,7 +5,7 @@ export const SAMPLES: { id: string; name: string; profile: ProfileInput }[] = [
   {
     id: "garcia",
     name: "Garcia family — CA, $140k, toddler in daycare + 8-year-old in school",
-    profile: { filingStatus: "mfj", state: "CA", parents: [{ label: "You", earnedIncome: 84_000, employerOffersDcfsa: true, currentElection: 0 }, { label: "Partner", earnedIncome: 56_000, employerOffersDcfsa: true, currentElection: 0 }], children: [{ name: "Mia", birthYear: 2023 }, { name: "Leo", birthYear: 2018 }], childcare: { daycare: 20_000, after_school: 3_000 } },
+    profile: { filingStatus: "mfj", state: "CA", parents: [{ label: "You", earnedIncome: 84_000, employerOffersDcfsa: true, currentElection: 0 }, { label: "Partner", earnedIncome: 56_000, employerOffersDcfsa: true, currentElection: 0 }], children: [{ name: "Mia", birthYear: 2023 }, { name: "Leo", birthYear: 2018 }], childcare: { daycare: 20_000, after_school: 3_000 }, budget: { housing: 2_600, groceries: 1_200, transport: 650, utilities: 380, insurance: 450, debt: 300, other: 900, savings: 7_000, holidays: 1_780, vacation: 2_500, backToSchool: 858 } },
   },
   {
     id: "garcia",
