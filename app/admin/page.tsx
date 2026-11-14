@@ -38,7 +38,7 @@ export default async function AdminPage() {
         ].map(([k, v]) => (
           <div key={k} className="border-l-4 border-brand/30 pl-3">
             <dt className="text-xs text-muted-foreground">{k}</dt>
-            <dd className="mt-0.5 font-heading text-2xl font-extrabold tabular">{v}</dd>
+            <dd className="mt-0.5 display text-2xl tabular">{v}</dd>
           </div>
         ))}
       </dl>

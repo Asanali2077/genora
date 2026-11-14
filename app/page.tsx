@@ -26,7 +26,7 @@ export default function Home() {
         <Spotlight />
         <div className="relative mx-auto grid w-full max-w-6xl gap-12 px-4 pb-20 pt-12 md:grid-cols-[1.25fr_1fr] md:items-center md:gap-14 md:pb-24 md:pt-20">
           <Reveal y={24}>
-            <h1 className="font-heading text-[2.5rem] font-bold leading-[1.02] tracking-[-0.035em] sm:text-[3.6rem]">{landing.heroTitle}</h1>
+            <h1 className="display text-[2.3rem] leading-[1.08] sm:text-[3.3rem]">{landing.heroTitle}</h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/75">{landing.heroSub}</p>
             <div className="mt-9 flex flex-wrap items-center gap-3">
               <Magnetic><Button size="lg" className="shine bg-sun text-ink shadow-[inset_0_1px_0_rgba(255,255,255,0.4),0_8px_24px_-10px_rgba(255,200,61,0.7)] hover:bg-sun" nativeButton={false} render={<Link href="/start" />}>
@@ -49,7 +49,7 @@ export default function Home() {
       <Bento />
 
       <section aria-labelledby="compare" className="mx-auto w-full max-w-5xl px-4 pb-4">
-        <h2 id="compare" className="font-heading text-3xl font-bold tracking-[-0.02em] text-ink">{compare.title}</h2>
+        <h2 id="compare" className="display text-3xl text-ink">{compare.title}</h2>
         <div className="panel mt-6 overflow-x-auto">
           <table className="w-full min-w-[640px] text-sm">
             <thead>
@@ -76,7 +76,7 @@ export default function Home() {
 
       <section aria-labelledby="faq" className="mx-auto grid w-full max-w-5xl gap-8 px-4 py-16 md:grid-cols-[18rem_1fr] md:py-20">
         <div>
-          <h2 id="faq" className="font-heading text-3xl font-bold tracking-[-0.02em] text-ink">Questions parents ask</h2>
+          <h2 id="faq" className="display text-3xl text-ink">Questions parents ask</h2>
           <p className="mt-3 text-muted-foreground">More detail in the <Link href="/guides" className="font-semibold text-brand underline-offset-2 hover:underline">2026 rules guides</Link>.</p>
         </div>
         <div className="panel ledger">
@@ -95,7 +95,7 @@ export default function Home() {
         <dl className="grid gap-10 sm:grid-cols-3">
           {landing.proof.map((p) => (
             <div key={p.stat}>
-              <dd className="font-heading text-4xl font-extrabold tracking-tight text-ink tabular">{p.stat}</dd>
+              <dd className="display text-4xl text-ink tabular">{p.stat}</dd>
               <dt className="mt-2 text-[15px] leading-snug text-ink/80">{p.label}</dt>
               <dd className="mt-1.5 text-xs text-muted-foreground">{p.source}</dd>
             </div>

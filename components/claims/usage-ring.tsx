@@ -27,7 +27,7 @@ export function UsageRing({ used, total }: { used: number; total: number }) {
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="font-heading text-2xl font-bold text-ink tabular">{Math.round(pct * 100)}%</span>
+        <span className="display text-2xl text-ink tabular">{Math.round(pct * 100)}%</span>
         <span className="text-[11px] text-muted-foreground">claimed</span>
       </div>
     </div>

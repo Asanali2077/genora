@@ -61,7 +61,7 @@ export function Checkout({ hasHousehold, foundMoney }: { hasHousehold: boolean; 
                 <span className="mt-0.5 block text-sm text-muted-foreground">{p.note} · ${p.perDay.toFixed(2)} a day</span>
               </span>
               <span className="text-right">
-                <span className="font-heading text-2xl font-extrabold text-ink tabular">${p.price}</span>
+                <span className="display text-2xl text-ink tabular">${p.price}</span>
                 <span className="block text-xs text-muted-foreground">per {p.period}</span>
               </span>
             </button>

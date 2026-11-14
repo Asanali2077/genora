@@ -38,7 +38,7 @@ export function ForecastChart({ months, selected, onSelect }: { months: Month[];
         </defs>
 
         {/* selected month band */}
-        <motion.rect animate={{ x: x(selected) - col / 2 }} transition={{ type: "spring", stiffness: 320, damping: 30 }} y={0} width={col} height={H - 22} rx={10} fill="rgba(91,74,230 / 0.07)" />
+        <motion.rect animate={{ x: x(selected) - col / 2 }} transition={{ type: "spring", stiffness: 320, damping: 30 }} y={0} width={col} height={H - 22} rx={10} fill="rgb(91 74 230 / 0.07)" />
 
         {[hi, (hi + lo) / 2, lo].map((v, i) => (
           <g key={i}>

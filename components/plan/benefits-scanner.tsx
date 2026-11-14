@@ -108,7 +108,7 @@ export function BenefitsScanner({ saved, sample }: { saved: Row[]; sample: strin
             <p className="text-sm text-muted-foreground">No family benefits found in this document.</p>
           ) : (
             <>
-              <p className="font-heading text-2xl font-bold text-ink">
+              <p className="display text-2xl text-ink">
                 Found <span className="marker tabular">{usd(total)}</span> a year in benefits
               </p>
               <ul className="ledger mt-4">

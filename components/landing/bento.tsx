@@ -49,7 +49,7 @@ export function Bento() {
 
   return (
     <section aria-labelledby="bento" className="mx-auto w-full max-w-6xl px-4 pb-20 pt-10 md:pb-28 md:pt-0">
-      <h2 id="bento" className="max-w-2xl font-heading text-[2.2rem] font-bold leading-[1.05] tracking-[-0.03em] text-ink sm:text-5xl">Everything your family budget was missing.</h2>
+      <h2 id="bento" className="max-w-2xl display text-[2.2rem] leading-[1.05] text-ink sm:text-5xl">Everything your family budget was missing.</h2>
       <p className="mt-4 max-w-xl text-lg text-muted-foreground">Ordinary budgets track what you spent. Genora plans what&apos;s coming, with the rules built in.</p>
 
       <div className="mt-12 grid auto-rows-[minmax(15rem,auto)] gap-4 md:grid-cols-6">
@@ -109,7 +109,7 @@ export function Bento() {
             <Title sub="Upload the HR guide. AI finds backup care and FSA contributions; Genora prices them.">Benefits you didn&apos;t know you had</Title>
             <FileSearch className="size-6 shrink-0 text-brand" aria-hidden />
           </div>
-          <p className="mt-5 font-heading text-3xl font-bold text-ink">+$2,100<span className="ml-1 text-sm font-medium text-muted-foreground">/ year found</span></p>
+          <p className="mt-5 display text-3xl text-ink">+$2,100<span className="ml-1 text-sm font-medium text-muted-foreground">/ year found</span></p>
         </SpotlightCard>
 
         {/* Ask */}

@@ -123,7 +123,7 @@ export function BudgetBoard({ profile, coverage, ptoUsed, today, pro }: { profil
   return (
     <div className="space-y-8">
       <section aria-labelledby="headline">
-        <h2 id="headline" className="max-w-3xl font-heading text-[1.9rem] font-bold leading-[1.1] tracking-[-0.025em] text-ink sm:text-[2.4rem]">
+        <h2 id="headline" className="max-w-3xl display text-[1.9rem] leading-[1.1] text-ink sm:text-[2.4rem]">
           {f.shortfallMonths > 0 ? (
             <>Money gets tight in <span className="marker">{f.lowest.label}</span>: you&apos;d be {usd(f.bufferNeeded)} short.</>
           ) : (

@@ -79,7 +79,7 @@ export function WhatIf({ profile, baseline }: { profile: Profile; baseline: numb
         <div className="inset flex flex-col justify-between p-5" aria-live="polite">
           <div>
             <p className="text-sm text-muted-foreground">Best plan in this scenario</p>
-            <p className="mt-1 font-heading text-4xl font-bold tracking-tight text-ink tabular">{usd(best.total)}</p>
+            <p className="mt-1 display text-4xl text-ink tabular">{usd(best.total)}</p>
             <p className={cn("mt-1 text-sm font-semibold tabular", best.total >= baseline ? "text-brand" : "text-destructive")}>{signed(best.total - baseline)} vs your plan today</p>
             <p className="mt-3 text-sm text-ink tabular">Child Tax Credit {usd(result.childTaxCredit)}{result.childTaxCredit !== baseCtc && <span className="font-semibold text-brand"> ({signed(result.childTaxCredit - baseCtc)})</span>}</p>
           </div>

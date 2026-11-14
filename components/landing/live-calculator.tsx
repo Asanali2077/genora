@@ -113,7 +113,7 @@ export function LiveCalculator() {
 
       <div className="mt-7 border-t border-ink/[0.08] pt-6" aria-live="polite">
         <p className="text-sm text-muted-foreground">Money this family leaves on the table</p>
-        <p className="mt-1 font-heading text-5xl font-extrabold tracking-tight text-ink tabular">
+        <p className="mt-1 display text-5xl text-ink tabular">
           <span className="marker">{usd(found)}</span>
           <span className="ml-2 text-base font-semibold tracking-normal text-muted-foreground">a year</span>
         </p>

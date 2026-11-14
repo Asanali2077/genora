@@ -136,7 +136,7 @@ export function Story() {
                 {STEPS.map((s, i) => (
                   <motion.li key={s.title} animate={{ opacity: i === step ? 1 : 0.28, x: i === step ? 0 : -6 }} transition={{ duration: 0.4, ease }}>
                     <p className="text-sm font-semibold text-brand">{String(i + 1).padStart(2, "0")} · {s.kicker}</p>
-                    <h3 className="mt-1 font-heading text-[2rem] font-bold leading-tight tracking-[-0.02em] text-ink">{s.title}</h3>
+                    <h3 className="mt-1 display text-[2rem] leading-tight text-ink">{s.title}</h3>
                     <AnimatePresence initial={false}>
                       {i === step && (
                         <motion.p initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.35, ease }} className="max-w-md overflow-hidden pt-2 text-lg leading-relaxed text-muted-foreground">
@@ -160,7 +160,7 @@ export function Story() {
           return (
             <motion.div key={s.title} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-60px" }} transition={{ duration: 0.5, ease }}>
               <p className="text-sm font-semibold text-brand">{String(i + 1).padStart(2, "0")} · {s.kicker}</p>
-              <h3 className="mt-1 font-heading text-2xl font-bold text-ink">{s.title}</h3>
+              <h3 className="mt-1 display text-2xl text-ink">{s.title}</h3>
               <p className="mt-2 text-muted-foreground">{s.body}</p>
               <div className="panel mt-5 overflow-hidden"><Screen /></div>
             </motion.div>

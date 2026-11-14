@@ -196,7 +196,7 @@ export default async function TodayPage() {
                 <Link href={r.href} className="group -mx-2 flex items-center gap-3 rounded-[10px] px-2 py-3 hover:bg-ink/[0.02]">
                   <span className="min-w-0 flex-1">
                     <dt className="text-sm text-muted-foreground">{r.label}</dt>
-                    <dd className="mt-0.5 font-heading text-2xl font-bold text-ink tabular">
+                    <dd className="mt-0.5 display text-2xl text-ink tabular">
                       {r.value} <span className="text-sm font-medium text-muted-foreground">{r.unit}</span>
                     </dd>
                     <dd className="text-xs text-muted-foreground">{r.note}</dd>

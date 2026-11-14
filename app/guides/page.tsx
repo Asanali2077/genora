@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function GuidesPage() {
   return (
     <div className="mx-auto w-full max-w-5xl px-4 pb-20 pt-10 md:pt-16">
-      <h1 className="max-w-3xl font-heading text-[2.4rem] font-bold leading-[1.05] tracking-[-0.03em] text-ink sm:text-5xl">The 2026 childcare money rules, in plain English</h1>
+      <h1 className="max-w-3xl display text-[2.4rem] leading-[1.05] text-ink sm:text-5xl">The 2026 childcare money rules, in plain English</h1>
       <p className="mt-4 max-w-2xl text-lg text-muted-foreground">Four short guides written from the tax code. Read one, then let Genora run the numbers for your family.</p>
 
       <nav aria-label="Guides" className="mt-10 grid gap-3 sm:grid-cols-2">
@@ -32,7 +32,7 @@ export default function GuidesPage() {
               <p className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand"><Clock className="size-4" aria-hidden />{g.minutes} min read</p>
             </div>
             <div className="max-w-2xl">
-              <h2 className="font-heading text-3xl font-bold leading-tight tracking-[-0.02em] text-ink">{g.title}</h2>
+              <h2 className="display text-3xl leading-tight text-ink">{g.title}</h2>
               {g.sections.map((s) => (
                 <section key={s.heading} className="mt-7">
                   <h3 className="text-lg font-semibold text-ink">{s.heading}</h3>

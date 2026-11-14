@@ -34,7 +34,7 @@ export default function JoinPage({ params }: { params: Promise<{ token: string }
     <div className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-4 py-16">
       <div className="panel p-7">
         <Mark size={40} />
-        <h1 className="mt-5 font-heading text-3xl font-bold tracking-[-0.025em] text-ink">You&apos;re invited to your family&apos;s Genora plan</h1>
+        <h1 className="mt-5 display text-3xl text-ink">You&apos;re invited to your family&apos;s Genora plan</h1>
         <p className="mt-3 text-muted-foreground">
           See the childcare benefits plan, add your PTO to the school-break calendar and log receipts together. Your partner&apos;s subscription covers you.
         </p>

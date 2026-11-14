@@ -16,8 +16,9 @@ Docs: `docs/HACKATHON_BRIEF.md` (rules and judging weights — check every decis
 8. Database changes: write a migration in `supabase/migrations`; the user runs destructive SQL in the SQL Editor (the MCP apply call hangs on confirmation in this environment).
 
 ## Design
-Light "kitchen calendar after bedtime" theme: pine `#0f5c4d` (trust), marigold `#f2b705` (found money, used sparingly), sky `#cfe3f5` (no-school days), ink `#172a26`, paper `#f6f8f7`. Bricolage Grotesque for headings and money figures, Figtree for text.
+"Evening violet" theme, tokens in `app/globals.css`: brand `#5b4ae6` (product, trust), brand-deep `#22185a` (hero surfaces), sun `#ffc83d` (found money only), sky `#9dcbff` (no-school days), good `#13a06f` / bad `#e5534b` (money in / out), ink `#17161f`, paper `#f6f5fa`, line `#e6e4ef`. Never hard-code hexes in components; use the token classes (`bg-brand`, `text-sun`, `bg-wash`...).
+Type: Unbounded (`.display`) for page titles and money figures only; Onest for everything else. Both carry Cyrillic.
+Layout: every app screen sits in the shell's one centred frame (`FRAME` in `components/app/shell.tsx`, max 1160px); pages never set their own width or side padding. Navigation comes from `config/nav.ts`.
 One signature move per screen; no generic SaaS card grids, no ALL-CAPS eyebrows, no decorative motion. Mobile first (390px), visible focus, AA contrast, tap targets ≥ 44px, `prefers-reduced-motion`.
-
 ## Environment
 Windows + PowerShell; npm scripts must be cross-platform. Next.js 16 (App Router, `proxy.ts` instead of middleware — read `node_modules/next/dist/docs` before using an API). Node 20 locally (supabase-js needs the `ws` transport), Node 22+ on Vercel.
