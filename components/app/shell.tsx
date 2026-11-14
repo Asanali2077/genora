@@ -23,13 +23,13 @@ export function AppShell({ parents, pro, children }: { parents: string[]; pro: b
   return (
     <div className="flex min-h-dvh">
       {/* Desktop sidebar */}
-      <aside className="sticky top-0 hidden h-dvh w-64 shrink-0 flex-col bg-[#0b3b32] px-4 py-5 text-white md:flex">
-        <Link href="/" className="flex items-center gap-2.5 px-2">
+      <aside className="sticky top-0 hidden h-dvh print:hidden w-64 shrink-0 flex-col bg-[#0b3b32] px-4 py-5 text-white md:flex">
+        <Link href="/app" className="flex items-center gap-2.5 px-2">
           <Mark size={24} light />
           <span className="font-heading text-xl font-bold tracking-[-0.02em]">genora</span>
         </Link>
 
-        <div className="mt-8 flex items-center gap-3 rounded-[12px] bg-white/[0.06] px-3 py-2.5">
+        <Link href="/app/family" className="mt-8 flex items-center gap-3 rounded-[12px] bg-white/[0.06] px-3 py-2.5 hover:bg-white/[0.1]">
           <div className="flex -space-x-2">
             {parents.map((p, i) => (
               <span key={p} className={cn("flex size-8 items-center justify-center rounded-full border-2 border-[#0b3b32] text-[11px] font-bold", i === 0 ? "bg-marigold text-ink" : "bg-[#9cc3e6] text-ink")}>
@@ -41,7 +41,7 @@ export function AppShell({ parents, pro, children }: { parents: string[]; pro: b
             <p className="truncate text-sm font-semibold">Your family</p>
             <p className="text-xs text-white/60">{pro ? "Genora plan" : "Free check"} · 2026</p>
           </div>
-        </div>
+        </Link>
 
         <nav aria-label="App" className="mt-6 space-y-1">
           {NAV.map(({ href, label, icon: Icon, pro: needsPro }) => (
@@ -68,16 +68,16 @@ export function AppShell({ parents, pro, children }: { parents: string[]; pro: b
               <span className="block text-xs text-ink/70">$99 a year for the whole family</span>
             </Link>
           )}
-          <Link href="/start" className="flex h-10 items-center gap-3 rounded-[10px] px-3 text-sm text-white/70 hover:bg-white/[0.07] hover:text-white">
+          <Link href="/app/family" aria-current={active("/app/family") ? "page" : undefined} className={cn("flex h-10 items-center gap-3 rounded-[10px] px-3 text-sm", active("/app/family") ? "bg-white text-[#0b3b32]" : "text-white/70 hover:bg-white/[0.07] hover:text-white")}>
             <Settings2 className="size-[18px]" aria-hidden />
-            Edit family details
+            Family & partner
           </Link>
         </div>
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
         {/* Mobile top bar */}
-        <header className="sticky top-0 z-30 flex h-14 items-center justify-between bg-[#0b3b32] px-4 text-white md:hidden">
+        <header className="sticky top-0 z-30 flex h-14 print:hidden items-center justify-between bg-[#0b3b32] px-4 text-white md:hidden">
           <Link href="/" className="flex items-center gap-2">
             <Mark size={20} light />
             <span className="font-heading text-lg font-bold">genora</span>
@@ -85,14 +85,14 @@ export function AppShell({ parents, pro, children }: { parents: string[]; pro: b
           {!pro ? (
             <Link href="/pricing" className="rounded-full bg-marigold px-3 py-1.5 text-xs font-bold text-ink">Unlock</Link>
           ) : (
-            <Link href="/start" aria-label="Edit family details" className="p-2 text-white/80"><Settings2 className="size-5" /></Link>
+            <Link href="/app/family" aria-label="Family and partner" className="p-2 text-white/80"><Settings2 className="size-5" /></Link>
           )}
         </header>
 
         <main className="flex-1 pb-24 md:pb-10">{children}</main>
 
         {/* Mobile tab bar */}
-        <nav aria-label="App" className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t border-ink/10 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden">
+        <nav aria-label="App" className="fixed inset-x-0 bottom-0 print:hidden z-30 grid grid-cols-5 border-t border-ink/10 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden">
           {NAV.map(({ href, label, icon: Icon }) => (
             <Link key={href} href={href} aria-current={active(href) ? "page" : undefined} className={cn("flex h-16 flex-col items-center justify-center gap-1 text-[11px] font-semibold", active(href) ? "text-pine" : "text-ink/50")}>
               <Icon className="size-5" aria-hidden />

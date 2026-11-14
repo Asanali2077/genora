@@ -9,7 +9,8 @@ export type SavedPlan = { id: string; result: BenefitsResult; found_money: numbe
 
 /** The household the signed-in user belongs to (RLS limits the query to their own). */
 export async function getHousehold(sb: SupabaseClient, userId: string): Promise<Household | null> {
-  const { data: m } = await sb.from("household_members").select("household_id").eq("user_id", userId).limit(1).maybeSingle();
+  // A parent who joined a partner's household after onboarding uses the newest membership.
+  const { data: m } = await sb.from("household_members").select("household_id").eq("user_id", userId).order("created_at", { ascending: false }).limit(1).maybeSingle();
   if (!m) return null;
   const { data } = await sb.from("households").select("id, name, profile").eq("id", m.household_id).maybeSingle();
   if (!data) return null;

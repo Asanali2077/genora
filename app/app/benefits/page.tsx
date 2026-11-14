@@ -6,6 +6,7 @@ import { requireHousehold } from "@/lib/services/access";
 import { PlanBreakdown, ShowMath } from "@/components/plan/plan-breakdown";
 import { possessive } from "@/lib/engine/benefits";
 import { CompareBars } from "@/components/plan/compare-bars";
+import { WhatIf } from "@/components/plan/what-if";
 import { TrackView } from "@/components/track-view";
 import { Button } from "@/components/ui/button";
 
@@ -87,6 +88,8 @@ export default async function BenefitsPage() {
           )}
         </ol>
       </section>
+
+      <div className="mt-8"><WhatIf profile={household.profile} baseline={r.optimal.total} /></div>
 
       <div className="mt-8"><ShowMath result={r} /></div>
 

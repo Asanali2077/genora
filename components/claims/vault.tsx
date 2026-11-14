@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { Camera } from "lucide-react";
+import { Camera, Printer } from "lucide-react";
 import { useRouter } from "next/navigation";
 import type { ClaimsResult } from "@/lib/engine/claims";
 import type { StoredReceipt } from "@/lib/services/claims";
@@ -243,7 +243,10 @@ export function Vault({ summary, receipts, recommended }: { summary: ClaimsResul
       {summary.byProvider.length > 0 && (
         <section aria-labelledby="f2441">
           <h2 id="f2441" className="text-lg font-bold">Form 2441 summary</h2>
-          <p className="mt-1 text-sm text-muted-foreground">Care providers and amounts for your 2026 return.</p>
+          <div className="mt-1 flex flex-wrap items-center justify-between gap-3">
+            <p className="text-sm text-muted-foreground">Care providers and amounts for your 2026 return.</p>
+            <Button size="sm" variant="outline" className="print:hidden" onClick={() => window.print()}><Printer />Print summary</Button>
+          </div>
           <table className="panel mt-3 w-full overflow-hidden text-sm">
             <thead><tr className="border-b text-left text-muted-foreground"><th className="p-3 font-medium">Provider</th><th className="p-3 font-medium">Taxpayer ID</th><th className="p-3 text-right font-medium">Paid</th></tr></thead>
             <tbody className="tabular">

@@ -55,3 +55,23 @@ export const pricing = {
 } as const;
 
 export type PlanId = (typeof pricing.plans)[number]["id"];
+
+export const compare = {
+  title: "Why not just use your benefits portal?",
+  columns: ["Genora", "Employer benefits portal", "Tax software", "Spreadsheet"],
+  rows: [
+    { label: "Compares the FSA with the tax credit", values: ["Yes, across both parents' jobs", "One employer only", "After the year is over", "If you build it"] },
+    { label: "Helps before open enrollment", values: ["Yes", "Yes", "No", "If you build it"] },
+    { label: "Plans school breaks with both parents' PTO", values: ["Yes", "No", "No", "By hand"] },
+    { label: "Tracks claims and warns before forfeiture", values: ["Yes", "Single account", "No", "By hand"] },
+    { label: "Writes the HR and provider letters", values: ["Yes", "No", "No", "No"] },
+  ],
+} as const;
+
+export const faq = [
+  { q: "Is this tax advice?", a: "No. Genora gives educational estimates based on the 2026 federal rules and shows the rule behind every number. Confirm your elections with your plan administrator or a tax professional." },
+  { q: "Do you need my bank login or Social Security number?", a: "Neither. You answer 11 questions about pay, kids and childcare costs. Receipts you upload stay in private storage and you can delete them any time." },
+  { q: "What if only one of us has a Dependent Care FSA at work?", a: "That's common. Genora compares that one FSA with the childcare tax credit and tells you how much to elect, or whether to skip it." },
+  { q: "Where does the AI come in?", a: "Only to read messy documents: your school calendar and childcare receipts. Every dollar figure comes from a rules engine you can check line by line." },
+  { q: "What does it cost?", a: "Checking your number is free. The full plan is $99 a year or $12 a month for the whole household, and if Genora doesn't find you at least 10× its price this year, you get a refund." },
+] as const;

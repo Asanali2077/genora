@@ -19,6 +19,12 @@ export function SiteHeader() {
         </Link>
         <nav className="flex items-center gap-1">
           <Link
+            href="/guides"
+            className={cn("tap hidden items-center rounded-lg px-3 text-sm font-semibold sm:inline-flex", path === "/guides" ? "text-pine" : dark ? "text-white/75 hover:text-white" : "text-muted-foreground hover:text-ink")}
+          >
+            Guides
+          </Link>
+          <Link
             href="/pricing"
             aria-current={path === "/pricing" ? "page" : undefined}
             className={cn("tap hidden items-center rounded-lg px-3 text-sm font-semibold sm:inline-flex", path === "/pricing" ? "text-pine" : dark ? "text-white/75 hover:text-white" : "text-muted-foreground hover:text-ink")}

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Lock, Timer, FileCheck } from "lucide-react";
-import { landing } from "@/config/site";
+import { compare, faq, landing } from "@/config/site";
 import { LiveCalculator } from "@/components/landing/live-calculator";
 import { ClaimsFragment, CompareFragment, YearFragment } from "@/components/landing/fragments";
 import { Button } from "@/components/ui/button";
@@ -55,7 +55,50 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-5xl px-4 py-16 md:py-20">
+      <section aria-labelledby="compare" className="mx-auto w-full max-w-5xl px-4 pb-4">
+        <h2 id="compare" className="font-heading text-3xl font-bold tracking-[-0.02em] text-ink">{compare.title}</h2>
+        <div className="panel mt-6 overflow-x-auto">
+          <table className="w-full min-w-[640px] text-sm">
+            <thead>
+              <tr className="border-b border-ink/[0.07] text-left">
+                <th scope="col" className="p-4 font-medium text-muted-foreground" />
+                {compare.columns.map((c, i) => (
+                  <th key={c} scope="col" className={i === 0 ? "bg-pine/[0.07] p-4 font-heading text-base font-bold text-pine" : "p-4 font-medium text-muted-foreground"}>{c}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {compare.rows.map((r) => (
+                <tr key={r.label} className="border-b border-ink/[0.06] last:border-0">
+                  <th scope="row" className="p-4 text-left font-semibold text-ink">{r.label}</th>
+                  {r.values.map((v, i) => (
+                    <td key={i} className={i === 0 ? "bg-pine/[0.07] p-4 font-semibold text-pine" : "p-4 text-muted-foreground"}>{v}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section aria-labelledby="faq" className="mx-auto grid w-full max-w-5xl gap-8 px-4 py-16 md:grid-cols-[18rem_1fr] md:py-20">
+        <div>
+          <h2 id="faq" className="font-heading text-3xl font-bold tracking-[-0.02em] text-ink">Questions parents ask</h2>
+          <p className="mt-3 text-muted-foreground">More detail in the <Link href="/guides" className="font-semibold text-pine underline-offset-2 hover:underline">2026 rules guides</Link>.</p>
+        </div>
+        <div className="panel ledger">
+          {faq.map((f) => (
+            <details key={f.q} className="group">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 font-semibold text-ink sm:px-6">
+                {f.q}
+                <span aria-hidden className="text-xl leading-none text-pine transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <p className="px-5 pb-5 text-[15px] leading-relaxed text-muted-foreground sm:px-6">{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+      <section className="mx-auto w-full max-w-5xl px-4 pb-16 md:pb-20">
         <dl className="grid gap-10 sm:grid-cols-3">
           {landing.proof.map((p) => (
             <div key={p.stat}>
