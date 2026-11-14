@@ -1,33 +1,31 @@
 import type { Metadata, Viewport } from "next";
-import { Unbounded, Onest } from "next/font/google";
+import { Bricolage_Grotesque, Figtree } from "next/font/google";
 import "./globals.css";
-import { appConfig } from "@/config/app.config";
-import { LocaleProvider } from "@/lib/i18n";
-import { getLocale } from "@/lib/i18n/server";
+import { site } from "@/config/site";
 import { SiteHeader } from "@/components/site-header";
 
-const display = Unbounded({ variable: "--font-display", subsets: ["latin", "cyrillic"], weight: ["500", "700", "800"] });
-const body = Onest({ variable: "--font-body", subsets: ["latin", "cyrillic"] });
+const display = Bricolage_Grotesque({ variable: "--font-display", subsets: ["latin"], weight: ["500", "700", "800"] });
+const body = Figtree({ variable: "--font-body", subsets: ["latin"] });
 
-export async function generateMetadata(): Promise<Metadata> {
-  const locale = await getLocale();
-  return {
-    title: `${appConfig.brand.name} — ${appConfig.brand.tagline[locale]}`,
-    description: appConfig.brand.description[locale],
-  };
-}
+export const metadata: Metadata = {
+  title: `${site.name} — ${site.tagline}`,
+  description: site.description,
+};
 
-export const viewport: Viewport = { themeColor: "#0b1a1c", colorScheme: "dark", width: "device-width", initialScale: 1 };
+export const viewport: Viewport = { themeColor: "#0f5c4d", width: "device-width", initialScale: 1 };
 
-export default async function RootLayout({ children }: LayoutProps<"/">) {
-  const locale = await getLocale();
+export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang={locale} className={`dark ${display.variable} ${body.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">
-        <LocaleProvider initial={locale}>
-          <SiteHeader />
-          <main className="flex flex-1 flex-col">{children}</main>
-        </LocaleProvider>
+    <html lang="en" className={`${display.variable} ${body.variable} h-full antialiased`}>
+      <body className="flex min-h-full flex-col">
+        <SiteHeader />
+        <main className="flex flex-1 flex-col">{children}</main>
+        <footer className="border-t px-4 py-8 text-sm text-muted-foreground">
+          <div className="mx-auto max-w-5xl space-y-2">
+            <p>{site.disclaimer}</p>
+            <p>© {new Date().getFullYear()} {site.name}</p>
+          </div>
+        </footer>
       </body>
     </html>
   );

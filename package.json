@@ -8,7 +8,8 @@
         "start": "next start",
         "lint": "eslint",
         "config:check": "tsx scripts/check-config.ts",
-        "seed": "tsx scripts/seed.ts"
+        "seed": "tsx scripts/seed.ts",
+        "test": "vitest run"
     },
     "dependencies": {
         "@anthropic-ai/sdk": "^1.8.0",
@@ -43,6 +44,7 @@
         "eslint-config-next": "16.4.6",
         "tailwindcss": "4.3.3",
         "tsx": "^4.23.15",
-        "typescript": "^5"
+        "typescript": "^5",
+        "vitest": "^4.1.12"
     }
 }

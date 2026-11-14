@@ -1,94 +1,42 @@
-# PLAN.md — чек-лист задач
+# PLAN.md — GENORA build checklist
 
-Порядок строгий. После каждой задачи: lint → build → браузер (если UI) → commit → отметить `[x]`.
+Details: `docs/ARCHITECTURE.md` · strategy: `docs/STRATEGY.md` · rules: `docs/HACKATHON_BRIEF.md`.
+After each phase: lint → build → tests → browser check → commit → push.
 
-## T0. Инструменты и skills (до кода) ✅
-- [x] context7 + Playwright MCP подключены через `.mcp.json`
-- [x] Skills подтверждены: `frontend-design`, `claude-api`, `dataviz`, `design:*`, `engineering:testing-strategy`, `engineering:deploy-checklist`, `simplify`, `code-review`, `security-review`
-- [x] `git init`, `.gitignore`, первый коммит
+## P1. Foundation ✅
+- [x] Remove the Lumi template (quiz content, result/share pages, ru/en i18n, old admin/checkout, old commands)
+- [x] Supabase schema `0002_genora.sql` applied: households, members, benefit_plans, receipts, school_calendars, coverage_plans, subscriptions, RLS, private `receipts` bucket
+- [x] Light "kitchen calendar" theme (pine / marigold / sky), Bricolage Grotesque + Figtree
+- [x] Landing with a live calculator running the real engine
+- [ ] Auth: anonymous session → household (needs Anonymous sign-ins enabled in Supabase)
 
-## T1. Каркас ✅
-- [x] Next.js 16 (App Router) + TS strict + Tailwind 4 + shadcn/ui
-- [x] Структура папок, лейаут, тёмная тема, токены (Unbounded + Onest, с кириллицей, не Inter)
-- [x] Переключатель ru/en (`useI18n()`: `t()`, `loc()`)
-- [x] `.env.example`, кроссплатформенные скрипты
+## P2. Engine ✅
+- [x] `lib/engine/tax-2026.ts`: 2026 brackets, standard deduction, §129, §21, §24, FICA, Trump Account — each with a source
+- [x] `lib/engine/benefits.ts`: optimizer (FSA split across both employers vs care credit), cap guard, forfeiture, CTC, actions, show-math lines
+- [x] 13 Vitest unit tests with hand-computed expectations
 
-## T2. Конфиг-система ✅
-- [x] `/config`: app / quiz / paywall / prompts / mocks / copy ru+en
-- [x] Zod-схемы + валидация при импорте (`npm run config:check`)
-- [x] Демо «Lumi — AI-коуч привычек» заполнен полностью
+## P3. Onboarding → reveal
+- [ ] `/start`: 11 questions, live "$ found" counter on every step
+- [ ] Save household + benefit plan (RLS) → `/reveal` with the found-money number and "show math" drawer
 
-## T3. Supabase ✅ (код готов; живая проверка — когда появятся ключи)
-- [x] Миграции в `/supabase/migrations/0001_init.sql` (единый файл для SQL Editor): `profiles`, `quiz_responses`, `ai_results`, `events`, `subscriptions`
-- [x] RLS-политики; анонимный гость (`ensureGuest`) + email magic link (`sendMagicLink`)
-- [x] Клиенты browser/admin, слой `lib/store.ts` с in-memory fallback, `npm run seed`
-- [x] Без ключей приложение работает на in-memory + встроенном seed
+## P4. School-break radar
+- [ ] Paste school calendar → Gemini extracts no-school days (Zod) → manual fallback
+- [ ] Coverage engine: gaps vs both parents' work days and PTO; PTO Tetris (PTO + FSA-eligible day camps, minimum cost) + unit tests
 
-**Готово, когда:** гость создаётся, строки пишутся и читаются под RLS; чужие данные недоступны; seed отрабатывает. (Нужны ключи Supabase.)
+## P5. Claim vault
+- [ ] Receipt photo/text → Gemini extraction → editable form → `receipts` + storage
+- [ ] Claimed-vs-elected burn-down, forfeiture pace meter, provider TIN check
 
-## T4. Движок квиз-онбординга ✅
-- [x] Типы шагов: `single`, `multi`, `slider`, `text`, `photo-upload`, `info`, лоадер «строим ваш план»
-- [x] Прогресс-бар, навигация назад, сохранение ответов (Supabase + локально)
-- [x] Событие аналитики на каждый шаг (view/answer)
+## P6. Pricing, dashboard, partner
+- [ ] `/pricing` (annual / monthly, 10× guarantee, mock checkout clearly labelled) → `subscriptions`
+- [ ] `/app` "Family Money Pulse": found money, burn-down, next gaps, actions
+- [ ] Partner invite (if time)
 
-**Готово, когда:** квиз целиком управляется `quiz.config.ts`; обновление страницы не теряет прогресс.
+## P7. Production
+- [ ] Analytics events + `/admin` funnel with real events
+- [ ] Playwright e2e of the full path
+- [ ] Vercel production deploy connected to GitHub
 
-## T5. AI-модуль ✅
-- [x] `/lib/ai`: провайдеры `anthropic | gemini | mock`
-- [x] `/api/ai/analyze`: ответы квиза + опционально фото, стриминг, JSON по Zod-схеме из конфига
-- [x] Таймаут, 1 retry, fallback на mock при `DEMO_MODE` или ошибке
-- [x] **Промежуточная проверка:** квиз → AI-результат в `DEMO_MODE=true` и с реальным ключом
-
-**Готово, когда:** без сети результат всё равно появляется (mock); невалидный ответ модели не ломает UI.
-
-## T6. Страница результата ✅
-- [x] Персональный план из AI JSON: карточки, прогресс, блок «что получишь в премиуме»
-- [x] Шаринг-ссылка (публичная read-only страница)
-
-**Готово, когда:** красиво на 390px, есть loading/error/empty, ссылка открывается без авторизации.
-
-## T7. Пейволл ✅
-- [x] Тарифы и триал из конфига, таймер-оффер
-- [x] Mock-checkout → `subscriptions` → разблокировка премиум-функции
-- [x] A/B через `?v=b`, событие с вариантом
-
-**Готово, когда:** покупка разблокирует премиум без перезагрузки; вариант B отличается и берётся из конфига.
-
-## T8. Аналитика и /admin ✅
-- [x] Дашборд воронки, конверсии по шагам, метрик-карточки
-- [x] Seed демо-данных
-- [x] Калькулятор юнит-экономики (CAC, CR, ARPU, churn → LTV, LTV/CAC, окупаемость)
-- [x] Защита `/admin` паролем из env
-
-**Готово, когда:** после seed видна живая воронка; смена параметра пересчитывает экономику мгновенно.
-
-## T9. Лендинг и полировка ✅
-- [x] Hero, ценность, соцдоказательство, CTA
-- [x] loading/empty/error, анимации, доступность
-
-**Готово, когда:** Lighthouse mobile Performance и Accessibility ≥ 90; путь проходим с клавиатуры.
-
-## T10. Надёжность
-- [x] `DEMO_MODE`, `/api/health`
-- [x] Playwright smoke: лендинг → квиз → результат → пейволл → покупка → admin
-- [x] Деплой на Vercel
-
-**Готово, когда:** smoke зелёный локально и на проде; `/api/health` = 200.
-
-## T11. Хакатон-инструменты (`.claude/commands`) ✅
-- [x] `/adapt-case <кейс>`: 3 идеи с оценкой → после выбора переписать ТОЛЬКО `/config` → build + smoke + commit
-- [x] `/econ <гипотезы>`: пересчёт экономики, таблица, 3 тезиса
-- [x] `/pitch`: `docs/PITCH.md` (3 минуты + 5 вопросов жюри)
-- [x] `/creative`: 3 креатива 9:16 → `docs/CREATIVES.md`
-- [x] `/ship`: lint, build, smoke, деплой, ссылка и чек-лист
-
-## T12. Документация ✅
-- [x] `README.md`
-- [x] `HACKATHON_RUNBOOK.md`: адаптация за 30 минут, чек-лист демо, план Б (mock)
-
----
-
-## Финальная репетиция (Промпт 4)
-- [x] `/adapt-case` на кейсе Zimran (финграмотность у студентов) → до `/ship`
-- [x] Отчёт: что сломалось, что исправлено, время, топ-5 рисков
-- [x] Откат конфига к Lumi через git
+## P8. Pitch
+- [ ] Slides: problem, user, demo path, engine, unit economics, $100M path, why now
+- [ ] Rehearsal + Q&A answers

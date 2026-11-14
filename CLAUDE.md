@@ -1,60 +1,23 @@
-# CLAUDE.md — Business Cup 2.0: конфиг-управляемая заготовка подписочного AI-продукта
+# CLAUDE.md — GENORA (Business Cup 2.0)
 
-## Контекст
-Хакатон Business Cup 2.0 (организатор Zimran: Coursiv, Finelo). Модель продукта: квиз-онбординг → персональная ценность (AI) → пейволл → подписка; перформанс-маркетинг; метрики LTV/CAC.
-Цель: универсальная заготовка, которую за 30 минут адаптируют под любой кейс, меняя только конфиг и промпты. Демо должно работать с первой попытки, в том числе без интернета к AI (DEMO_MODE / mock).
-Демо-продукт по умолчанию: «Lumi — AI-коуч привычек» (вымышленный).
+## What we are building
+GENORA: the money engine for the childcare years. B2C web app for working US parents (27–40, kids under 13, $80k–180k).
+Core: Benefits Stack Optimizer (Dependent Care FSA vs care credit vs Child Tax Credit, 2026 rules), School-break radar with PTO planning, Claim vault for FSA receipts.
+Docs: `docs/HACKATHON_BRIEF.md` (rules and judging weights — check every decision against it), `docs/ARCHITECTURE.md`, `docs/STRATEGY.md`, `PLAN.md`.
 
-## Условия конкурса (ГЛАВНОЕ)
-Хакатон идёт. Полные условия и веса жюри — в `docs/HACKATHON_BRIEF.md`; каждое решение сверять с ними.
-Коротко: веб-продукт B2C для взрослых США 25–45, одна боль одного пользователя; 40% веса — продукт реально работает в production, ядро ценности НЕ имитация и НЕ хардкод; жюри читает репозиторий. UI продукта — на английском.
-Бюджет: только бесплатные сервисы (Gemini free key, Supabase Free, Vercel Hobby). Платное не подключать без разрешения.
+## Non-negotiables
+1. **Core value is real.** Money numbers come only from `lib/engine` (pure, deterministic, unit-tested). AI only extracts structured data from messy input; it never produces tax numbers. No faked or hardcoded results; demo data is labelled.
+2. **Free stack only:** Supabase Free, Vercel Hobby, Gemini free key. No paid services or billing without the user's explicit permission. Anthropic stays optional behind `ALLOW_PAID_AI=true`.
+3. **Every tax constant has a source** in `lib/engine/tax-2026.ts`; every engine rule has a test in `tests/unit`.
+4. **Security:** secrets only in `.env.local`; service role key server-only; RLS on every table; no SSNs collected; receipts in a private bucket.
+5. **UI in English** for US users. Product copy lives in `config/site.ts`, not in components.
+6. **Every AI call:** Zod schema, timeout, one retry, and a manual fallback instead of invented data.
+7. After each phase: `npm run lint`, `npm run build`, `npm test`, browser check at 390px and desktop, commit, push, tick `PLAN.md`.
+8. Database changes: write a migration in `supabase/migrations`; the user runs destructive SQL in the SQL Editor (the MCP apply call hangs on confirmation in this environment).
 
-## Стек
-Next.js (последняя стабильная, App Router) + TypeScript strict + Tailwind + shadcn/ui, Supabase (auth, Postgres, Storage), Zod, Recharts, Playwright, деплой на Vercel.
-AI: Anthropic API по умолчанию, модель из `AI_MODEL` (по умолчанию `claude-sonnet-5-5`), абстракция провайдера (`anthropic | gemini | mock`).
-Актуальную документацию библиотек проверяй через context7, не по памяти. По Claude API используй skill `claude-api`.
+## Design
+Light "kitchen calendar after bedtime" theme: pine `#0f5c4d` (trust), marigold `#f2b705` (found money, used sparingly), sky `#cfe3f5` (no-school days), ink `#172a26`, paper `#f6f8f7`. Bricolage Grotesque for headings and money figures, Figtree for text.
+One signature move per screen; no generic SaaS card grids, no ALL-CAPS eyebrows, no decorative motion. Mobile first (390px), visible focus, AA contrast, tap targets ≥ 44px, `prefers-reduced-motion`.
 
-## Окружение
-Windows + PowerShell. Все npm-скрипты и команды — кроссплатформенные (без bash-измов в package.json; для файловых операций — Node-скрипты или `cross-env`/`rimraf`).
-
-## Жёсткие правила
-1. **Вся кейс-специфика живёт ТОЛЬКО в `/config`**: `app.config.ts`, `quiz.config.ts`, `paywall.config.ts`, `prompts/*.ts`, `mocks/*`, copy `ru`/`en`. Компоненты не содержат хардкод-текстов, цен, брендов, названий тарифов. Конфиг валидируется Zod при старте.
-2. **Mobile first (390px)**, затем десктоп. Тёмная тема по умолчанию.
-3. **Любой AI-вызов**: Zod-схема ответа, таймаут, 1 retry, fallback на mock из `/config/mocks` при `DEMO_MODE=true` или при ошибке. Пользователь никогда не видит сырую ошибку провайдера.
-4. **Секреты** только в `.env.local` (в `.gitignore`). Любая новая переменная сразу попадает в `.env.example` с комментарием. `SUPABASE_SERVICE_ROLE_KEY` и `ANTHROPIC_API_KEY` — только на сервере, никогда не в клиентском бандле и не в `NEXT_PUBLIC_*`.
-5. **Цикл после каждой задачи**: `npm run lint` → `npm run build` → исправить ошибки → проверка в браузере (если есть UI) → `git commit` с понятным сообщением → отметить `[x]` в `PLAN.md`.
-6. **Не добавлять функции вне `PLAN.md`.** Не переусложнять: это хакатон, а не прод. Без лишних абстракций, без преждевременной оптимизации.
-7. **Остановка только по делу**: спрашивать пользователя только если нужны ключи/доступы (Supabase, Anthropic, Vercel) или есть блокер. Иначе принимать разумный дефолт и фиксировать его.
-8. Миграции Supabase лежат в `/supabase/migrations`. Если CLI недоступен — выдать SQL одним файлом для SQL Editor.
-
-## Дизайн и UI
-- Использовать skill `frontend-design`: выразительный, НЕ шаблонный дизайн. Запрещено по умолчанию: Inter + фиолетовые градиенты, стандартные «SaaS-карточки». Нужны характерная пара шрифтов (display + text, через `next/font`), продуманная шкала типографики, свой цветовой токен-набор в CSS-переменных, микроанимации (framer-motion / CSS), аккуратные состояния hover/focus/loading/empty/error.
-- Доступность: контраст AA, видимый фокус, aria для интерактива, `prefers-reduced-motion`, тап-зоны ≥ 44px.
-- Графики и дашборды — по skill `dataviz` (Recharts, единая палитра, доступные цвета).
-
-## Рекомендуемые skills (использовать по месту)
-| Когда | Skill |
-|---|---|
-| Любой UI | `frontend-design`, `design:ux-copy` (микрокопи), `design:accessibility-review` |
-| Работа с Claude API | `claude-api` |
-| Тесты / Playwright | `engineering:testing-strategy` |
-| Перед коммитом крупных задач | `simplify`, `code-review`, `security-review` |
-| Перед деплоем | `engineering:deploy-checklist` |
-| Дашборд /admin, воронка | `dataviz`, `data:build-dashboard` (как референс) |
-| Питч и креативы | `marketing:content-creation`, `marketing:campaign-plan` |
-
-## Структура (целевая)
-```
-/app            маршруты (landing, /quiz, /result, /paywall, /admin, /api/*)
-/components     UI без хардкод-текстов
-/config         app/quiz/paywall конфиги, prompts/*, mocks/*, copy/{ru,en}
-/lib            ai/, supabase/, analytics/, econ/, i18n/
-/supabase       migrations/, seed
-/tests          Playwright smoke
-/docs           PITCH.md, CREATIVES.md
-/.claude        commands/, skills/
-```
-
-## Definition of Done для задачи
-Критерии из `PLAN.md` выполнены; lint и build зелёные; UI проверен на 390px и десктопе; работает в `DEMO_MODE=true`; коммит сделан; чекбокс отмечен.
+## Environment
+Windows + PowerShell; npm scripts must be cross-platform. Next.js 16 (App Router, `proxy.ts` instead of middleware — read `node_modules/next/dist/docs` before using an API). Node 20 locally (supabase-js needs the `ws` transport), Node 22+ on Vercel.
