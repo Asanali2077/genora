@@ -11,6 +11,10 @@ import { TrackView } from "@/components/track-view";
 import { Locked } from "@/components/app/locked";
 import { DateChip } from "@/components/app/date-chip";
 import { KidCards } from "@/components/family/kid-cards";
+import { SavingsHero } from "@/components/app/savings-hero";
+import { lifeEvents, savingsSummary, valueBenefits } from "@/lib/engine/family";
+import { pricing } from "@/config/site";
+import { LifeBuoy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CountUp, Stagger, StaggerItem } from "@/components/motion";
 
@@ -32,6 +36,16 @@ export default async function OverviewPage() {
   const monthName = new Date().toLocaleString("en-US", { month: "long", timeZone: "UTC" });
 
   const nextGap = (coverage.result?.assignments ?? []).find((a) => a.date >= today);
+  const scanned = valueBenefits(household.profile.employerBenefits, 160);
+  const savings = savingsSummary(
+    [
+      { label: "Benefits plan", amount: plan?.result.foundMoney ?? 0 },
+      { label: "School-break plan", amount: coverage.result?.savedByPto ?? 0 },
+      { label: "Employer benefits found", amount: scanned.total },
+    ],
+    pricing.plans[0].price,
+  );
+  const life = lifeEvents(household.profile, today, { gracePeriod: household.profile.gracePeriod });
 
   // Real upcoming events from the family's own plan.
   const events: Event[] = [
@@ -47,7 +61,8 @@ export default async function OverviewPage() {
       })),
     ...(!claims.recommended ? [{ date: claims.deadline, title: "FSA claim deadline", detail: `${usd(claims.remaining)} of your election still to claim`, tone: "marigold" as const, href: "/app/claims" }] : []),
     { date: `${TAX_YEAR + 1}-04-15`, title: "Tax day", detail: "File Form 2441 with your provider list", tone: "pine" as const, href: "/app/claims" },
-  ].sort((a, b) => a.date.localeCompare(b.date));
+    ...life.filter((e) => e.kind !== "deadline").map((e) => ({ date: e.date, title: e.title, detail: e.detail, tone: (e.kind === "child" ? "marigold" : "pine") as "marigold" | "pine", href: e.kind === "child" ? "/app/family" : "/app/benefits" })),
+  ].sort((a, b) => a.date.localeCompare(b.date)).slice(0, 7);
 
   // Childcare logged per month this plan year.
   const byMonth = Array.from({ length: 12 }, () => 0);
@@ -63,6 +78,17 @@ export default async function OverviewPage() {
         {best ? <>Your family gets <CountUp value={best.total} className="marker tabular" /> back in {TAX_YEAR}.</> : "Your family money overview"}
       </h1>
       {plan && plan.result.foundMoney > 0 && <p className="mt-3 text-lg text-muted-foreground">{usd(plan.result.foundMoney)} of it is money you were leaving on the table.</p>}
+
+      <div className="mt-8 grid max-w-6xl gap-4 lg:grid-cols-[1fr_17rem]">
+        <SavingsHero savings={savings} price={pricing.plans[0].price} />
+        <Link href="/app/sos" className="group flex flex-col justify-between rounded-[22px] bg-marigold p-6 text-ink transition-transform hover:-translate-y-0.5">
+          <LifeBuoy className="size-8" aria-hidden />
+          <span>
+            <span className="block font-heading text-2xl font-bold leading-tight">Kid sick tomorrow?</span>
+            <span className="mt-1 block text-sm text-ink/75">Every way to cover it, ranked by real cost, with messages ready.</span>
+          </span>
+        </Link>
+      </div>
 
       <section aria-labelledby="kids" className="mt-9 max-w-6xl">
         <h2 id="kids" className="font-heading text-lg font-bold text-ink">Your kids</h2>

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CalendarDays, FileText, Landmark, LayoutGrid, Lock, Receipt, Settings2 } from "lucide-react";
+import { CalendarDays, FileText, Landmark, LayoutGrid, LifeBuoy, Lock, MessageCircleQuestion, Receipt, Settings2 } from "lucide-react";
 import { Mark } from "@/components/brand/mark";
 import { cn } from "@/lib/utils";
 
@@ -12,6 +12,7 @@ const NAV = [
   { href: "/app/coverage", label: "School breaks", icon: CalendarDays, pro: true },
   { href: "/app/claims", label: "Claims", icon: Receipt, pro: true },
   { href: "/app/paperwork", label: "Paperwork", icon: FileText, pro: true },
+  { href: "/app/ask", label: "Ask Genora", icon: MessageCircleQuestion, pro: false },
 ];
 
 const initials = (label: string) => (label.toLowerCase() === "you" ? "Me" : label.slice(0, 2));
@@ -41,6 +42,11 @@ export function AppShell({ parents, pro, children }: { parents: string[]; pro: b
             <p className="truncate text-sm font-semibold">Your family</p>
             <p className="text-xs text-white/60">{pro ? "Genora plan" : "Free check"} · 2026</p>
           </div>
+        </Link>
+
+        <Link href="/app/sos" prefetch className="mt-4 flex items-center gap-3 rounded-[12px] bg-marigold px-3 py-2.5 text-ink transition-transform hover:-translate-y-px">
+          <LifeBuoy className="size-5" aria-hidden />
+          <span className="text-sm font-bold leading-tight">Kid sick tomorrow?<span className="block text-xs font-medium text-ink/70">Find care in 10 seconds</span></span>
         </Link>
 
         <nav aria-label="App" className="mt-6 space-y-1">
@@ -86,7 +92,7 @@ export function AppShell({ parents, pro, children }: { parents: string[]; pro: b
           {!pro ? (
             <Link href="/pricing" className="rounded-full bg-marigold px-3 py-1.5 text-xs font-bold text-ink">Unlock</Link>
           ) : (
-            <Link href="/app/family" aria-label="Family and partner" className="p-2 text-white/80"><Settings2 className="size-5" /></Link>
+            <Link href="/app/sos" className="rounded-full bg-marigold px-3 py-1.5 text-xs font-bold text-ink">Kid sick?</Link>
           )}
         </header>
 
@@ -94,7 +100,7 @@ export function AppShell({ parents, pro, children }: { parents: string[]; pro: b
 
         {/* Mobile tab bar */}
         <nav aria-label="App" className="fixed inset-x-0 bottom-0 print:hidden z-30 grid grid-cols-5 border-t border-ink/10 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden">
-          {NAV.map(({ href, label, icon: Icon }) => (
+          {NAV.filter((n) => n.href !== "/app/paperwork").map(({ href, label, icon: Icon }) => (
             <Link key={href} href={href} prefetch aria-current={active(href) ? "page" : undefined} className={cn("flex h-16 flex-col items-center justify-center gap-1 text-[11px] font-semibold", active(href) ? "text-pine" : "text-ink/50")}>
               <Icon className="size-5" aria-hidden />
               {label.split(" ")[0]}

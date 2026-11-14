@@ -4,9 +4,12 @@ import Anthropic from "@anthropic-ai/sdk";
 export type AIRequest = { system: string; user: string; imageDataUrl?: string; timeoutMs: number };
 export type Provider = (req: AIRequest) => Promise<string>;
 
-function parseDataUrl(url?: string): { mime: "image/jpeg" | "image/png" | "image/webp" | "image/gif"; data: string } | null {
-  const m = url?.match(/^data:(image\/(?:jpeg|png|webp|gif));base64,(.+)$/);
-  return m ? { mime: m[1] as "image/jpeg", data: m[2] } : null;
+type Mime = "image/jpeg" | "image/png" | "image/webp" | "image/gif" | "application/pdf";
+
+/** Images (receipts) and PDFs (benefits guides) arrive as data URLs. */
+function parseDataUrl(url?: string): { mime: Mime; data: string } | null {
+  const m = url?.match(/^data:(image\/(?:jpeg|png|webp|gif)|application\/pdf);base64,(.+)$/);
+  return m ? { mime: m[1] as Mime, data: m[2] } : null;
 }
 
 export const anthropicProvider: Provider = async ({ system, user, imageDataUrl, timeoutMs }) => {
@@ -22,7 +25,7 @@ export const anthropicProvider: Provider = async ({ system, user, imageDataUrl, 
         {
           role: "user",
           content: [
-            ...(img ? [{ type: "image" as const, source: { type: "base64" as const, media_type: img.mime, data: img.data } }] : []),
+            ...(img && img.mime !== "application/pdf" ? [{ type: "image" as const, source: { type: "base64" as const, media_type: img.mime as "image/jpeg", data: img.data } }] : []),
             { type: "text" as const, text: user },
           ],
         },

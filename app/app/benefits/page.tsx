@@ -12,6 +12,9 @@ import { OptimizerChart } from "@/components/plan/optimizer-chart";
 import { ProcessStrip } from "@/components/plan/process-strip";
 import { analyzeBenefits } from "@/lib/engine/benefits";
 import { buildLetters } from "@/lib/engine/paperwork";
+import { valueBenefits } from "@/lib/engine/family";
+import { BenefitsScanner } from "@/components/plan/benefits-scanner";
+import { SAMPLE_GUIDE } from "@/lib/ai/tasks/benefits-guide";
 import { TrackView } from "@/components/track-view";
 import { Button } from "@/components/ui/button";
 
@@ -52,6 +55,8 @@ export default async function BenefitsPage() {
       </p>
 
       <div className="mt-7"><CompareBars now={r.current.total} best={r.optimal.total} /></div>
+
+      <Reveal className="mt-10"><BenefitsScanner saved={valueBenefits(household.profile.employerBenefits, 160).rows} sample={SAMPLE_GUIDE} /></Reveal>
 
       <section aria-labelledby="how-built" className="mt-10">
         <h2 id="how-built" className="font-heading text-xl font-bold text-ink">How Genora built this plan</h2>

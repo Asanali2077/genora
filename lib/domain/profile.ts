@@ -23,6 +23,15 @@ export const ChildSchema = z.object({
 });
 export type Child = z.infer<typeof ChildSchema>;
 
+export const EmployerBenefitSchema = z.object({
+  name: z.string().min(1).max(120),
+  kind: z.enum(["backup_care", "childcare_subsidy", "dcfsa_contribution", "dependent_care_fsa", "other"]),
+  days: z.number().min(0).max(365).nullable().default(null),
+  amount: z.number().min(0).max(100_000).nullable().default(null),
+  detail: z.string().max(400).default(""),
+});
+export type EmployerBenefit = z.infer<typeof EmployerBenefitSchema>;
+
 export const ProfileSchema = z.object({
   filingStatus: z.enum(["mfj", "single", "hoh"]),
   state: z.string().length(2).toUpperCase(),
@@ -33,6 +42,7 @@ export const ProfileSchema = z.object({
   paysRelative: z.boolean().default(false),
   gracePeriod: z.boolean().default(false),
   trumpAccountElected: z.boolean().default(false),
+  employerBenefits: z.array(EmployerBenefitSchema).max(25).default([]),
 });
 export type Profile = z.infer<typeof ProfileSchema>;
 export type ProfileInput = z.input<typeof ProfileSchema>;

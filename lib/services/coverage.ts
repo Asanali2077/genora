@@ -22,6 +22,12 @@ export function withSummer(closures: Closure[], lastDay: string | null, summerWe
   return [...closures, { start: addDays(lastDay, 1), end: addDays(lastDay, summerWeeks * 7), label: "Summer break" }];
 }
 
+/** Marginal federal + employee FICA + flat state estimate: what each pre-tax FSA dollar saves this family. */
+export function combinedTaxRate(profile: Profile) {
+  const agi = profile.parents.reduce((s, p) => s + p.earnedIncome, 0) + profile.otherIncome;
+  return marginalRate(agi, profile.filingStatus) + FICA.socialSecurityRate + FICA.medicareRate + stateRateFor(profile.state);
+}
+
 export function computeCoverage(profile: Profile, closures: Closure[], settings: CoverageSettings, today: string): CoverageResult {
   // School breaks only affect school-age children (5–12); younger kids stay in daycare or preschool.
   const kidsInCare = profile.children.filter((c) => TAX_YEAR - c.birthYear >= 5 && TAX_YEAR - c.birthYear < 13).length;
