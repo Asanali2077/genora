@@ -5,11 +5,11 @@ import { LiveCalculator } from "@/components/landing/live-calculator";
 import { HeroGrid } from "@/components/landing/hero-grid";
 import { SampleButton } from "@/components/landing/sample-button";
 import { Reveal } from "@/components/motion";
-import { ClaimsFragment, CompareFragment, YearFragment } from "@/components/landing/fragments";
+import { FactTicker, Magnetic, Spotlight } from "@/components/landing/effects";
+import { Story } from "@/components/landing/story";
 import { Button } from "@/components/ui/button";
 import { TrackView } from "@/components/track-view";
 
-const FRAGMENTS = [CompareFragment, YearFragment, ClaimsFragment];
 const TRUST = [
   { icon: Timer, text: "3 minutes, 11 questions" },
   { icon: Lock, text: "No bank login, no SSN" },
@@ -22,14 +22,15 @@ export default function Home() {
       <TrackView name="landing_view" />
       <section className="relative overflow-hidden bg-[#0b3b32] text-white">
         <HeroGrid />
+        <Spotlight />
         <div className="relative mx-auto grid w-full max-w-6xl gap-12 px-4 pb-20 pt-12 md:grid-cols-[1.25fr_1fr] md:items-center md:gap-14 md:pb-24 md:pt-20">
           <Reveal y={24}>
             <h1 className="font-heading text-[2.5rem] font-bold leading-[1.02] tracking-[-0.035em] sm:text-[3.6rem]">{landing.heroTitle}</h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/75">{landing.heroSub}</p>
             <div className="mt-9 flex flex-wrap items-center gap-3">
-              <Button size="lg" className="bg-marigold text-ink shadow-[inset_0_1px_0_rgba(255,255,255,0.4),0_8px_24px_-10px_rgba(242,183,5,0.7)] hover:bg-[#ffc61a]" nativeButton={false} render={<Link href="/start" />}>
+              <Magnetic><Button size="lg" className="shine bg-marigold text-ink shadow-[inset_0_1px_0_rgba(255,255,255,0.4),0_8px_24px_-10px_rgba(242,183,5,0.7)] hover:bg-[#ffc61a]" nativeButton={false} render={<Link href="/start" />}>
                 {landing.cta}
-              </Button>
+              </Button></Magnetic>
               <SampleButton dark />
             </div>
             <ul className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/65">
@@ -41,23 +42,9 @@ export default function Home() {
           <Reveal delay={0.15} y={32}><LiveCalculator /></Reveal>
         </div>
       </section>
+      <FactTicker />
 
-      <section id="how">
-        <div className="mx-auto max-w-5xl space-y-16 px-4 py-16 md:space-y-24 md:py-24">
-          {landing.pillars.map((p, i) => {
-            const Fragment = FRAGMENTS[i];
-            return (
-              <Reveal key={p.title} className="grid items-center gap-8 md:grid-cols-2 md:gap-16">
-                <div className={i % 2 ? "md:order-2" : ""}>
-                  <h2 className="text-3xl font-extrabold leading-tight text-ink">{p.title}</h2>
-                  <p className="mt-3 max-w-md text-lg leading-relaxed text-muted-foreground">{p.body}</p>
-                </div>
-                <div className={i % 2 ? "md:order-1" : ""}><Fragment /></div>
-              </Reveal>
-            );
-          })}
-        </div>
-      </section>
+      <Story />
 
       <section aria-labelledby="compare" className="mx-auto w-full max-w-5xl px-4 pb-4">
         <h2 id="compare" className="font-heading text-3xl font-bold tracking-[-0.02em] text-ink">{compare.title}</h2>
