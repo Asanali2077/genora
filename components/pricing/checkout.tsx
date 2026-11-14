@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Check, ShieldCheck } from "lucide-react";
 import { pricing, type PlanId } from "@/config/site";
 import { track } from "@/lib/analytics";
 import { Button } from "@/components/ui/button";
@@ -13,6 +14,7 @@ export function Checkout({ hasHousehold, foundMoney }: { hasHousehold: boolean; 
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const plan = pricing.plans.find((p) => p.id === planId)!;
+  const yearlyCost = plan.period === "year" ? plan.price : plan.price * 12;
 
   async function start() {
     if (!hasHousehold) return router.push("/start");
@@ -32,8 +34,8 @@ export function Checkout({ hasHousehold, foundMoney }: { hasHousehold: boolean; 
   }
 
   return (
-    <div>
-      <div role="radiogroup" aria-label="Plan" className="grid gap-3 sm:grid-cols-2">
+    <div className="panel p-5 sm:p-6">
+      <div role="radiogroup" aria-label="Plan" className="space-y-2.5">
         {pricing.plans.map((p) => {
           const on = p.id === planId;
           return (
@@ -43,32 +45,51 @@ export function Checkout({ hasHousehold, foundMoney }: { hasHousehold: boolean; 
               role="radio"
               aria-checked={on}
               onClick={() => { setPlanId(p.id); track("plan_selected", { plan: p.id }); }}
-              className={cn("tap relative rounded-xl border-2 bg-card p-5 text-left transition-colors", on ? "border-pine" : "border-border hover:border-pine/40")}
+              className={cn(
+                "flex w-full items-center gap-4 rounded-[14px] border px-4 py-4 text-left transition-[border-color,background-color,box-shadow]",
+                on ? "border-pine bg-[#f1f7f5] shadow-[0_0_0_1px_var(--pine)]" : "border-ink/12 bg-white hover:border-pine/45",
+              )}
             >
-              <span className="flex items-baseline justify-between">
-                <span className="text-lg font-bold">{p.name}</span>
-                {p.highlight && <span className="rounded-full bg-marigold px-2.5 py-0.5 text-xs font-bold text-ink">Best value</span>}
+              <span aria-hidden className={cn("flex size-6 shrink-0 items-center justify-center rounded-full border-2", on ? "border-pine bg-pine text-white" : "border-ink/20")}>
+                {on && <Check className="size-3.5" strokeWidth={3} />}
               </span>
-              <span className="mt-3 block font-heading text-4xl font-extrabold tabular">${p.price}<span className="text-base font-medium text-muted-foreground"> / {p.period}</span></span>
-              <span className="mt-1 block text-sm text-muted-foreground">${p.perDay.toFixed(2)} a day · {p.note}</span>
+              <span className="flex-1">
+                <span className="flex items-center gap-2">
+                  <span className="font-semibold text-ink">{p.name}</span>
+                  {p.highlight && <span className="rounded-full bg-marigold/90 px-2 py-0.5 text-[11px] font-bold text-ink">Save 31%</span>}
+                </span>
+                <span className="mt-0.5 block text-sm text-muted-foreground">{p.note} · ${p.perDay.toFixed(2)} a day</span>
+              </span>
+              <span className="text-right">
+                <span className="font-heading text-2xl font-extrabold text-ink tabular">${p.price}</span>
+                <span className="block text-xs text-muted-foreground">per {p.period}</span>
+              </span>
             </button>
           );
         })}
       </div>
 
       {foundMoney !== null && foundMoney > 0 && (
-        <p className="mt-5 text-sm">
-          Genora found you <strong className="tabular">${foundMoney.toLocaleString("en-US")}</strong> this year — {Math.max(1, Math.round(foundMoney / (plan.period === "year" ? plan.price : plan.price * 12)))}× the price of the {plan.name.toLowerCase()} plan.
+        <p className="mt-5 text-[15px] text-ink">
+          Genora found your family <span className="marker font-semibold tabular">${foundMoney.toLocaleString("en-US")}</span> this year,{" "}
+          {Math.max(1, Math.round(foundMoney / yearlyCost))}× what the {plan.name.toLowerCase()} plan costs.
         </p>
       )}
 
-      {error && <p role="alert" className="mt-4 rounded-lg bg-destructive/10 p-3 text-sm text-destructive">{error}</p>}
+      {error && <p role="alert" className="mt-4 rounded-[10px] bg-destructive/10 p-3 text-sm text-destructive">{error}</p>}
 
-      <Button size="lg" className="tap mt-6 h-13 w-full text-base sm:w-auto sm:px-10" disabled={busy} onClick={start}>
-        {hasHousehold ? (busy ? "Starting your plan…" : `Start ${plan.name.toLowerCase()} plan`) : "Build my plan first"}
+      <Button size="lg" className="mt-5 w-full" disabled={busy} onClick={start}>
+        {hasHousehold ? (busy ? "Starting your plan…" : `Start the ${plan.name.toLowerCase()} plan`) : "Find my money first"}
       </Button>
-      <p className="mt-3 text-sm text-muted-foreground">{pricing.guarantee}</p>
-      <p className="mt-1 text-xs text-muted-foreground">{pricing.mockNotice}</p>
+
+      <div className="inset mt-5 flex gap-3 p-4 text-sm">
+        <ShieldCheck className="mt-0.5 size-5 shrink-0 text-pine" aria-hidden />
+        <div>
+          <p className="font-semibold text-ink">10× guarantee</p>
+          <p className="mt-0.5 text-muted-foreground">{pricing.guarantee}</p>
+        </div>
+      </div>
+      <p className="mt-3 text-center text-xs text-muted-foreground">{pricing.mockNotice}</p>
     </div>
   );
 }

@@ -109,6 +109,40 @@
   .tabular {
     font-variant-numeric: tabular-nums;
   }
+  /* Surfaces: page (paper) → panel (raised ledger sheet) → inset (recessed well). */
+  .panel {
+    background: #fff;
+    border: 1px solid rgb(23 42 38 / 0.08);
+    border-radius: 18px;
+    box-shadow: 0 1px 2px rgb(23 42 38 / 0.04), 0 14px 34px -22px rgb(15 92 77 / 0.35);
+  }
+  .inset {
+    background: #edf2f0;
+    border-radius: 12px;
+  }
+  /* Ledger rows: hairlines between rows instead of separate cards. */
+  .ledger > * + * {
+    border-top: 1px solid rgb(23 42 38 / 0.08);
+  }
+  .field {
+    height: 3rem;
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid rgb(23 42 38 / 0.16);
+    background: #fff;
+    padding-inline: 0.85rem;
+    font-size: 1rem;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .field:hover {
+    border-color: rgb(23 42 38 / 0.3);
+  }
+  .field:focus,
+  .field:focus-within {
+    outline: none;
+    border-color: var(--pine);
+    box-shadow: 0 0 0 3px rgb(15 92 77 / 0.15);
+  }
   /* The one signature move: found money gets a marigold marker stroke. */
   .marker {
     background-image: linear-gradient(transparent 58%, color-mix(in srgb, var(--marigold) 70%, transparent) 58%, color-mix(in srgb, var(--marigold) 70%, transparent) 92%, transparent 92%);

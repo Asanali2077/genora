@@ -14,8 +14,8 @@ export const landing = {
   heroSub:
     "Most parents who could use a Dependent Care FSA never do, and in 2026 the rules changed again. Genora checks both parents' benefits and tells you exactly what to elect.",
   calculatorTitle: "Try it with your numbers",
-  calculatorNote: "Live result from the same 2026 engine the app uses. Texas assumed for state tax.",
-  cta: "Get my full plan",
+  calculatorNote: "Live result from the same 2026 engine the app uses. Assumes both employers offer a Dependent Care FSA and you only claim the credit today.",
+  cta: "Find my money",
   pillars: [
     {
       title: "Benefits optimizer",

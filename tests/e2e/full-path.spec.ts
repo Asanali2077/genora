@@ -4,9 +4,9 @@ import { expect, test } from "@playwright/test";
 test("a family goes from the landing page to a paid plan with a logged receipt", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toContainText("overpaying for childcare");
-  await expect(page.getByText("a year back")).toBeVisible(); // live engine on the landing page
+  await expect(page.getByText("Money this family leaves on the table")).toBeVisible(); // live engine on the landing page
 
-  await page.getByRole("button", { name: "Get my full plan" }).first().click();
+  await page.getByRole("button", { name: "Find my money" }).first().click();
   await expect(page).toHaveURL(/\/start/);
   for (let step = 0; step < 6; step++) {
     if (step === 3) await page.fill("#care-daycare", "20000");
@@ -21,7 +21,7 @@ test("a family goes from the landing page to a paid plan with a logged receipt",
 
   await page.getByRole("button", { name: "Unlock the full plan" }).click();
   await expect(page).toHaveURL(/\/pricing/);
-  await page.getByRole("button", { name: "Start annual plan" }).click();
+  await page.getByRole("button", { name: "Start the annual plan" }).click();
 
   await expect(page).toHaveURL(/\/app$/, { timeout: 30_000 });
   await expect(page.getByRole("heading", { name: "FSA claims" })).toBeVisible();

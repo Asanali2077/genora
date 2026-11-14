@@ -5,6 +5,7 @@ import { getUser } from "@/lib/supabase/server";
 import { getHousehold, getLatestPlan, isSubscribed } from "@/lib/services/household";
 import { PlanBreakdown, ShowMath } from "@/components/plan/plan-breakdown";
 import { possessive } from "@/lib/engine/benefits";
+import { CompareBars } from "@/components/plan/compare-bars";
 import { TrackView } from "@/components/track-view";
 import { Button } from "@/components/ui/button";
 
@@ -46,10 +47,12 @@ export default async function RevealPage() {
           : `Best plan: skip the FSA and claim the ${usd(r.optimal.careCredit)} care credit.`}
       </p>
 
+      <div className="mt-7"><CompareBars now={r.current.total} best={r.optimal.total} /></div>
+
       {r.warnings.length > 0 && (
         <ul className="mt-6 space-y-2">
           {r.warnings.map((w) => (
-            <li key={w.id} className="rounded-lg border-l-4 border-marigold bg-accent px-4 py-3 text-sm">
+            <li key={w.id} className="inset border-l-4 border-marigold px-4 py-3 text-sm">
               {w.message}
               {w.amount ? <strong className="tabular"> {usd(w.amount)}</strong> : null}
             </li>
@@ -66,7 +69,7 @@ export default async function RevealPage() {
         <h2 id="todo" className="text-xl font-bold">What to do</h2>
         <ol className="mt-3 space-y-3">
           {firstAction && (
-            <li className="rounded-xl border bg-card p-4">
+            <li className="panel p-5">
               <p className="font-semibold">{firstAction.title}</p>
               <p className="mt-1 text-sm text-muted-foreground">{firstAction.detail}</p>
               <p className="mt-2 text-xs font-medium text-pine">{firstAction.when}</p>
@@ -80,7 +83,7 @@ export default async function RevealPage() {
                 <p className="mt-2 text-xs font-medium text-pine">{a.when}</p>
               </li>
             ) : (
-              <li key={a.id} className="rounded-xl border border-dashed p-4 text-muted-foreground">
+              <li key={a.id} className="rounded-[18px] border border-dashed border-ink/15 p-5 text-muted-foreground">
                 <p className="select-none font-semibold blur-[3px]" aria-hidden>{a.title}</p>
                 <p className="mt-1 text-sm">Included in the full plan</p>
               </li>
@@ -99,11 +102,11 @@ export default async function RevealPage() {
 
       <div className="mt-10 flex flex-wrap gap-3">
         {subscribed ? (
-          <Button size="lg" className="tap h-12 px-6 text-base" nativeButton={false} render={<Link href="/app" />}>Open my dashboard</Button>
+          <Button size="lg" nativeButton={false} render={<Link href="/app" />}>Open my dashboard</Button>
         ) : (
-          <Button size="lg" className="tap h-12 px-6 text-base" nativeButton={false} render={<Link href="/pricing" />}>Unlock the full plan</Button>
+          <Button size="lg" nativeButton={false} render={<Link href="/pricing" />}>Unlock the full plan</Button>
         )}
-        <Button size="lg" variant="outline" className="tap h-12 px-6 text-base" nativeButton={false} render={<Link href="/start" />}>Change my answers</Button>
+        <Button size="lg" variant="outline" nativeButton={false} render={<Link href="/start" />}>Change my answers</Button>
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { Camera } from "lucide-react";
 import { useRouter } from "next/navigation";
 import type { ClaimsResult } from "@/lib/engine/claims";
 import type { StoredReceipt } from "@/lib/services/claims";
@@ -128,26 +129,28 @@ export function Vault({ summary, receipts, recommended }: { summary: ClaimsResul
     <div className="space-y-10">
       <section aria-labelledby="pace">
         <h2 id="pace" className="text-2xl font-extrabold leading-tight">
-          {summary.forfeitRisk > 0 ? (
+          {recommended ? (
+            <>You haven&apos;t elected a Dependent Care FSA yet. Genora recommends <span className="marker tabular">{usd(summary.election)}</span>.</>
+          ) : summary.forfeitRisk > 0 ? (
             <>On track to forfeit <span className="marker tabular">{usd(summary.forfeitRisk)}</span> by {fmt(summary.deadline)}.</>
           ) : (
             <>On track to use your full {usd(summary.election)} by {fmt(summary.deadline)}.</>
           )}
         </h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          {recommended ? `Tracking the recommended ${usd(summary.election)} election. ` : `Tracking your ${usd(summary.election)} election. `}
-          {summary.daysToDeadline} days left to submit claims.
-          {summary.waiting > 0 && ` ${usd(summary.waiting)} is ready to submit to your FSA administrator now.`}
+          {recommended
+            ? "Elect it at open enrollment (or within 30 days of a qualifying change). Keep logging childcare receipts here: they become claims the day your FSA starts."
+            : `Tracking your ${usd(summary.election)} election. ${summary.daysToDeadline} days left to submit claims.${summary.waiting > 0 ? ` ${usd(summary.waiting)} is ready to submit to your FSA administrator now.` : ""}`}
         </p>
-        <div className="mt-5 rounded-xl border bg-card p-4"><PaceBar s={summary} /></div>
+        {!recommended && <div className="panel mt-5 p-5"><PaceBar s={summary} /></div>}
         {summary.missingTin.length > 0 && (
-          <p className="mt-4 rounded-lg border-l-4 border-marigold bg-accent px-4 py-3 text-sm">
+          <p className="inset mt-4 border-l-4 border-marigold px-4 py-3 text-sm">
             Ask {summary.missingTin.join(", ")} for a taxpayer ID (or a signed Form W-10). You need it for FSA claims and Form 2441.
           </p>
         )}
       </section>
 
-      <section aria-labelledby="add" className="rounded-xl border bg-card p-4 sm:p-5">
+      <section aria-labelledby="add" className="panel p-5 sm:p-6">
         <h2 id="add" className="text-lg font-bold">Add a childcare receipt</h2>
         <p className="mt-1 text-sm text-muted-foreground">AI reads the provider, amount and dates. You check them before anything is saved.</p>
         <input
@@ -166,7 +169,7 @@ export function Vault({ summary, receipts, recommended }: { summary: ClaimsResul
         />
         <div className="mt-4 flex flex-wrap gap-2">
           <Button className="tap" disabled={busy} onClick={() => fileRef.current?.click()}>
-            {busy && !fields ? "Reading the receipt…" : "Snap or upload a receipt"}
+            <Camera />{busy && !fields ? "Reading the receipt…" : "Snap or upload a receipt"}
           </Button>
           <Button variant="outline" className="tap" disabled={busy} onClick={() => { setSource("manual"); setFields({ provider: "", category: "daycare", amount: 0, serviceFrom: today, serviceTo: today, providerTinLast4: null }); }}>
             Enter by hand
@@ -213,9 +216,9 @@ export function Vault({ summary, receipts, recommended }: { summary: ClaimsResul
       <section aria-labelledby="list">
         <h2 id="list" className="text-lg font-bold">Receipts ({receipts.length})</h2>
         {receipts.length === 0 ? (
-          <p className="mt-3 rounded-xl border border-dashed p-4 text-sm text-muted-foreground">No receipts yet. Add your latest daycare or camp payment to start tracking.</p>
+          <p className="mt-3 rounded-[18px] border border-dashed border-ink/15 p-5 text-sm text-muted-foreground">No receipts yet. Add your latest daycare or camp payment to start tracking.</p>
         ) : (
-          <ul className="mt-3 divide-y rounded-xl border bg-card">
+          <ul className="panel ledger mt-3">
             {receipts.map((r) => {
               const next = STATUS_NEXT[r.status];
               return (
@@ -241,7 +244,7 @@ export function Vault({ summary, receipts, recommended }: { summary: ClaimsResul
         <section aria-labelledby="f2441">
           <h2 id="f2441" className="text-lg font-bold">Form 2441 summary</h2>
           <p className="mt-1 text-sm text-muted-foreground">Care providers and amounts for your 2026 return.</p>
-          <table className="mt-3 w-full rounded-xl border bg-card text-sm">
+          <table className="panel mt-3 w-full overflow-hidden text-sm">
             <thead><tr className="border-b text-left text-muted-foreground"><th className="p-3 font-medium">Provider</th><th className="p-3 font-medium">Taxpayer ID</th><th className="p-3 text-right font-medium">Paid</th></tr></thead>
             <tbody className="tabular">
               {summary.byProvider.map((p) => (

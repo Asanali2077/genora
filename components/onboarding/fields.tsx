@@ -1,13 +1,14 @@
 "use client";
 
+import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function MoneyInput({ id, label, hint, value, onChange }: { id: string; label: string; hint?: string; value: number; onChange: (v: number) => void }) {
   return (
     <label htmlFor={id} className="block">
-      <span className="text-sm font-semibold">{label}</span>
-      {hint && <span className="mt-0.5 block text-xs text-muted-foreground">{hint}</span>}
-      <span className="mt-2 flex h-12 items-center rounded-lg border bg-card px-3 focus-within:border-pine focus-within:ring-2 focus-within:ring-pine/20">
+      <span className="text-sm font-semibold text-ink">{label}</span>
+      {hint && <span className="mt-0.5 block text-[13px] text-muted-foreground">{hint}</span>}
+      <span className="field mt-2 flex items-center">
         <span className="text-muted-foreground" aria-hidden>$</span>
         <input
           id={id}
@@ -15,7 +16,7 @@ export function MoneyInput({ id, label, hint, value, onChange }: { id: string; l
           value={value ? value.toLocaleString("en-US") : ""}
           placeholder="0"
           onChange={(e) => onChange(Number(e.target.value.replace(/[^0-9]/g, "")) || 0)}
-          className="tabular h-full w-full bg-transparent pl-1 text-base outline-none"
+          className="tabular h-full w-full bg-transparent pl-1 outline-none"
         />
       </span>
     </label>
@@ -25,7 +26,7 @@ export function MoneyInput({ id, label, hint, value, onChange }: { id: string; l
 export function NumberInput({ id, label, value, min, max, onChange }: { id: string; label: string; value: number; min: number; max: number; onChange: (v: number) => void }) {
   return (
     <label htmlFor={id} className="block">
-      <span className="text-sm font-semibold">{label}</span>
+      <span className="text-sm font-semibold text-ink">{label}</span>
       <input
         id={id}
         type="number"
@@ -33,17 +34,31 @@ export function NumberInput({ id, label, value, min, max, onChange }: { id: stri
         max={max}
         value={value}
         onChange={(e) => onChange(Math.min(max, Math.max(min, Number(e.target.value) || 0)))}
-        className="tabular mt-2 h-12 w-full rounded-lg border bg-card px-3 text-base outline-none focus:border-pine focus:ring-2 focus:ring-pine/20"
+        className="field tabular mt-2"
       />
     </label>
+  );
+}
+
+function Indicator({ on }: { on: boolean }) {
+  return (
+    <span
+      aria-hidden
+      className={cn(
+        "flex size-6 shrink-0 items-center justify-center rounded-full border-2 transition-colors",
+        on ? "border-pine bg-pine text-white" : "border-ink/20 bg-white",
+      )}
+    >
+      {on && <Check className="size-3.5" strokeWidth={3} />}
+    </span>
   );
 }
 
 export function Choice<T extends string>({ label, value, options, onChange }: { label: string; value: T | undefined; options: { value: T; label: string; hint?: string }[]; onChange: (v: T) => void }) {
   return (
     <fieldset>
-      <legend className="text-sm font-semibold">{label}</legend>
-      <div role="radiogroup" className="mt-2 grid gap-2">
+      <legend className="text-sm font-semibold text-ink">{label}</legend>
+      <div role="radiogroup" className="mt-3 grid gap-2.5">
         {options.map((o) => {
           const on = o.value === value;
           return (
@@ -53,10 +68,16 @@ export function Choice<T extends string>({ label, value, options, onChange }: { 
               role="radio"
               aria-checked={on}
               onClick={() => onChange(o.value)}
-              className={cn("tap rounded-lg border bg-card px-4 py-3 text-left transition-colors", on ? "border-pine bg-pine/5 ring-2 ring-pine/25" : "hover:border-pine/40")}
+              className={cn(
+                "tap flex items-center justify-between gap-4 rounded-[14px] border bg-white px-4 py-3.5 text-left transition-[border-color,background-color,box-shadow]",
+                on ? "border-pine bg-[#f1f7f5] shadow-[0_0_0_1px_var(--pine)]" : "border-ink/12 hover:border-pine/45",
+              )}
             >
-              <span className="block font-semibold">{o.label}</span>
-              {o.hint && <span className="mt-0.5 block text-sm text-muted-foreground">{o.hint}</span>}
+              <span>
+                <span className="block font-semibold text-ink">{o.label}</span>
+                {o.hint && <span className="mt-0.5 block text-sm text-muted-foreground">{o.hint}</span>}
+              </span>
+              <Indicator on={on} />
             </button>
           );
         })}
@@ -67,10 +88,9 @@ export function Choice<T extends string>({ label, value, options, onChange }: { 
 
 export function YesNo({ label, value, onChange }: { label: string; value: boolean; onChange: (v: boolean) => void }) {
   return (
-    <fieldset className="flex items-center justify-between gap-4">
-      <legend className="sr-only">{label}</legend>
-      <span className="text-sm font-semibold" aria-hidden>{label}</span>
-      <div role="radiogroup" aria-label={label} className="flex shrink-0 rounded-lg border bg-card p-0.5">
+    <div className="flex items-center justify-between gap-4">
+      <span id={`yn-${label}`} className="text-sm font-semibold text-ink">{label}</span>
+      <div role="radiogroup" aria-labelledby={`yn-${label}`} className="inline-flex shrink-0 rounded-[11px] bg-[#e6eeeb] p-1">
         {[true, false].map((v) => (
           <button
             key={String(v)}
@@ -78,12 +98,15 @@ export function YesNo({ label, value, onChange }: { label: string; value: boolea
             role="radio"
             aria-checked={value === v}
             onClick={() => onChange(v)}
-            className={cn("tap rounded-md px-4 text-sm font-semibold", value === v ? "bg-pine text-white" : "text-muted-foreground")}
+            className={cn(
+              "h-9 min-w-14 rounded-[8px] px-3 text-sm font-semibold transition-[background-color,color,box-shadow]",
+              value === v ? "bg-white text-pine shadow-[0_1px_2px_rgba(23,42,38,0.12)]" : "text-muted-foreground hover:text-ink",
+            )}
           >
             {v ? "Yes" : "No"}
           </button>
         ))}
       </div>
-    </fieldset>
+    </div>
   );
 }

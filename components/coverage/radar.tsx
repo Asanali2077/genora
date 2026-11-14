@@ -42,7 +42,7 @@ export function Radar({ initialClosures, initialResult, sample, today }: { initi
 
   return (
     <div className="space-y-8">
-      <section aria-labelledby="paste" className="rounded-xl border bg-card p-4 sm:p-5">
+      <section aria-labelledby="paste" className="panel p-5 sm:p-6">
         <h2 id="paste" className="text-lg font-bold">Paste your school calendar</h2>
         <p className="mt-1 text-sm text-muted-foreground">Copy it from the district website or PDF. AI reads the dates; the plan below is calculated by Genora.</p>
         <textarea
@@ -92,7 +92,7 @@ export function Radar({ initialClosures, initialResult, sample, today }: { initi
               </div>
             ))}
           </dl>
-          <div className="rounded-xl border bg-card p-4">
+          <div className="panel p-5">
             <YearStrip assignments={result.assignments} from={today} />
           </div>
         </section>
@@ -100,7 +100,7 @@ export function Radar({ initialClosures, initialResult, sample, today }: { initi
 
       <section aria-labelledby="dates">
         <h2 id="dates" className="text-lg font-bold">No-school dates ({closures.length})</h2>
-        <ul className="mt-3 divide-y rounded-xl border bg-card">
+        <ul className="panel ledger mt-3">
           {closures.map((c, i) => (
             <li key={`${c.start}-${i}`} className="flex items-center justify-between gap-3 px-4 py-2 text-sm">
               <span>

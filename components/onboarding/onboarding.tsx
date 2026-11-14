@@ -115,14 +115,14 @@ export function Onboarding() {
                 <NumberInput id={`kid-${i}`} label={`Child ${i + 1}: birth year`} value={c.birthYear} min={2008} max={2026} onChange={(v) => set({ children: draft.children.map((x, j) => (j === i ? { ...x, birthYear: v } : x)) })} />
               </div>
               {draft.children.length > 1 && (
-                <Button variant="outline" className="tap h-12" onClick={() => set({ children: draft.children.filter((_, j) => j !== i) })} aria-label={`Remove child ${i + 1}`}>
+                <Button size="lg" variant="outline" onClick={() => set({ children: draft.children.filter((_, j) => j !== i) })} aria-label={`Remove child ${i + 1}`}>
                   Remove
                 </Button>
               )}
             </div>
           ))}
           {draft.children.length < 4 && (
-            <Button variant="outline" className="tap" onClick={() => set({ children: [...draft.children, { name: "", birthYear: 2020 }] })}>
+            <Button variant="secondary" onClick={() => set({ children: [...draft.children, { name: "", birthYear: 2020 }] })}>
               Add a child
             </Button>
           )}
@@ -145,7 +145,7 @@ export function Onboarding() {
       body: (
         <div className="space-y-6">
           {parents.map((p, i) => (
-            <div key={i} className="space-y-3 rounded-xl border bg-card p-4">
+            <div key={i} className="panel space-y-4 p-5">
               <p className="font-semibold">{i === 0 ? "Your employer" : "Your partner's employer"}</p>
               <YesNo label="Offers a Dependent Care FSA" value={p.employerOffersDcfsa} onChange={(v) => setParent(i, { employerOffersDcfsa: v, currentElection: v ? p.currentElection : 0 })} />
               {p.employerOffersDcfsa && <MoneyInput id={`elect-${i}`} label="Amount elected this year" hint="Leave at $0 if you don't use it" value={p.currentElection} onChange={(v) => setParent(i, { currentElection: v })} />}
@@ -161,7 +161,7 @@ export function Onboarding() {
         <div className="space-y-5">
           <label className="block">
             <span className="text-sm font-semibold">State you live in</span>
-            <select value={draft.state} onChange={(e) => set({ state: e.target.value })} className="mt-2 h-12 w-full rounded-lg border bg-card px-3 text-base">
+            <select value={draft.state} onChange={(e) => set({ state: e.target.value })} className="field mt-2">
               {STATES.map((s) => (
                 <option key={s} value={s}>{s}{STATE_RATES[s] === 0 ? " (no state income tax)" : ""}</option>
               ))}
@@ -219,13 +219,13 @@ export function Onboarding() {
         </div>
         <div className="mt-2 grid gap-1" style={{ gridTemplateColumns: `repeat(${steps.length}, 1fr)` }} aria-hidden>
           {steps.map((_, i) => (
-            <span key={i} className={`h-1.5 rounded-full ${i <= step ? "bg-pine" : "bg-border"}`} />
+            <span key={i} className={`h-1.5 rounded-full transition-colors ${i <= step ? "bg-pine" : "bg-ink/10"}`} />
           ))}
         </div>
       </div>
 
       <section className="mt-8" aria-labelledby="step-title">
-        <h1 id="step-title" className="text-3xl font-extrabold leading-tight">{steps[step].title}</h1>
+        <h1 id="step-title" className="text-[2rem] font-extrabold leading-[1.1] text-ink">{steps[step].title}</h1>
         <div className="mt-6">{steps[step].body}</div>
       </section>
 
@@ -233,12 +233,12 @@ export function Onboarding() {
 
       <div className="mt-8 flex gap-3">
         {step > 0 && (
-          <Button variant="outline" className="tap h-12 px-5" onClick={() => setStep(step - 1)} disabled={saving}>
+          <Button size="lg" variant="outline" onClick={() => setStep(step - 1)} disabled={saving}>
             Back
           </Button>
         )}
         <Button
-          className="tap h-12 flex-1 text-base"
+          size="lg" className="flex-1"
           disabled={saving}
           onClick={() => {
             track("quiz_step_answered", { step });
