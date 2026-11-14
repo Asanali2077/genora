@@ -148,7 +148,7 @@
   .display {
     font-family: var(--font-display), var(--font-body), sans-serif;
     font-weight: 600;
-    letter-spacing: -0.035em;
+    letter-spacing: -0.01em;
   }
   .field {
     height: 3rem;

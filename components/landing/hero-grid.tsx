@@ -24,7 +24,7 @@ export function HeroGrid() {
               key={i}
               className={`size-[1.6rem] rounded-[7px] ${lit ? "bg-sun" : sky ? "bg-sky" : "bg-white"}`}
               initial={{ opacity: 0, scale: 0.6 }}
-              animate={lit ? { opacity: [0.15, 0.9, 0.15], scale: 1 } : { opacity: sky ? 0.35 : 0.06, scale: 1 }}
+              animate={lit ? { opacity: [0.3, 1, 0.3], scale: 1 } : { opacity: sky ? 0.45 : 0.07, scale: 1 }}
               transition={
                 lit
                   ? { duration: 3.2, repeat: Infinity, delay: (i % COLS) * 0.12 + Math.floor(i / COLS) * 0.05, ease: "easeInOut" }
