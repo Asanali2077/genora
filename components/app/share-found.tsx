@@ -16,7 +16,7 @@ export function ShareFound({ amount }: { amount: number }) {
     } catch {}
   }
   return (
-    <button type="button" onClick={share} className="inline-flex h-9 items-center gap-1.5 rounded-full px-3 text-sm font-semibold text-pine transition-colors hover:bg-pine/[0.07]">
+    <button type="button" onClick={share} className="inline-flex h-9 items-center gap-1.5 rounded-full px-3 text-sm font-semibold text-brand transition-colors hover:bg-brand/[0.07]">
       <Share2 className="size-4" aria-hidden />
       Share
     </button>

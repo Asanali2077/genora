@@ -16,7 +16,7 @@ export function SiteFooter() {
   const path = usePathname();
   if (path.startsWith("/app")) return null;
   return (
-    <footer className="bg-[#0b3b32] text-white">
+    <footer className="bg-brand-deep text-white">
       <div className="mx-auto grid max-w-5xl gap-10 px-4 py-14 md:grid-cols-[1.4fr_1fr]">
         <div>
           <Wordmark light />

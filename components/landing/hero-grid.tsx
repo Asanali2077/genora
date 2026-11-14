@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 
 /**
- * The hero backdrop: a wall of calendar days in the brand's cell shape. A few cells light up marigold in a slow
+ * The hero backdrop: a wall of calendar days in the brand's cell shape. A few cells light up sun-yellow in a slow
  * wave — money found on ordinary days. Pure decoration (aria-hidden), honours reduced motion via MotionConfig.
  */
 const COLS = 22;
@@ -22,7 +22,7 @@ export function HeroGrid() {
           return (
             <motion.span
               key={i}
-              className={`size-[1.6rem] rounded-[7px] ${lit ? "bg-marigold" : sky ? "bg-[#9cc3e6]" : "bg-white"}`}
+              className={`size-[1.6rem] rounded-[7px] ${lit ? "bg-sun" : sky ? "bg-sky" : "bg-white"}`}
               initial={{ opacity: 0, scale: 0.6 }}
               animate={lit ? { opacity: [0.15, 0.9, 0.15], scale: 1 } : { opacity: sky ? 0.35 : 0.06, scale: 1 }}
               transition={

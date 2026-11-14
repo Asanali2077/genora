@@ -36,7 +36,7 @@ export default async function AdminPage() {
           ["Childcare $ tracked", usd(m.receiptDollars)],
           ["School-break plans", m.breakPlans.toLocaleString("en-US")],
         ].map(([k, v]) => (
-          <div key={k} className="border-l-4 border-pine/30 pl-3">
+          <div key={k} className="border-l-4 border-brand/30 pl-3">
             <dt className="text-xs text-muted-foreground">{k}</dt>
             <dd className="mt-0.5 font-heading text-2xl font-extrabold tabular">{v}</dd>
           </div>
@@ -50,7 +50,7 @@ export default async function AdminPage() {
             <li key={s.key} className="grid grid-cols-[10rem_1fr_6rem] items-center gap-3 text-sm">
               <span>{s.label}</span>
               <span className="h-6 rounded bg-muted">
-                <span className="block h-full rounded bg-pine" style={{ width: `${(s.count / top) * 100}%` }} />
+                <span className="block h-full rounded bg-brand" style={{ width: `${(s.count / top) * 100}%` }} />
               </span>
               <span className="tabular text-right">
                 {s.count}

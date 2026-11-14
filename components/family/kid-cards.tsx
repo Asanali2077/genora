@@ -3,7 +3,7 @@ import type { Assignment } from "@/lib/engine/coverage";
 import { TAX_YEAR, TRUMP_ACCOUNT } from "@/lib/engine/tax-2026";
 import { DateChip } from "@/components/app/date-chip";
 
-const TONES = ["bg-marigold text-ink", "bg-[#9cc3e6] text-ink", "bg-pine text-white", "bg-[#f3c9b6] text-ink"];
+const TONES = ["bg-sun text-ink", "bg-sky text-ink", "bg-brand text-white", "bg-bad-soft text-ink"];
 
 function stage(age: number) {
   if (age < 1) return "Baby";
@@ -56,12 +56,12 @@ export function KidCards({ profile, nextGap }: { profile: Profile; nextGap?: Ass
 
             <ul className="mt-4 flex flex-wrap gap-2 text-xs font-semibold">
               {careYears > 0 ? (
-                <li className="rounded-full bg-pine/[0.08] px-2.5 py-1 text-pine">Care benefits for {careYears} more year{careYears === 1 ? "" : "s"}</li>
+                <li className="rounded-full bg-brand/[0.08] px-2.5 py-1 text-brand">Care benefits for {careYears} more year{careYears === 1 ? "" : "s"}</li>
               ) : (
                 <li className="rounded-full bg-ink/[0.06] px-2.5 py-1 text-muted-foreground">Past care-benefit age</li>
               )}
-              {ctcYears > 0 && <li className="rounded-full bg-pine/[0.08] px-2.5 py-1 text-pine">Child Tax Credit until {c.birthYear + 17}</li>}
-              {trump && <li className="rounded-full bg-marigold/25 px-2.5 py-1 text-ink">$1,000 Trump Account</li>}
+              {ctcYears > 0 && <li className="rounded-full bg-brand/[0.08] px-2.5 py-1 text-brand">Child Tax Credit until {c.birthYear + 17}</li>}
+              {trump && <li className="rounded-full bg-sun/25 px-2.5 py-1 text-ink">$1,000 Trump Account</li>}
             </ul>
           </li>
         );

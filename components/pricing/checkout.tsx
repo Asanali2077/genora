@@ -47,16 +47,16 @@ export function Checkout({ hasHousehold, foundMoney }: { hasHousehold: boolean; 
               onClick={() => { setPlanId(p.id); track("plan_selected", { plan: p.id }); }}
               className={cn(
                 "flex w-full items-center gap-4 rounded-[14px] border px-4 py-4 text-left transition-[border-color,background-color,box-shadow]",
-                on ? "border-pine bg-[#f1f7f5] shadow-[0_0_0_1px_var(--pine)]" : "border-ink/12 bg-white hover:border-pine/45",
+                on ? "border-brand bg-wash shadow-[0_0_0_1px_var(--brand)]" : "border-ink/12 bg-white hover:border-brand/45",
               )}
             >
-              <span aria-hidden className={cn("flex size-6 shrink-0 items-center justify-center rounded-full border-2", on ? "border-pine bg-pine text-white" : "border-ink/20")}>
+              <span aria-hidden className={cn("flex size-6 shrink-0 items-center justify-center rounded-full border-2", on ? "border-brand bg-brand text-white" : "border-ink/20")}>
                 {on && <Check className="size-3.5" strokeWidth={3} />}
               </span>
               <span className="flex-1">
                 <span className="flex items-center gap-2">
                   <span className="font-semibold text-ink">{p.name}</span>
-                  {p.highlight && <span className="rounded-full bg-marigold/90 px-2 py-0.5 text-[11px] font-bold text-ink">Save 31%</span>}
+                  {p.highlight && <span className="rounded-full bg-sun/90 px-2 py-0.5 text-[11px] font-bold text-ink">Save 31%</span>}
                 </span>
                 <span className="mt-0.5 block text-sm text-muted-foreground">{p.note} · ${p.perDay.toFixed(2)} a day</span>
               </span>
@@ -83,7 +83,7 @@ export function Checkout({ hasHousehold, foundMoney }: { hasHousehold: boolean; 
       </Button>
 
       <div className="inset mt-5 flex gap-3 p-4 text-sm">
-        <ShieldCheck className="mt-0.5 size-5 shrink-0 text-pine" aria-hidden />
+        <ShieldCheck className="mt-0.5 size-5 shrink-0 text-brand" aria-hidden />
         <div>
           <p className="font-semibold text-ink">10× guarantee</p>
           <p className="mt-0.5 text-muted-foreground">{pricing.guarantee}</p>

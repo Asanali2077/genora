@@ -21,7 +21,7 @@ export default function Home() {
   return (
     <>
       <TrackView name="landing_view" />
-      <section className="relative overflow-hidden bg-[#0b3b32] text-white">
+      <section className="relative overflow-hidden bg-brand-deep text-white">
         <HeroGrid />
         <Spotlight />
         <div className="relative mx-auto grid w-full max-w-6xl gap-12 px-4 pb-20 pt-12 md:grid-cols-[1.25fr_1fr] md:items-center md:gap-14 md:pb-24 md:pt-20">
@@ -29,14 +29,14 @@ export default function Home() {
             <h1 className="font-heading text-[2.5rem] font-bold leading-[1.02] tracking-[-0.035em] sm:text-[3.6rem]">{landing.heroTitle}</h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/75">{landing.heroSub}</p>
             <div className="mt-9 flex flex-wrap items-center gap-3">
-              <Magnetic><Button size="lg" className="shine bg-marigold text-ink shadow-[inset_0_1px_0_rgba(255,255,255,0.4),0_8px_24px_-10px_rgba(242,183,5,0.7)] hover:bg-[#ffc61a]" nativeButton={false} render={<Link href="/start" />}>
+              <Magnetic><Button size="lg" className="shine bg-sun text-ink shadow-[inset_0_1px_0_rgba(255,255,255,0.4),0_8px_24px_-10px_rgba(255,200,61,0.7)] hover:bg-sun" nativeButton={false} render={<Link href="/start" />}>
                 {landing.cta}
               </Button></Magnetic>
               <SampleButton dark />
             </div>
             <ul className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/65">
               {TRUST.map(({ icon: Icon, text }) => (
-                <li key={text} className="inline-flex items-center gap-2"><Icon className="size-4 text-marigold" aria-hidden />{text}</li>
+                <li key={text} className="inline-flex items-center gap-2"><Icon className="size-4 text-sun" aria-hidden />{text}</li>
               ))}
             </ul>
           </Reveal>
@@ -56,7 +56,7 @@ export default function Home() {
               <tr className="border-b border-ink/[0.07] text-left">
                 <th scope="col" className="p-4 font-medium text-muted-foreground" />
                 {compare.columns.map((c, i) => (
-                  <th key={c} scope="col" className={i === 0 ? "bg-pine/[0.07] p-4 font-heading text-base font-bold text-pine" : "p-4 font-medium text-muted-foreground"}>{c}</th>
+                  <th key={c} scope="col" className={i === 0 ? "bg-brand/[0.07] p-4 font-heading text-base font-bold text-brand" : "p-4 font-medium text-muted-foreground"}>{c}</th>
                 ))}
               </tr>
             </thead>
@@ -65,7 +65,7 @@ export default function Home() {
                 <tr key={r.label} className="border-b border-ink/[0.06] last:border-0">
                   <th scope="row" className="p-4 text-left font-semibold text-ink">{r.label}</th>
                   {r.values.map((v, i) => (
-                    <td key={i} className={i === 0 ? "bg-pine/[0.07] p-4 font-semibold text-pine" : "p-4 text-muted-foreground"}>{v}</td>
+                    <td key={i} className={i === 0 ? "bg-brand/[0.07] p-4 font-semibold text-brand" : "p-4 text-muted-foreground"}>{v}</td>
                   ))}
                 </tr>
               ))}
@@ -77,14 +77,14 @@ export default function Home() {
       <section aria-labelledby="faq" className="mx-auto grid w-full max-w-5xl gap-8 px-4 py-16 md:grid-cols-[18rem_1fr] md:py-20">
         <div>
           <h2 id="faq" className="font-heading text-3xl font-bold tracking-[-0.02em] text-ink">Questions parents ask</h2>
-          <p className="mt-3 text-muted-foreground">More detail in the <Link href="/guides" className="font-semibold text-pine underline-offset-2 hover:underline">2026 rules guides</Link>.</p>
+          <p className="mt-3 text-muted-foreground">More detail in the <Link href="/guides" className="font-semibold text-brand underline-offset-2 hover:underline">2026 rules guides</Link>.</p>
         </div>
         <div className="panel ledger">
           {faq.map((f) => (
             <details key={f.q} className="group">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 font-semibold text-ink sm:px-6">
                 {f.q}
-                <span aria-hidden className="text-xl leading-none text-pine transition-transform group-open:rotate-45">+</span>
+                <span aria-hidden className="text-xl leading-none text-brand transition-transform group-open:rotate-45">+</span>
               </summary>
               <p className="px-5 pb-5 text-[15px] leading-relaxed text-muted-foreground sm:px-6">{f.a}</p>
             </details>

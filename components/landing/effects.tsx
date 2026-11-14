@@ -45,7 +45,7 @@ export function Spotlight() {
         ref={ref}
         aria-hidden
         className="pointer-events-none absolute inset-0 transition-opacity duration-500"
-        style={{ background: "radial-gradient(560px circle at var(--x, 30%) var(--y, 40%), rgba(242,183,5,0.13), transparent 62%)" }}
+        style={{ background: "radial-gradient(560px circle at var(--x, 30%) var(--y, 40%), rgba(255,200,61,0.13), transparent 62%)" }}
       />
       <div aria-hidden className="grain pointer-events-none absolute inset-0 opacity-[0.07] mix-blend-overlay" />
     </>
@@ -90,7 +90,7 @@ const FACTS = [
 export function FactTicker() {
   const items = [...FACTS, ...FACTS];
   return (
-    <div className="group relative overflow-hidden border-y border-white/10 bg-[#082d26] py-4 text-white" aria-label="Facts">
+    <div className="group relative overflow-hidden border-y border-white/10 bg-brand-deep py-4 text-white" aria-label="Facts">
       <div className="flex w-max animate-[ticker_48s_linear_infinite] gap-10 group-hover:[animation-play-state:paused] motion-reduce:animate-none">
         {items.map((f, i) => (
           <span key={i} className="inline-flex items-center gap-10 whitespace-nowrap text-sm text-white/75" aria-hidden={i >= FACTS.length}>
@@ -98,8 +98,8 @@ export function FactTicker() {
             <span className="grid grid-cols-2 gap-[3px]" aria-hidden>
               <span className="size-[5px] rounded-[1.5px] bg-white/70" />
               <span className="size-[5px] rounded-[1.5px] bg-white/70" />
-              <span className="size-[5px] rounded-[1.5px] bg-marigold" />
-              <span className="size-[5px] rounded-[1.5px] bg-[#9cc3e6]" />
+              <span className="size-[5px] rounded-[1.5px] bg-sun" />
+              <span className="size-[5px] rounded-[1.5px] bg-sky" />
             </span>
           </span>
         ))}

@@ -26,9 +26,9 @@ export function ProcessStrip({ answers, scenarios, best, letters }: { answers: n
           transition={{ delay: i * 0.18, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="flex items-center justify-between">
-            <span className="flex size-9 items-center justify-center rounded-[10px] bg-pine/[0.08] text-pine"><s.icon className="size-[18px]" aria-hidden /></span>
+            <span className="flex size-9 items-center justify-center rounded-[10px] bg-brand/[0.08] text-brand"><s.icon className="size-[18px]" aria-hidden /></span>
             <motion.span
-              className="flex size-5 items-center justify-center rounded-full bg-pine text-white"
+              className="flex size-5 items-center justify-center rounded-full bg-brand text-white"
               initial={{ scale: 0 }}
               whileInView={{ scale: 1 }}
               viewport={{ once: true }}
@@ -43,7 +43,7 @@ export function ProcessStrip({ answers, scenarios, best, letters }: { answers: n
           {i < steps.length - 1 && (
             <motion.span
               aria-hidden
-              className="absolute -right-3 top-1/2 hidden h-0.5 w-3 origin-left bg-pine/40 sm:block"
+              className="absolute -right-3 top-1/2 hidden h-0.5 w-3 origin-left bg-brand/40 sm:block"
               initial={{ scaleX: 0 }}
               whileInView={{ scaleX: 1 }}
               viewport={{ once: true }}

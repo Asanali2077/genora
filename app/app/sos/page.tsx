@@ -23,7 +23,7 @@ export default async function SosPage() {
   return (
     <>
       <PageHeader title="Sick day plan" sub="Kid sick or school closed tomorrow? Every way to cover it, ranked by what it really costs, with the messages ready." />
-      <div className="max-w-6xl px-5 py-8 md:px-10">
+      <div>
         <SosPlanner
           kids={kids}
           parents={parents}

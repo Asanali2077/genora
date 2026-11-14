@@ -36,7 +36,7 @@ function Chips<T extends string | number>({ label, value, options, onChange }: {
             role="radio"
             aria-checked={value === o.v}
             onClick={() => onChange(o.v)}
-            className={cn("h-10 rounded-full border px-4 text-sm font-semibold transition-colors", value === o.v ? "border-pine bg-pine text-white" : "border-ink/15 bg-white text-ink hover:border-pine/50")}
+            className={cn("h-10 rounded-full border px-4 text-sm font-semibold transition-colors", value === o.v ? "border-brand bg-brand text-white" : "border-ink/15 bg-white text-ink hover:border-brand/50")}
           >
             {o.t}
           </button>
@@ -80,13 +80,13 @@ export function SosPlanner(p: Props) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
               transition={{ delay: i * 0.06, duration: 0.3 }}
-              className={cn("panel flex items-start justify-between gap-4 p-5", i === 0 && o.available && "ring-2 ring-pine", !o.available && "opacity-55")}
+              className={cn("panel flex items-start justify-between gap-4 p-5", i === 0 && o.available && "ring-2 ring-brand", !o.available && "opacity-55")}
             >
               <div>
                 <p className="flex flex-wrap items-center gap-2 font-semibold text-ink">
                   {o.title}
-                  {i === 0 && o.available && <span className="rounded-full bg-pine px-2 py-0.5 text-[11px] font-bold text-white">Best option</span>}
-                  {o.badge && <span className="rounded-full bg-marigold/25 px-2 py-0.5 text-[11px] font-bold text-ink">{o.badge}</span>}
+                  {i === 0 && o.available && <span className="rounded-full bg-brand px-2 py-0.5 text-[11px] font-bold text-white">Best option</span>}
+                  {o.badge && <span className="rounded-full bg-sun/25 px-2 py-0.5 text-[11px] font-bold text-ink">{o.badge}</span>}
                 </p>
                 <p className="mt-1 text-sm text-muted-foreground">{o.detail}</p>
               </div>

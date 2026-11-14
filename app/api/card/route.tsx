@@ -8,14 +8,14 @@ export async function GET(req: Request) {
 
   return new ImageResponse(
     (
-      <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between", background: "#0b3b32", color: "#fff", padding: 96, fontFamily: "sans-serif" }}>
+      <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between", background: "#22185a", color: "#fff", padding: 96, fontFamily: "sans-serif" }}>
         <div style={{ display: "flex", gap: 20 }}>
-          <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>{cell("#ffffff")}{cell("#f2b705")}</div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>{cell("#ffffff")}{cell("#9cc3e6")}</div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>{cell("#ffffff")}{cell("#ffc83d")}</div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>{cell("#ffffff")}{cell("#9dcbff")}</div>
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ fontSize: 56, opacity: 0.8 }}>Our family found</div>
-          <div style={{ fontSize: 200, fontWeight: 800, color: "#f2b705", letterSpacing: -6, lineHeight: 1.05 }}>${found.toLocaleString("en-US")}</div>
+          <div style={{ fontSize: 200, fontWeight: 800, color: "#ffc83d", letterSpacing: -6, lineHeight: 1.05 }}>${found.toLocaleString("en-US")}</div>
           <div style={{ fontSize: 56, opacity: 0.8 }}>a year in childcare money</div>
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", fontSize: 40 }}>

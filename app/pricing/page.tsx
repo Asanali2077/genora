@@ -27,7 +27,7 @@ export default async function PricingPage() {
             const Icon = ICONS[i] ?? Calculator;
             return (
               <li key={f} className="flex gap-4">
-                <span className="flex size-10 shrink-0 items-center justify-center rounded-[11px] bg-pine/[0.08] text-pine" aria-hidden>
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-[11px] bg-brand/[0.08] text-brand" aria-hidden>
                   <Icon className="size-5" />
                 </span>
                 <span className="pt-2 text-ink">{f}</span>
@@ -39,7 +39,7 @@ export default async function PricingPage() {
         <dl className="mt-4 space-y-3">
           {pricing.weekly.map((w) => (
             <div key={w.when} className="grid gap-1 sm:grid-cols-[11rem_1fr]">
-              <dt className="text-sm font-semibold text-pine">{w.when}</dt>
+              <dt className="text-sm font-semibold text-brand">{w.when}</dt>
               <dd className="text-sm text-ink/80">{w.what}</dd>
             </div>
           ))}

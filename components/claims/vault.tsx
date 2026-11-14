@@ -43,16 +43,16 @@ function PaceBar({ s }: { s: ClaimsResult }) {
   return (
     <div>
       <div className="flex h-5 overflow-hidden rounded-md bg-muted" role="img" aria-label={`${usd(s.logged)} of ${usd(s.election)} used, ${usd(s.forfeitRisk)} at risk`}>
-        <span className="bg-pine" style={{ width: seg(s.reimbursed) }} />
-        <span className="bg-pine/55" style={{ width: seg(s.submitted) }} />
-        <span className="bg-marigold" style={{ width: seg(s.waiting) }} />
-        <span style={{ width: seg(future), backgroundImage: "repeating-linear-gradient(45deg, var(--pine) 0 2px, transparent 2px 7px)", opacity: 0.35 }} />
+        <span className="bg-brand" style={{ width: seg(s.reimbursed) }} />
+        <span className="bg-brand/55" style={{ width: seg(s.submitted) }} />
+        <span className="bg-sun" style={{ width: seg(s.waiting) }} />
+        <span style={{ width: seg(future), backgroundImage: "repeating-linear-gradient(45deg, var(--brand) 0 2px, transparent 2px 7px)", opacity: 0.35 }} />
         <span className="bg-destructive/15 outline outline-1 -outline-offset-1 outline-destructive/50" style={{ width: seg(s.forfeitRisk) }} />
       </div>
       <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-xs text-muted-foreground">
-        <li><span className="mr-1.5 inline-block size-2.5 rounded-sm bg-pine" />Reimbursed {usd(s.reimbursed)}</li>
-        <li><span className="mr-1.5 inline-block size-2.5 rounded-sm bg-pine/55" />Submitted {usd(s.submitted)}</li>
-        <li><span className="mr-1.5 inline-block size-2.5 rounded-sm bg-marigold" />Waiting to submit {usd(s.waiting)}</li>
+        <li><span className="mr-1.5 inline-block size-2.5 rounded-sm bg-brand" />Reimbursed {usd(s.reimbursed)}</li>
+        <li><span className="mr-1.5 inline-block size-2.5 rounded-sm bg-brand/55" />Submitted {usd(s.submitted)}</li>
+        <li><span className="mr-1.5 inline-block size-2.5 rounded-sm bg-sun" />Waiting to submit {usd(s.waiting)}</li>
         <li>Expected care before the deadline {usd(future)}</li>
         <li className="text-destructive">At risk {usd(s.forfeitRisk)}</li>
       </ul>
@@ -150,7 +150,7 @@ export function Vault({ summary, receipts, recommended }: { summary: ClaimsResul
           </div>
         )}
         {summary.missingTin.length > 0 && (
-          <p className="inset mt-4 border-l-4 border-marigold px-4 py-3 text-sm">
+          <p className="inset mt-4 border-l-4 border-sun px-4 py-3 text-sm">
             Ask {summary.missingTin.join(", ")} for a taxpayer ID (or a signed Form W-10). You need it for FSA claims and Form 2441.
           </p>
         )}
@@ -191,7 +191,7 @@ export function Vault({ summary, receipts, recommended }: { summary: ClaimsResul
 
         {fields && (
           <div className="mt-5 space-y-4 border-t pt-5">
-            {source === "ai" && <p className="text-sm font-medium text-pine">Read by AI — check each field.</p>}
+            {source === "ai" && <p className="text-sm font-medium text-brand">Read by AI — check each field.</p>}
             <label className="block text-sm">
               <span className="font-semibold">Provider</span>
               <input value={fields.provider} onChange={(e) => set({ provider: e.target.value })} className="mt-2 h-12 w-full rounded-lg border bg-background px-3 text-base" />

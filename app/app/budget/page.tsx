@@ -14,7 +14,7 @@ export default async function BudgetPage() {
   return (
     <>
       <PageHeader title="Budget forecast" sub="Your next 12 months with everything ordinary budgets miss: tax rules, benefits, school breaks, sick season, holidays and your kids' milestones." />
-      <div className="max-w-7xl px-5 py-8 md:px-10">
+      <div>
         <BudgetBoard profile={household.profile} coverage={result?.assignments ?? []} ptoUsed={result?.ptoUsed ?? {}} today={today} pro={pro} />
       </div>
     </>

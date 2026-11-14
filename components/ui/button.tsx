@@ -3,22 +3,22 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 /**
- * Genora buttons. Primary: pine with a soft top highlight and a pressed state.
- * Outline: white with an ink hairline that turns pine on hover. Sizes keep 44px+ tap targets.
+ * Genora buttons. Primary: brand violet with a soft top highlight and a pressed state.
+ * Outline: white with an ink hairline that turns violet on hover. Sizes keep 44px+ tap targets.
  */
 const buttonVariants = cva(
-  "group/button inline-flex shrink-0 items-center justify-center gap-2 border font-semibold whitespace-nowrap transition-[background-color,border-color,color,box-shadow,transform] duration-150 outline-none select-none focus-visible:ring-[3px] focus-visible:ring-marigold/70 active:not-aria-[haspopup]:translate-y-[1px] disabled:pointer-events-none disabled:opacity-45 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-[18px]",
+  "group/button inline-flex shrink-0 items-center justify-center gap-2 border font-semibold whitespace-nowrap transition-[background-color,border-color,color,box-shadow,transform] duration-150 outline-none select-none focus-visible:ring-[3px] focus-visible:ring-sun/70 active:not-aria-[haspopup]:translate-y-[1px] disabled:pointer-events-none disabled:opacity-45 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-[18px]",
   {
     variants: {
       variant: {
         default:
-          "border-transparent bg-pine text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_1px_2px_rgba(15,92,77,0.35),0_6px_16px_-8px_rgba(15,92,77,0.6)] hover:-translate-y-px hover:bg-[#0b4c40]",
+          "border-transparent bg-brand text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_1px_2px_rgba(91,74,230,0.35),0_6px_16px_-8px_rgba(91,74,230,0.6)] hover:-translate-y-px hover:bg-brand-deep",
         outline:
-          "border-ink/15 bg-white text-ink shadow-[0_1px_2px_rgba(23,42,38,0.06)] hover:border-pine/60 hover:text-pine aria-expanded:border-pine",
-        secondary: "border-transparent bg-pine/[0.08] text-pine hover:bg-pine/[0.14]",
-        ghost: "border-transparent text-muted-foreground hover:bg-pine/[0.07] hover:text-pine",
+          "border-ink/15 bg-white text-ink shadow-[0_1px_2px_rgba(23,22,31,0.06)] hover:border-brand/60 hover:text-brand aria-expanded:border-brand",
+        secondary: "border-transparent bg-brand/[0.08] text-brand hover:bg-brand/[0.14]",
+        ghost: "border-transparent text-muted-foreground hover:bg-brand/[0.07] hover:text-brand",
         destructive: "border-transparent bg-destructive/10 text-destructive hover:bg-destructive/15",
-        link: "border-transparent text-pine underline-offset-4 hover:underline",
+        link: "border-transparent text-brand underline-offset-4 hover:underline",
       },
       size: {
         default: "h-11 rounded-[10px] px-5 text-[15px]",

@@ -37,9 +37,9 @@ export function Letters({ letters }: { letters: Letter[] }) {
               type="button"
               onClick={() => setOpenId(l.id)}
               aria-current={l.id === open.id}
-              className={cn("w-full px-4 py-3.5 text-left transition-colors", l.id === open.id ? "bg-pine/[0.07]" : "hover:bg-ink/[0.03]")}
+              className={cn("w-full px-4 py-3.5 text-left transition-colors", l.id === open.id ? "bg-brand/[0.07]" : "hover:bg-ink/[0.03]")}
             >
-              <span className={cn("block text-sm font-semibold", l.id === open.id ? "text-pine" : "text-ink")}>{l.title}</span>
+              <span className={cn("block text-sm font-semibold", l.id === open.id ? "text-brand" : "text-ink")}>{l.title}</span>
               <span className="mt-0.5 block text-xs text-muted-foreground">{l.when}</span>
             </button>
           </li>
@@ -56,7 +56,7 @@ export function Letters({ letters }: { letters: Letter[] }) {
           </dl>
         </header>
         <pre className="whitespace-pre-wrap px-5 py-5 font-sans text-[15px] leading-relaxed text-ink sm:px-6">{open.body}</pre>
-        <footer className="flex flex-wrap gap-2 border-t border-ink/[0.07] bg-[#fafcfb] px-5 py-4 sm:px-6">
+        <footer className="flex flex-wrap gap-2 border-t border-ink/[0.07] bg-wash px-5 py-4 sm:px-6">
           <Button onClick={() => copy(open)}>{copied === open.id ? <Check /> : <Copy />}{copied === open.id ? "Copied" : "Copy letter"}</Button>
           <Button variant="outline" nativeButton={false} render={<a href={`mailto:?subject=${encodeURIComponent(open.subject)}&body=${encodeURIComponent(open.body)}`} />}>
             <Mail />Open in email

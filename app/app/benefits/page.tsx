@@ -8,7 +8,7 @@ import { possessive } from "@/lib/engine/benefits";
 import { CompareBars } from "@/components/plan/compare-bars";
 import { WhatIf } from "@/components/plan/what-if";
 import { CountUp } from "@/components/motion";
-import { ChevronRight } from "lucide-react";
+import { Crumb } from "@/components/app/shell";
 import { SectionTabs } from "@/components/app/section-tabs";
 import { TAX_YEAR } from "@/lib/engine/tax-2026";
 import { OptimizerChart } from "@/components/plan/optimizer-chart";
@@ -40,10 +40,10 @@ export default async function BenefitsPage() {
   const what = (
     <ol className="space-y-3">
       {firstAction && (
-        <li className="panel border-l-4 border-l-pine p-5">
+        <li className="panel border-l-4 border-l-brand p-5">
           <p className="font-semibold text-ink">{firstAction.title}</p>
           <p className="mt-1 text-sm text-muted-foreground">{firstAction.detail}</p>
-          <p className="mt-2 text-xs font-semibold text-pine">{firstAction.when}</p>
+          <p className="mt-2 text-xs font-semibold text-brand">{firstAction.when}</p>
         </li>
       )}
       {moreActions.map((a) =>
@@ -51,7 +51,7 @@ export default async function BenefitsPage() {
           <li key={a.id} className="panel p-5">
             <p className="font-semibold text-ink">{a.title}</p>
             <p className="mt-1 text-sm text-muted-foreground">{a.detail}</p>
-            <p className="mt-2 text-xs font-semibold text-pine">{a.when}</p>
+            <p className="mt-2 text-xs font-semibold text-brand">{a.when}</p>
           </li>
         ) : (
           <li key={a.id} className="rounded-[18px] border border-dashed border-ink/15 p-5 text-muted-foreground">
@@ -64,21 +64,16 @@ export default async function BenefitsPage() {
   );
 
   return (
-    <div className="mx-auto w-full max-w-4xl px-5 pb-20 pt-6 md:px-10 md:pt-9">
+    <div>
       <TrackView name="savings_reveal_view" props={{ found_money: r.foundMoney }} />
-
-      <nav aria-label="Breadcrumb" className="mb-3 flex items-center gap-1.5 text-sm text-muted-foreground">
-        <Link href="/app" className="hover:text-pine">Today</Link>
-        <ChevronRight className="size-3.5" aria-hidden />
-        <span>Money</span>
-      </nav>
-      <p className="font-semibold text-pine">Taxes & benefits · {TAX_YEAR}</p>
+      <Crumb group="Money" />
+      <p className="font-semibold text-brand">Taxes & benefits · {TAX_YEAR}</p>
       {big ? (
-        <h1 className="mt-2 font-heading text-[2.3rem] font-bold leading-[1.05] tracking-[-0.03em] text-ink sm:text-[3.2rem]">
+        <h1 className="display mt-2 max-w-4xl text-[1.9rem] leading-[1.1] text-ink sm:text-[2.6rem]">
           You&apos;re leaving <CountUp value={r.foundMoney} className="marker tabular" /> a year on the table.
         </h1>
       ) : (
-        <h1 className="mt-2 font-heading text-[2.3rem] font-bold leading-[1.05] tracking-[-0.03em] text-ink sm:text-[3.2rem]">
+        <h1 className="display mt-2 max-w-4xl text-[1.9rem] leading-[1.1] text-ink sm:text-[2.6rem]">
           Your setup is close to the best plan: <CountUp value={r.optimal.total} className="marker tabular" /> back this year.
         </h1>
       )}
@@ -97,7 +92,7 @@ export default async function BenefitsPage() {
         {r.warnings.length > 0 && (
           <ul className="mt-3 space-y-2">
             {r.warnings.map((w) => (
-              <li key={w.id} className="inset border-l-4 border-marigold px-4 py-3 text-sm">
+              <li key={w.id} className="inset border-l-4 border-sun px-4 py-3 text-sm">
                 {w.message}
                 {w.amount ? <strong className="tabular"> {usd(w.amount)}</strong> : null}
               </li>

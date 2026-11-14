@@ -63,16 +63,16 @@ export function AskChat({ suggestions, initialQuestion }: { suggestions: string[
           {msgs.map((m, i) => (
             <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className={cn("flex gap-3", m.role === "user" && "justify-end")}>
               {m.role === "assistant" && <Mark size={28} className="mt-1 shrink-0" />}
-              <p className={cn("max-w-xl whitespace-pre-wrap rounded-[16px] px-4 py-3 text-[15px] leading-relaxed", m.role === "user" ? "bg-pine text-white" : "bg-[#eef3f1] text-ink")}>{m.text}</p>
+              <p className={cn("max-w-xl whitespace-pre-wrap rounded-[16px] px-4 py-3 text-[15px] leading-relaxed", m.role === "user" ? "bg-brand text-white" : "bg-wash text-ink")}>{m.text}</p>
             </motion.div>
           ))}
         </AnimatePresence>
         {busy && (
           <div className="flex items-center gap-3">
             <Mark size={28} />
-            <span className="flex gap-1 rounded-[16px] bg-[#eef3f1] px-4 py-4" aria-label="Genora is thinking">
+            <span className="flex gap-1 rounded-[16px] bg-wash px-4 py-4" aria-label="Genora is thinking">
               {[0, 1, 2].map((d) => (
-                <motion.span key={d} className="size-2 rounded-full bg-pine" animate={{ opacity: [0.3, 1, 0.3] }} transition={{ duration: 1, repeat: Infinity, delay: d * 0.2 }} />
+                <motion.span key={d} className="size-2 rounded-full bg-brand" animate={{ opacity: [0.3, 1, 0.3] }} transition={{ duration: 1, repeat: Infinity, delay: d * 0.2 }} />
               ))}
             </span>
           </div>
@@ -80,17 +80,17 @@ export function AskChat({ suggestions, initialQuestion }: { suggestions: string[
         <div ref={endRef} />
       </div>
 
-      <div className="border-t border-ink/[0.07] bg-[#fafcfb] p-4 sm:p-5">
+      <div className="border-t border-ink/[0.07] bg-wash p-4 sm:p-5">
         <div className="mb-3 flex flex-wrap gap-2">
           {follow.map((s) => (
-            <button key={s} type="button" disabled={busy} onClick={() => ask(s)} className="rounded-full border border-ink/15 bg-white px-3.5 py-1.5 text-sm text-ink transition-colors hover:border-pine hover:text-pine disabled:opacity-50">
+            <button key={s} type="button" disabled={busy} onClick={() => ask(s)} className="rounded-full border border-ink/15 bg-white px-3.5 py-1.5 text-sm text-ink transition-colors hover:border-brand hover:text-brand disabled:opacity-50">
               {s}
             </button>
           ))}
         </div>
         <form onSubmit={(e) => { e.preventDefault(); void ask(input); }} className="field flex items-center gap-2 pr-1.5">
           <input value={input} onChange={(e) => setInput(e.target.value)} maxLength={500} placeholder="Can I pay for summer camp with my FSA?" aria-label="Your question" className="h-full flex-1 bg-transparent outline-none" />
-          <button type="submit" disabled={busy || !input.trim()} aria-label="Send" className="flex size-9 items-center justify-center rounded-[9px] bg-pine text-white disabled:opacity-40"><ArrowUp className="size-[18px]" /></button>
+          <button type="submit" disabled={busy || !input.trim()} aria-label="Send" className="flex size-9 items-center justify-center rounded-[9px] bg-brand text-white disabled:opacity-40"><ArrowUp className="size-[18px]" /></button>
         </form>
         <p className="mt-2 text-xs text-muted-foreground">Educational answers from your Genora numbers, not tax advice.</p>
       </div>

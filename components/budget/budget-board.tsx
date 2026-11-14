@@ -17,13 +17,13 @@ import { ForecastChart } from "./forecast-chart";
 
 const usd = (n: number) => `${n < 0 ? "−" : ""}$${Math.abs(Math.round(n)).toLocaleString("en-US")}`;
 const KIND: Record<LineKind, { label: string; dot: string }> = {
-  income: { label: "Pay", dot: "bg-pine" },
-  benefit: { label: "Benefits", dot: "bg-marigold" },
-  tax: { label: "Tax credits", dot: "bg-[#5b8fc7]" },
+  income: { label: "Pay", dot: "bg-brand" },
+  benefit: { label: "Benefits", dot: "bg-sun" },
+  tax: { label: "Tax credits", dot: "bg-sky-strong" },
   fixed: { label: "Bills", dot: "bg-ink/40" },
-  care: { label: "Childcare", dot: "bg-[#d9694f]" },
-  season: { label: "Seasonal", dot: "bg-[#b58ad6]" },
-  sick: { label: "Sick days", dot: "bg-[#8a6d3b]" },
+  care: { label: "Childcare", dot: "bg-bad" },
+  season: { label: "Seasonal", dot: "bg-brand" },
+  sick: { label: "Sick days", dot: "bg-ink" },
 };
 const FIELDS: { key: keyof Budget; label: string; hint?: string }[] = [
   { key: "housing", label: "Rent or mortgage" },
@@ -39,7 +39,7 @@ function Slider({ label, value, min, max, step, suffix, onChange }: { label: str
   return (
     <label className="block">
       <span className="flex justify-between text-sm"><span className="font-medium text-ink/80">{label}</span><span className="font-heading font-bold text-ink tabular">{value > 0 ? "+" : ""}{value}{suffix}</span></span>
-      <input type="range" min={min} max={max} step={step} value={value} onChange={(e) => onChange(Number(e.target.value))} className="mt-2 w-full accent-[var(--pine)]" />
+      <input type="range" min={min} max={max} step={step} value={value} onChange={(e) => onChange(Number(e.target.value))} className="mt-2 w-full accent-[var(--brand)]" />
     </label>
   );
 }
@@ -148,14 +148,14 @@ export function BudgetBoard({ profile, coverage, ptoUsed, today, pro }: { profil
 
       <div className="grid gap-6 xl:grid-cols-[1.5fr_1fr] xl:items-start">
         <section aria-labelledby="chart" className="panel p-5 sm:p-6">
-          <h2 id="chart" className="font-heading text-lg font-bold text-ink">Your next 12 months{stressed && <span className="ml-2 rounded-full bg-marigold/30 px-2 py-0.5 text-xs font-bold text-ink">stress test on</span>}</h2>
+          <h2 id="chart" className="font-heading text-lg font-bold text-ink">Your next 12 months{stressed && <span className="ml-2 rounded-full bg-sun/30 px-2 py-0.5 text-xs font-bold text-ink">stress test on</span>}</h2>
           <div className="mt-4"><ForecastChart months={f.months} selected={selected} onSelect={setSelected} /></div>
         </section>
 
         <section aria-labelledby="month" className="panel overflow-hidden" aria-live="polite">
           <header className="flex items-baseline justify-between border-b border-ink/[0.07] px-5 py-4">
             <h2 id="month" className="font-heading text-lg font-bold text-ink">{month.label}</h2>
-            <span className={cn("font-heading font-bold tabular", month.net >= 0 ? "text-pine" : "text-[#c2553c]")}>{month.net >= 0 ? "+" : ""}{usd(month.net)}</span>
+            <span className={cn("font-heading font-bold tabular", month.net >= 0 ? "text-brand" : "text-bad")}>{month.net >= 0 ? "+" : ""}{usd(month.net)}</span>
           </header>
           <AnimatePresence mode="wait">
             <motion.ul key={month.ym} initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="ledger max-h-[22rem] overflow-y-auto">
@@ -165,12 +165,12 @@ export function BudgetBoard({ profile, coverage, ptoUsed, today, pro }: { profil
                     <span className={cn("mt-1.5 size-2 shrink-0 rounded-full", KIND[l.kind].dot)} aria-hidden />
                     <span><span className="text-ink">{l.label}</span>{l.note && <span className="block text-xs text-muted-foreground">{l.note}</span>}</span>
                   </span>
-                  <span className={cn("shrink-0 font-semibold tabular", l.amount >= 0 ? "text-pine" : "text-ink")}>{l.amount >= 0 ? "+" : ""}{usd(l.amount)}</span>
+                  <span className={cn("shrink-0 font-semibold tabular", l.amount >= 0 ? "text-brand" : "text-ink")}>{l.amount >= 0 ? "+" : ""}{usd(l.amount)}</span>
                 </li>
               ))}
             </motion.ul>
           </AnimatePresence>
-          <footer className="flex justify-between border-t border-ink/[0.07] bg-[#fafcfb] px-5 py-3 text-sm">
+          <footer className="flex justify-between border-t border-ink/[0.07] bg-wash px-5 py-3 text-sm">
             <span className="text-muted-foreground">Balance at month end</span>
             <span className={cn("font-heading font-bold tabular", month.balance < 0 ? "text-destructive" : "text-ink")}>{usd(month.balance)}</span>
           </footer>
@@ -186,9 +186,9 @@ export function BudgetBoard({ profile, coverage, ptoUsed, today, pro }: { profil
                 <div>
                   <p className="font-semibold text-ink">{e.title}</p>
                   <p className="text-sm text-muted-foreground">{e.detail}</p>
-                  <p className="mt-0.5 text-xs font-medium text-pine">{e.when}</p>
+                  <p className="mt-0.5 text-xs font-medium text-brand">{e.when}</p>
                 </div>
-                {e.amount !== 0 && <span className={cn("shrink-0 font-heading font-bold tabular", e.amount > 0 ? "text-pine" : "text-[#c2553c]")}>{e.amount > 0 ? "+" : ""}{usd(e.amount)}</span>}
+                {e.amount !== 0 && <span className={cn("shrink-0 font-heading font-bold tabular", e.amount > 0 ? "text-brand" : "text-bad")}>{e.amount > 0 ? "+" : ""}{usd(e.amount)}</span>}
               </motion.li>
             ))}
           </ul>
@@ -202,9 +202,9 @@ export function BudgetBoard({ profile, coverage, ptoUsed, today, pro }: { profil
               <Slider label="Household pay" value={sc.incomeChangePct} min={-30} max={20} step={5} suffix="%" onChange={(v) => setSc({ ...sc, incomeChangePct: v })} />
               <Slider label="Childcare prices" value={sc.careChangePct} min={0} max={30} step={5} suffix="%" onChange={(v) => setSc({ ...sc, careChangePct: v })} />
               <Slider label="Extra sick days" value={sc.extraSickDays} min={0} max={25} step={1} suffix=" days" onChange={(v) => setSc({ ...sc, extraSickDays: v })} />
-              <button type="button" role="switch" aria-checked={sc.usePlan} onClick={() => setSc({ ...sc, usePlan: !sc.usePlan })} className={cn("flex w-full items-center justify-between rounded-[12px] border px-4 py-3 text-left", sc.usePlan ? "border-pine bg-[#f1f7f5]" : "border-ink/12 bg-white")}>
+              <button type="button" role="switch" aria-checked={sc.usePlan} onClick={() => setSc({ ...sc, usePlan: !sc.usePlan })} className={cn("flex w-full items-center justify-between rounded-[12px] border px-4 py-3 text-left", sc.usePlan ? "border-brand bg-wash" : "border-ink/12 bg-white")}>
                 <span><span className="block text-sm font-semibold text-ink">Use Genora&apos;s benefits plan</span><span className="block text-xs text-muted-foreground">Turn off to see the year with your current elections</span></span>
-                <span aria-hidden className={cn("relative h-6 w-10 rounded-full transition-colors", sc.usePlan ? "bg-pine" : "bg-ink/15")}><span className={cn("absolute top-0.5 size-5 rounded-full bg-white shadow transition-[left]", sc.usePlan ? "left-[18px]" : "left-0.5")} /></span>
+                <span aria-hidden className={cn("relative h-6 w-10 rounded-full transition-colors", sc.usePlan ? "bg-brand" : "bg-ink/15")}><span className={cn("absolute top-0.5 size-5 rounded-full bg-white shadow transition-[left]", sc.usePlan ? "left-[18px]" : "left-0.5")} /></span>
               </button>
               {stressed && <Button variant="ghost" size="sm" onClick={() => setSc(BASE_SCENARIO)}>Reset to my plan</Button>}
             </div>
@@ -216,7 +216,7 @@ export function BudgetBoard({ profile, coverage, ptoUsed, today, pro }: { profil
       </div>
 
       <details className="group">
-        <summary className="inline-flex cursor-pointer items-center text-sm font-semibold text-pine">Edit my bills and yearly costs</summary>
+        <summary className="inline-flex cursor-pointer items-center text-sm font-semibold text-brand">Edit my bills and yearly costs</summary>
         <div className="mt-4">{setup}</div>
       </details>
       <p className="text-xs text-muted-foreground">

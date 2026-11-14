@@ -231,7 +231,7 @@ export function Onboarding() {
         </div>
         <div className="mt-2 grid gap-1" style={{ gridTemplateColumns: `repeat(${steps.length}, 1fr)` }} aria-hidden>
           {steps.map((_, i) => (
-            <span key={i} className={`h-1.5 rounded-full transition-colors ${i <= step ? "bg-pine" : "bg-ink/10"}`} />
+            <span key={i} className={`h-1.5 rounded-full transition-colors ${i <= step ? "bg-brand" : "bg-ink/10"}`} />
           ))}
         </div>
       </div>

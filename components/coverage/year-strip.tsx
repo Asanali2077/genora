@@ -1,9 +1,9 @@
 import type { Assignment } from "@/lib/engine/coverage";
 
 const COLORS: Record<Assignment["cover"], string> = {
-  pto: "bg-pine",
-  camp: "bg-marigold",
-  sitter: "bg-[#5b8fc7]",
+  pto: "bg-brand",
+  camp: "bg-sun",
+  sitter: "bg-sky-strong",
 };
 const LEGEND: { cover: Assignment["cover"]; label: string }[] = [
   { cover: "pto", label: "Parent PTO" },

@@ -13,7 +13,7 @@ export default async function AskPage({ searchParams }: PageProps<"/app/ask">) {
   return (
     <>
       <PageHeader title="Ask Genora" sub="Questions about the FSA, the credit, camps or deadlines, answered from your family's numbers." />
-      <div className="max-w-4xl px-5 py-8 md:px-10">
+      <div>
         <AskChat initialQuestion={typeof q === "string" ? q.slice(0, 500) : undefined} suggestions={["Why is the FSA better for us than the tax credit?", `Can I pay for ${kid}'s summer camp with my FSA?`, "What happens if I don't use all my FSA money?"]} />
       </div>
     </>

@@ -16,7 +16,7 @@ export default async function ClaimsPage() {
   return (
     <>
       <PageHeader title="Claims & receipts" sub="Every childcare payment you log brings FSA money back. Genora tracks it and warns you before anything is forfeited." />
-      <div className="max-w-4xl px-5 py-8 md:px-10">
+      <div>
         {pro ? (
           <Vault summary={summary} receipts={receipts} recommended={recommended} />
         ) : (

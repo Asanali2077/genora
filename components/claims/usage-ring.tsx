@@ -10,13 +10,13 @@ export function UsageRing({ used, total }: { used: number; total: number }) {
   return (
     <div className="relative size-32 shrink-0" role="img" aria-label={`${Math.round(pct * 100)}% of the FSA election claimed`}>
       <svg viewBox="0 0 110 110" className="size-full -rotate-90">
-        <circle cx="55" cy="55" r={r} fill="none" stroke="#eef3f1" strokeWidth="11" />
+        <circle cx="55" cy="55" r={r} fill="none" stroke="var(--wash)" strokeWidth="11" />
         <motion.circle
           cx="55"
           cy="55"
           r={r}
           fill="none"
-          stroke="var(--pine)"
+          stroke="var(--brand)"
           strokeWidth="11"
           strokeLinecap="round"
           strokeDasharray={c}

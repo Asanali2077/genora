@@ -21,7 +21,7 @@ export function PlanBreakdown({ result }: { result: BenefitsResult }) {
           <tr className="border-b border-ink/[0.07] text-left text-muted-foreground">
             <th scope="col" className="p-3 font-medium">This year</th>
             <th scope="col" className="p-3 text-right font-medium">Now</th>
-            <th scope="col" className="bg-pine/[0.06] p-3 text-right font-semibold text-pine">Best plan</th>
+            <th scope="col" className="bg-brand/[0.06] p-3 text-right font-semibold text-brand">Best plan</th>
           </tr>
         </thead>
         <tbody className="tabular">
@@ -34,14 +34,14 @@ export function PlanBreakdown({ result }: { result: BenefitsResult }) {
               <tr key={r.key} className="border-b border-ink/[0.07]">
                 <th scope="row" className="p-3 text-left font-normal">{r.label}</th>
                 <td className="p-3 text-right">{sign}{usd(now)}</td>
-                <td className="bg-pine/[0.06] p-3 text-right font-semibold">{sign}{usd(best)}</td>
+                <td className="bg-brand/[0.06] p-3 text-right font-semibold">{sign}{usd(best)}</td>
               </tr>
             );
           })}
           <tr className="font-semibold">
             <th scope="row" className="p-3 text-left">Money back this year</th>
             <td className="p-3 text-right">{usd(result.current.total)}</td>
-            <td className="bg-pine/[0.1] p-3 text-right font-heading text-base font-extrabold text-pine">{usd(result.optimal.total)}</td>
+            <td className="bg-brand/[0.1] p-3 text-right font-heading text-base font-extrabold text-brand">{usd(result.optimal.total)}</td>
           </tr>
         </tbody>
       </table>
@@ -66,7 +66,7 @@ export function ShowMath({ result }: { result: BenefitsResult }) {
                 {m.source && (
                   <>
                     {" · "}
-                    <a href={m.source} target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-pine">
+                    <a href={m.source} target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-brand">
                       source
                     </a>
                   </>

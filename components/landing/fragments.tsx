@@ -15,8 +15,8 @@ export function CompareFragment() {
               <span className={r.best ? "font-semibold text-ink" : "text-muted-foreground"}>{r.label}</span>
               <span className="font-heading font-extrabold tabular text-ink">${r.value.toLocaleString("en-US")}</span>
             </div>
-            <div className="mt-1.5 h-2.5 rounded-full bg-[#e6eeeb]">
-              <div className={`h-full rounded-full ${r.best ? "bg-pine" : "bg-ink/25"}`} style={{ width: `${r.width}%` }} />
+            <div className="mt-1.5 h-2.5 rounded-full bg-wash">
+              <div className={`h-full rounded-full ${r.best ? "bg-brand" : "bg-ink/25"}`} style={{ width: `${r.width}%` }} />
             </div>
           </div>
         ))}
@@ -32,7 +32,7 @@ const SPRING = [
   { m: "Mar", d: "_.....__.....__S....__.....__....." },
   { m: "Apr", d: ".__CCCCC__.....__.....__.....__.." },
 ];
-const CELL: Record<string, string> = { P: "bg-pine", C: "bg-marigold", S: "bg-[#5b8fc7]", ".": "bg-ink/10", _: "bg-transparent" };
+const CELL: Record<string, string> = { P: "bg-brand", C: "bg-sun", S: "bg-sky-strong", ".": "bg-ink/10", _: "bg-transparent" };
 
 export function YearFragment() {
   return (
@@ -49,9 +49,9 @@ export function YearFragment() {
         ))}
       </div>
       <div className="mt-4 flex flex-wrap gap-4 text-xs text-muted-foreground">
-        <span className="inline-flex items-center gap-1.5"><span className="size-2.5 rounded-[3px] bg-pine" />PTO</span>
-        <span className="inline-flex items-center gap-1.5"><span className="size-2.5 rounded-[3px] bg-marigold" />Day camp</span>
-        <span className="inline-flex items-center gap-1.5"><span className="size-2.5 rounded-[3px] bg-[#5b8fc7]" />Sitter</span>
+        <span className="inline-flex items-center gap-1.5"><span className="size-2.5 rounded-[3px] bg-brand" />PTO</span>
+        <span className="inline-flex items-center gap-1.5"><span className="size-2.5 rounded-[3px] bg-sun" />Day camp</span>
+        <span className="inline-flex items-center gap-1.5"><span className="size-2.5 rounded-[3px] bg-sky-strong" />Sitter</span>
       </div>
     </div>
   );
@@ -64,10 +64,10 @@ export function ClaimsFragment() {
         <p className="text-sm text-muted-foreground">FSA election $5,000</p>
         <p className="text-sm font-semibold text-destructive">$785 at risk</p>
       </div>
-      <div className="mt-4 flex h-3.5 overflow-hidden rounded-full bg-[#e6eeeb]">
-        <span className="bg-pine" style={{ width: "33%" }} />
-        <span className="bg-marigold" style={{ width: "18%" }} />
-        <span style={{ width: "33%", backgroundImage: "repeating-linear-gradient(45deg, var(--pine) 0 2px, transparent 2px 7px)", opacity: 0.35 }} />
+      <div className="mt-4 flex h-3.5 overflow-hidden rounded-full bg-wash">
+        <span className="bg-brand" style={{ width: "33%" }} />
+        <span className="bg-sun" style={{ width: "18%" }} />
+        <span style={{ width: "33%", backgroundImage: "repeating-linear-gradient(45deg, var(--brand) 0 2px, transparent 2px 7px)", opacity: 0.35 }} />
         <span className="bg-destructive/15" style={{ width: "16%" }} />
       </div>
       <div className="mt-4 rounded-[10px] border border-ink/10 px-3.5 py-3 text-sm">

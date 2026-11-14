@@ -31,12 +31,21 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  --color-pine: var(--pine);
-  --color-marigold: var(--marigold);
+  --color-brand: var(--brand);
+  --color-brand-deep: var(--brand-deep);
+  --color-brand-soft: var(--brand-soft);
+  --color-sun: var(--sun);
+  --color-sun-soft: var(--sun-soft);
   --color-sky: var(--sky);
+  --color-sky-strong: var(--sky-strong);
+  --color-good: var(--good);
+  --color-good-soft: var(--good-soft);
+  --color-bad: var(--bad);
+  --color-bad-soft: var(--bad-soft);
   --color-ink: var(--ink);
   --color-paper: var(--paper);
-  --radius-sm: calc(var(--radius) * 0.5);
+  --color-wash: var(--wash);
+  --color-line: var(--line);  --radius-sm: calc(var(--radius) * 0.5);
   --radius-md: calc(var(--radius) * 0.75);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) * 1.5);
@@ -44,14 +53,25 @@
   --radius-3xl: calc(var(--radius) * 3);
 }
 
-/* Genora palette: "kitchen calendar after bedtime".
-   pine = trust/money, marigold = found money, sky = no-school days, ink = text, paper = cool white. */
+/* Genora palette: "evening violet".
+   brand = the product and trust; sun = found money only; sky = days without school;
+   good / bad = money in / money out; ink = text; paper = the cool page; wash = recessed wells. */
 :root {
-  --pine: #0f5c4d;
-  --marigold: #f2b705;
-  --sky: #cfe3f5;
-  --ink: #172a26;
-  --paper: #f6f8f7;
+  --brand: #5b4ae6;
+  --brand-deep: #22185a;
+  --brand-soft: #efecff;
+  --sun: #ffc83d;
+  --sun-soft: #fff4d1;
+  --sky: #9dcbff;
+  --sky-strong: #3d8be0;
+  --good: #13a06f;
+  --good-soft: #e3f6ee;
+  --bad: #e5534b;
+  --bad-soft: #fdebe9;
+  --ink: #17161f;
+  --paper: #f6f5fa;
+  --wash: #f0eff6;
+  --line: #e6e4ef;
 
   --background: var(--paper);
   --foreground: var(--ink);
@@ -59,27 +79,26 @@
   --card-foreground: var(--ink);
   --popover: #ffffff;
   --popover-foreground: var(--ink);
-  --primary: var(--pine);
+  --primary: var(--brand);
   --primary-foreground: #ffffff;
-  --secondary: #e4ece9;
+  --secondary: var(--brand-soft);
   --secondary-foreground: var(--ink);
-  --muted: #e9efed;
-  --muted-foreground: #4f625d;
-  --accent: #fff4cc;
+  --muted: var(--wash);
+  --muted-foreground: #5e5b6e;
+  --accent: var(--sun-soft);
   --accent-foreground: var(--ink);
-  --destructive: #b42318;
-  --border: #d5dfdb;
-  --input: #c4d1cc;
-  --ring: #0f5c4d;
-  --chart-1: #0f5c4d;
-  --chart-2: #f2b705;
-  --chart-3: #5b8fc7;
-  --chart-4: #8aa69c;
-  --chart-5: #b42318;
+  --destructive: #c4372f;
+  --border: var(--line);
+  --input: #d6d3e3;
+  --ring: var(--brand);
+  --chart-1: var(--brand);
+  --chart-2: var(--sun);
+  --chart-3: var(--sky-strong);
+  --chart-4: var(--good);
+  --chart-5: var(--bad);
   --radius: 0.75rem;
   color-scheme: light;
 }
-
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -91,12 +110,13 @@
     @apply font-sans;
   }
   h1, h2, h3 {
-    font-family: var(--font-display), var(--font-body), sans-serif;
-    letter-spacing: -0.025em;
+    font-family: var(--font-body), sans-serif;
+    font-weight: 650;
+    letter-spacing: -0.02em;
     text-wrap: balance;
   }
   :focus-visible {
-    outline: 3px solid var(--marigold);
+    outline: 3px solid var(--brand);
     outline-offset: 2px;
   }
 }
@@ -112,40 +132,46 @@
   /* Surfaces: page (paper) → panel (raised ledger sheet) → inset (recessed well). */
   .panel {
     background: #fff;
-    border: 1px solid rgb(23 42 38 / 0.08);
-    border-radius: 18px;
-    box-shadow: 0 1px 2px rgb(23 42 38 / 0.04), 0 14px 34px -22px rgb(15 92 77 / 0.35);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: 0 1px 2px rgb(23 22 31 / 0.04);
   }
   .inset {
-    background: #edf2f0;
+    background: var(--wash);
     border-radius: 12px;
   }
   /* Ledger rows: hairlines between rows instead of separate cards. */
   .ledger > * + * {
-    border-top: 1px solid rgb(23 42 38 / 0.08);
+    border-top: 1px solid var(--line);
+  }
+  /* Display face: Unbounded, for page titles and the money figures only. */
+  .display {
+    font-family: var(--font-display), var(--font-body), sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.035em;
   }
   .field {
     height: 3rem;
     width: 100%;
     border-radius: 10px;
-    border: 1px solid rgb(23 42 38 / 0.16);
+    border: 1px solid var(--input);
     background: #fff;
     padding-inline: 0.85rem;
     font-size: 1rem;
     transition: border-color 0.15s, box-shadow 0.15s;
   }
   .field:hover {
-    border-color: rgb(23 42 38 / 0.3);
+    border-color: #b9b5cc;
   }
   .field:focus,
   .field:focus-within {
     outline: none;
-    border-color: var(--pine);
-    box-shadow: 0 0 0 3px rgb(15 92 77 / 0.15);
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px rgb(91 74 230 / 0.18);
   }
-  /* The one signature move: found money gets a marigold marker stroke. */
+  /* Found money gets a sun marker stroke. */
   .marker {
-    background-image: linear-gradient(transparent 58%, color-mix(in srgb, var(--marigold) 70%, transparent) 58%, color-mix(in srgb, var(--marigold) 70%, transparent) 92%, transparent 92%);
+    background-image: linear-gradient(transparent 58%, color-mix(in srgb, var(--sun) 75%, transparent) 58%, color-mix(in srgb, var(--sun) 75%, transparent) 92%, transparent 92%);
     padding-inline: 0.08em;
   }
 }
@@ -167,7 +193,7 @@
   z-index: 1;
   border-radius: inherit;
   padding: 2px;
-  background: conic-gradient(from var(--beam), transparent 70%, var(--marigold) 86%, #ffe58a 90%, transparent 100%);
+  background: conic-gradient(from var(--beam), transparent 70%, var(--brand) 86%, var(--sun) 90%, transparent 100%);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;

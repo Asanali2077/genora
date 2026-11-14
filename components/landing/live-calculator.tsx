@@ -46,8 +46,8 @@ function Slider({ label, value, min, max, step, onChange }: { label: string; val
         step={step}
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="mt-3 h-1.5 w-full cursor-pointer appearance-none rounded-full accent-[var(--pine)]"
-        style={{ background: `linear-gradient(to right, var(--pine) ${pct}%, rgb(23 42 38 / 0.12) ${pct}%)` }}
+        className="mt-3 h-1.5 w-full cursor-pointer appearance-none rounded-full accent-[var(--brand)]"
+        style={{ background: `linear-gradient(to right, var(--brand) ${pct}%, rgb(23 22 31 / 0.12) ${pct}%)` }}
       />
     </label>
   );
@@ -92,7 +92,7 @@ export function LiveCalculator() {
           ].map((g) => (
             <div key={g.label}>
               <span id={`seg-${g.label}`} className="text-sm font-medium text-ink/80">{g.label}</span>
-              <div role="radiogroup" aria-labelledby={`seg-${g.label}`} className="mt-2 flex rounded-[11px] bg-[#e6eeeb] p-1">
+              <div role="radiogroup" aria-labelledby={`seg-${g.label}`} className="mt-2 flex rounded-[11px] bg-wash p-1">
                 {g.options.map((o) => (
                   <button
                     key={o.v}
@@ -100,7 +100,7 @@ export function LiveCalculator() {
                     role="radio"
                     aria-checked={g.value === o.v}
                     onClick={() => g.set(o.v)}
-                    className={cn("h-9 flex-1 rounded-[8px] text-sm font-semibold transition-[background-color,color,box-shadow]", g.value === o.v ? "bg-white text-pine shadow-[0_1px_2px_rgba(23,42,38,0.12)]" : "text-muted-foreground hover:text-ink")}
+                    className={cn("h-9 flex-1 rounded-[8px] text-sm font-semibold transition-[background-color,color,box-shadow]", g.value === o.v ? "bg-white text-brand shadow-[0_1px_2px_rgba(23,22,31,0.12)]" : "text-muted-foreground hover:text-ink")}
                   >
                     {o.t}
                   </button>
@@ -117,7 +117,7 @@ export function LiveCalculator() {
           <span className="marker">{usd(found)}</span>
           <span className="ml-2 text-base font-semibold tracking-normal text-muted-foreground">a year</span>
         </p>
-        <p className="mt-3 text-sm font-semibold text-pine">{verdict}</p>
+        <p className="mt-3 text-sm font-semibold text-brand">{verdict}</p>
         <p className="mt-0.5 text-sm text-muted-foreground">{usd(best.total)} back in total vs {usd(result.current.total)} with the credit alone.</p>
       </div>
       <p className="mt-5 text-xs text-muted-foreground">{landing.calculatorNote}</p>

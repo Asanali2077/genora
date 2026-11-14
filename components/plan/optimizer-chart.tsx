@@ -50,23 +50,23 @@ export function OptimizerChart({ curve, best, current }: { curve: { election: nu
       >
         <defs>
           <linearGradient id="opt-area" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%" stopColor="var(--pine)" stopOpacity="0.18" />
-            <stop offset="100%" stopColor="var(--pine)" stopOpacity="0" />
+            <stop offset="0%" stopColor="var(--brand)" stopOpacity="0.18" />
+            <stop offset="100%" stopColor="var(--brand)" stopOpacity="0" />
           </linearGradient>
         </defs>
         {ticks.map((t) => (
           <g key={t}>
-            <line x1={x(t)} x2={x(t)} y1={P.t} y2={H - P.b} stroke="rgb(23 42 38 / 0.06)" />
-            <text x={x(t)} y={H - 12} textAnchor="middle" className="fill-[#4f625d] text-[11px]">{usd(t)}</text>
+            <line x1={x(t)} x2={x(t)} y1={P.t} y2={H - P.b} stroke="rgb(23 22 31 / 0.06)" />
+            <text x={x(t)} y={H - 12} textAnchor="middle" className="fill-muted-foreground text-[11px]">{usd(t)}</text>
           </g>
         ))}
-        <text x={P.l - 8} y={P.t + 4} textAnchor="end" className="fill-[#4f625d] text-[11px]">back</text>
+        <text x={P.l - 8} y={P.t + 4} textAnchor="end" className="fill-muted-foreground text-[11px]">back</text>
 
         <motion.path d={area} fill="url(#opt-area)" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.6 }} />
         <motion.path
           d={path}
           fill="none"
-          stroke="var(--pine)"
+          stroke="var(--brand)"
           strokeWidth={3}
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -77,23 +77,23 @@ export function OptimizerChart({ curve, best, current }: { curve: { election: nu
         />
 
         {/* today's choice */}
-        <circle cx={x(Math.min(current.election, curve.at(-1)!.election))} cy={y(current.total)} r={6} fill="#fff" stroke="rgb(23 42 38 / 0.45)" strokeWidth={2.5} />
-        <text x={x(Math.min(current.election, curve.at(-1)!.election)) + 10} y={y(current.total) + 16} className="fill-[#4f625d] text-[12px]">Today {usd(current.total)}</text>
+        <circle cx={x(Math.min(current.election, curve.at(-1)!.election))} cy={y(current.total)} r={6} fill="#fff" stroke="rgb(23 22 31 / 0.45)" strokeWidth={2.5} />
+        <text x={x(Math.min(current.election, curve.at(-1)!.election)) + 10} y={y(current.total) + 16} className="fill-muted-foreground text-[12px]">Today {usd(current.total)}</text>
 
         {/* best point */}
         <motion.g initial={{ scale: 0, opacity: 0 }} whileInView={{ scale: 1, opacity: 1 }} viewport={{ once: true }} transition={{ delay: 1.15, type: "spring", stiffness: 260, damping: 16 }} style={{ originX: `${x(best.election)}px`, originY: `${y(best.total)}px` }}>
-          <circle cx={x(best.election)} cy={y(best.total)} r={14} fill="var(--marigold)" opacity={0.3} />
-          <circle cx={x(best.election)} cy={y(best.total)} r={7} fill="var(--marigold)" stroke="#fff" strokeWidth={2.5} />
-          <text x={x(best.election) - 12} y={y(best.total) - 18} textAnchor="end" className="fill-[#172a26] text-[13px] font-bold">Best {usd(best.total)}</text>
+          <circle cx={x(best.election)} cy={y(best.total)} r={14} fill="var(--sun)" opacity={0.3} />
+          <circle cx={x(best.election)} cy={y(best.total)} r={7} fill="var(--sun)" stroke="#fff" strokeWidth={2.5} />
+          <text x={x(best.election) - 12} y={y(best.total) - 18} textAnchor="end" className="fill-ink text-[13px] font-bold">Best {usd(best.total)}</text>
         </motion.g>
 
         {h && (
           <g pointerEvents="none">
-            <line x1={x(h.election)} x2={x(h.election)} y1={P.t} y2={H - P.b} stroke="var(--pine)" strokeDasharray="3 4" />
-            <circle cx={x(h.election)} cy={y(h.total)} r={5} fill="var(--pine)" />
-            <rect x={Math.min(x(h.election) + 8, W - 150)} y={P.t} width={140} height={40} rx={8} fill="#172a26" />
+            <line x1={x(h.election)} x2={x(h.election)} y1={P.t} y2={H - P.b} stroke="var(--brand)" strokeDasharray="3 4" />
+            <circle cx={x(h.election)} cy={y(h.total)} r={5} fill="var(--brand)" />
+            <rect x={Math.min(x(h.election) + 8, W - 150)} y={P.t} width={140} height={40} rx={8} fill="var(--ink)" />
             <text x={Math.min(x(h.election) + 18, W - 140)} y={P.t + 17} className="fill-white text-[12px]">FSA {usd(h.election)}</text>
-            <text x={Math.min(x(h.election) + 18, W - 140)} y={P.t + 33} className="fill-[#f2b705] text-[12px] font-bold">{usd(h.total)} back</text>
+            <text x={Math.min(x(h.election) + 18, W - 140)} y={P.t + 33} className="fill-sun text-[12px] font-bold">{usd(h.total)} back</text>
           </g>
         )}
       </svg>

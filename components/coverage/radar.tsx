@@ -53,7 +53,7 @@ export function Radar({ initialClosures, initialResult, sample, today }: { initi
           rows={7}
           placeholder="e.g. Nov 23–27 Thanksgiving break…"
           aria-label="School calendar text"
-          className="mt-3 w-full rounded-lg border bg-background p-3 text-sm outline-none focus:border-pine focus:ring-2 focus:ring-pine/20"
+          className="mt-3 w-full rounded-lg border bg-background p-3 text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/20"
         />
         <div className="mt-3 flex flex-wrap gap-2">
           <Button className="tap" disabled={busy || !raw.trim()} onClick={() => run({ rawText: raw })}>
@@ -88,7 +88,7 @@ export function Radar({ initialClosures, initialResult, sample, today }: { initi
               ["Paid care, FSA-eligible", usd(result.fsaEligible)],
               ["Tax saved via FSA", usd(result.fsaTaxSaved)],
             ].map(([k, v]) => (
-              <div key={k} className="border-l-4 border-pine/30 pl-3">
+              <div key={k} className="border-l-4 border-brand/30 pl-3">
                 <dt className="text-xs text-muted-foreground">{k}</dt>
                 <dd className="mt-0.5 font-semibold tabular">{v}</dd>
               </div>

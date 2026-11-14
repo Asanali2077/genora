@@ -24,7 +24,7 @@ const DAY = 86_400_000;
 const addDays = (iso: string, d: number) => new Date(Date.parse(`${iso}T00:00:00Z`) + d * DAY).toISOString().slice(0, 10);
 const shortDate = (iso: string) => new Date(`${iso}T00:00:00Z`).toLocaleString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
 
-type Event = { date: string; title: string; detail: string; tone: "pine" | "marigold" | "sky"; href: string };
+type Event = { date: string; title: string; detail: string; tone: "brand" | "sun" | "sky"; href: string };
 
 /** Collapses consecutive no-school days of one break into a single line with who covers what. */
 function breaks(list: { date: string; label: string; cover: string; who?: string; cost: number }[]): Event[] {
@@ -45,8 +45,8 @@ function breaks(list: { date: string; label: string; cover: string; who?: string
 }
 
 const URGENCY: Record<NextAction["urgency"], { label: string; dot: string }> = {
-  now: { label: "Now", dot: "bg-marigold" },
-  soon: { label: "Soon", dot: "bg-pine" },
+  now: { label: "Now", dot: "bg-sun" },
+  soon: { label: "Soon", dot: "bg-brand" },
   setup: { label: "Set up", dot: "bg-ink/20" },
 };
 
@@ -96,9 +96,9 @@ export default async function TodayPage() {
   const horizon = addDays(today, 90);
   const events: Event[] = [
     ...breaks(assignments.filter((a) => a.date >= today)).slice(0, 3),
-    ...(!claims.recommended && claims.remaining > 0 ? [{ date: claims.deadline, title: "FSA claim deadline", detail: `${usd(claims.remaining)} of your election still to claim`, tone: "marigold" as const, href: "/app/claims" }] : []),
-    ...lifeEvents(profile, today, { gracePeriod: profile.gracePeriod }).map((e) => ({ date: e.date, title: e.title, detail: e.detail, tone: (e.kind === "child" ? "marigold" : "pine") as Event["tone"], href: e.kind === "child" ? "/app/family" : "/app/benefits" })),
-    ...(result && result.childTaxCredit > 0 ? [{ date: `${TAX_YEAR + 1}-04-15`, title: "Tax day: credits arrive", detail: `${usd(result.childTaxCredit + (best?.careCredit ?? 0))} in Child Tax Credit and care credit`, tone: "pine" as const, href: "/app/budget" }] : []),
+    ...(!claims.recommended && claims.remaining > 0 ? [{ date: claims.deadline, title: "FSA claim deadline", detail: `${usd(claims.remaining)} of your election still to claim`, tone: "sun" as const, href: "/app/claims" }] : []),
+    ...lifeEvents(profile, today, { gracePeriod: profile.gracePeriod }).map((e) => ({ date: e.date, title: e.title, detail: e.detail, tone: (e.kind === "child" ? "sun" : "brand") as Event["tone"], href: e.kind === "child" ? "/app/family" : "/app/benefits" })),
+    ...(result && result.childTaxCredit > 0 ? [{ date: `${TAX_YEAR + 1}-04-15`, title: "Tax day: credits arrive", detail: `${usd(result.childTaxCredit + (best?.careCredit ?? 0))} in Child Tax Credit and care credit`, tone: "brand" as const, href: "/app/budget" }] : []),
   ]
     .filter((e) => e.date <= horizon || e.title.startsWith("Tax day"))
     .sort((a, b) => a.date.localeCompare(b.date))
@@ -110,14 +110,14 @@ export default async function TodayPage() {
   const maxNet = Math.max(1, ...forecast.months.map((m) => Math.abs(m.net)));
 
   return (
-    <div className="px-5 pb-12 pt-6 md:px-10 md:pt-9">
+    <div>
       <TrackView name="dashboard_view" props={{ pro, actions: actions.length }} />
-      <p className="text-sm font-semibold text-pine">{weekday}</p>
-      <h1 className="mt-2 max-w-3xl font-heading text-[2rem] font-bold leading-[1.08] tracking-[-0.03em] text-ink md:text-[2.7rem]">
+      <p className="text-sm font-semibold text-brand">{weekday}</p>
+      <h1 className="display mt-2 max-w-4xl text-[1.65rem] leading-[1.15] text-ink md:text-[2.25rem]">
         {status} <span className="text-ink/55">{need}</span>
       </h1>
 
-      <div className="mt-8 grid max-w-6xl items-start gap-5 lg:grid-cols-[1.35fr_1fr]">
+      <div className="mt-8 grid items-start gap-5 lg:grid-cols-[1.35fr_1fr]">
         <div className="min-w-0 space-y-5">
         {/* Needs you */}
         <section aria-labelledby="needs" className="panel overflow-hidden">
@@ -136,12 +136,12 @@ export default async function TodayPage() {
                       <span className="block font-semibold leading-snug text-ink">{a.title}</span>
                       <span className="mt-0.5 block text-sm text-muted-foreground">{a.detail}</span>
                       <span className="mt-2 flex flex-wrap items-center gap-2 text-xs font-semibold">
-                        {a.impact > 0 && <span className="rounded-full bg-marigold/25 px-2 py-0.5 text-ink tabular">{usd(a.impact)}</span>}
-                        {a.due && <span className="rounded-full bg-pine/[0.08] px-2 py-0.5 text-pine">By {shortDate(a.due)}</span>}
+                        {a.impact > 0 && <span className="rounded-full bg-sun/25 px-2 py-0.5 text-ink tabular">{usd(a.impact)}</span>}
+                        {a.due && <span className="rounded-full bg-brand/[0.08] px-2 py-0.5 text-brand">By {shortDate(a.due)}</span>}
                         {locked && <span className="inline-flex items-center gap-1 rounded-full bg-ink/[0.06] px-2 py-0.5 text-ink/60"><Lock className="size-3" aria-hidden />Genora plan</span>}
                       </span>
                     </span>
-                    <ChevronRight className="mt-1 size-4 shrink-0 text-ink/30 transition-transform group-hover:translate-x-0.5 group-hover:text-pine" aria-hidden />
+                    <ChevronRight className="mt-1 size-4 shrink-0 text-ink/30 transition-transform group-hover:translate-x-0.5 group-hover:text-brand" aria-hidden />
                   </Link>
                 </li>
               );
@@ -154,7 +154,7 @@ export default async function TodayPage() {
         <section aria-labelledby="upcoming" className="panel overflow-hidden">
           <header className="flex items-center justify-between border-b border-ink/[0.07] px-5 py-4 sm:px-6">
             <h2 id="upcoming" className="font-heading text-lg font-bold text-ink">Coming up</h2>
-            <Link href="/app/coverage" className="inline-flex items-center gap-1 text-sm font-semibold text-pine hover:underline">School breaks <ArrowRight className="size-3.5" aria-hidden /></Link>
+            <Link href="/app/coverage" className="inline-flex items-center gap-1 text-sm font-semibold text-brand hover:underline">School breaks <ArrowRight className="size-3.5" aria-hidden /></Link>
           </header>
           <ol className="divide-y divide-ink/[0.06]">
             {events.map((e) => (
@@ -170,7 +170,7 @@ export default async function TodayPage() {
             ))}
             {!coverage.result && (
               <li className="px-5 py-4 text-sm text-muted-foreground sm:px-6">
-                No-school days show up here once you add the school calendar. <Link href="/app/coverage" className="font-semibold text-pine">Plan school breaks</Link>
+                No-school days show up here once you add the school calendar. <Link href="/app/coverage" className="font-semibold text-brand">Plan school breaks</Link>
               </li>
             )}
           </ol>
@@ -201,17 +201,17 @@ export default async function TodayPage() {
                     </dd>
                     <dd className="text-xs text-muted-foreground">{r.note}</dd>
                   </span>
-                  <ChevronRight className="size-4 text-ink/30 group-hover:text-pine" aria-hidden />
+                  <ChevronRight className="size-4 text-ink/30 group-hover:text-brand" aria-hidden />
                 </Link>
               </div>
             ))}
           </dl>
-          <Link href="/app/budget" className="mt-3 block rounded-[12px] bg-[#f1f5f3] p-3" aria-label="Open the 12-month budget forecast">
+          <Link href="/app/budget" className="mt-3 block rounded-[12px] bg-wash p-3" aria-label="Open the 12-month budget forecast">
             <span className="flex h-12 items-center gap-1" aria-hidden>
               {forecast.months.map((m) => (
                 <span key={m.ym} className="flex h-full flex-1 flex-col">
-                  <span className="flex h-1/2 items-end">{m.net >= 0 && <span className="w-full rounded-t-[2px] bg-pine" style={{ height: `${Math.max(8, (m.net / maxNet) * 100)}%` }} />}</span>
-                  <span className="flex h-1/2 items-start border-t border-ink/10">{m.net < 0 && <span className="w-full rounded-b-[2px] bg-[#d9694f]" style={{ height: `${Math.max(8, (-m.net / maxNet) * 100)}%` }} />}</span>
+                  <span className="flex h-1/2 items-end">{m.net >= 0 && <span className="w-full rounded-t-[2px] bg-brand" style={{ height: `${Math.max(8, (m.net / maxNet) * 100)}%` }} />}</span>
+                  <span className="flex h-1/2 items-start border-t border-ink/10">{m.net < 0 && <span className="w-full rounded-b-[2px] bg-bad" style={{ height: `${Math.max(8, (-m.net / maxNet) * 100)}%` }} />}</span>
                 </span>
               ))}
             </span>
@@ -221,7 +221,7 @@ export default async function TodayPage() {
         </section>
 
         {/* Sick day */}
-        <Link href="/app/sos" className="group flex items-center gap-4 rounded-[22px] bg-marigold p-5 text-ink transition-transform hover:-translate-y-0.5 sm:p-6">
+        <Link href="/app/sos" className="group flex items-center gap-4 rounded-[22px] bg-sun p-5 text-ink transition-transform hover:-translate-y-0.5 sm:p-6">
           <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-ink/10"><LifeBuoy className="size-6" aria-hidden /></span>
           <span className="flex-1">
             <span className="block font-heading text-xl font-bold leading-tight">Kid sick tomorrow?</span>
@@ -232,10 +232,10 @@ export default async function TodayPage() {
         </div>
       </div>
 
-      <section aria-labelledby="kids" className="mt-10 max-w-6xl">
+      <section aria-labelledby="kids" className="mt-10">
         <div className="flex items-center justify-between">
           <h2 id="kids" className="font-heading text-lg font-bold text-ink">Your kids</h2>
-          <Link href="/app/family" className="text-sm font-semibold text-pine hover:underline">Kids & partner</Link>
+          <Link href="/app/family" className="text-sm font-semibold text-brand hover:underline">Kids & partner</Link>
         </div>
         <div className="mt-4"><KidCards profile={profile} nextGap={assignments.find((a) => a.date >= today)} /></div>
       </section>

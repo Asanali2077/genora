@@ -94,8 +94,8 @@ export function BenefitsScanner({ saved, sample }: { saved: Row[]; sample: strin
       <AnimatePresence>
         {busy && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="px-5 py-6 sm:px-6">
-            <div className="h-2 overflow-hidden rounded-full bg-[#eef3f1]">
-              <motion.div className="h-full w-1/3 rounded-full bg-pine" animate={{ x: ["-100%", "300%"] }} transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }} />
+            <div className="h-2 overflow-hidden rounded-full bg-wash">
+              <motion.div className="h-full w-1/3 rounded-full bg-brand" animate={{ x: ["-100%", "300%"] }} transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }} />
             </div>
             <p className="mt-3 text-sm text-muted-foreground">Reading every page for childcare, backup care and FSA benefits…</p>
           </motion.div>

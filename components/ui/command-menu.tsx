@@ -66,7 +66,7 @@ export function CommandMenu({ open, setOpen }: { open: boolean; setOpen: (v: boo
             role="dialog"
             aria-modal="true"
             aria-label="Command menu"
-            className="w-full max-w-xl overflow-hidden rounded-[18px] border border-ink/10 bg-white shadow-[0_30px_80px_-20px_rgba(11,59,50,0.55)]"
+            className="w-full max-w-xl overflow-hidden rounded-[18px] border border-ink/10 bg-white shadow-[0_30px_80px_-20px_rgba(34,24,90,0.55)]"
             initial={{ opacity: 0, y: -12, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -8, scale: 0.98 }}
@@ -106,13 +106,13 @@ export function CommandMenu({ open, setOpen }: { open: boolean; setOpen: (v: boo
                     type="button"
                     onMouseMove={() => setActive(i)}
                     onClick={() => go(item)}
-                    className={cn("relative flex w-full items-center gap-3 rounded-[10px] px-3 py-2.5 text-left text-[15px] text-ink", i === active && "text-pine")}
+                    className={cn("relative flex w-full items-center gap-3 rounded-[10px] px-3 py-2.5 text-left text-[15px] text-ink", i === active && "text-brand")}
                   >
-                    {i === active && <motion.span layoutId="cmd-active" className="absolute inset-0 rounded-[10px] bg-pine/[0.08]" transition={{ type: "spring", stiffness: 500, damping: 40 }} />}
+                    {i === active && <motion.span layoutId="cmd-active" className="absolute inset-0 rounded-[10px] bg-brand/[0.08]" transition={{ type: "spring", stiffness: 500, damping: 40 }} />}
                     <item.icon className="relative size-[18px] shrink-0" />
                     <span className="relative flex-1">{item.label}</span>
                     {item.hint && <span className="relative text-xs text-muted-foreground">{item.hint}</span>}
-                    {i === active && <CornerDownLeft className="relative size-4 text-pine" aria-hidden />}
+                    {i === active && <CornerDownLeft className="relative size-4 text-brand" aria-hidden />}
                   </button>
                 </li>
               ))}

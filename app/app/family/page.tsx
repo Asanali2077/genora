@@ -45,7 +45,7 @@ export default async function FamilyPage() {
         sub={`${STATUS[p.filingStatus]} · ${p.state} · ${TAX_YEAR} plan year`}
         action={<Button variant="outline" nativeButton={false} render={<Link href="/start" />}><Pencil />Edit details</Button>}
       />
-      <div className="grid max-w-6xl gap-6 px-5 py-8 md:px-10 xl:grid-cols-2">
+      <div className="grid gap-6 xl:grid-cols-2">
         <Section title="Parents">
           <ul className="space-y-4">
             {parents.map((x) => (
@@ -89,7 +89,7 @@ export default async function FamilyPage() {
               ))}
             </ul>
           ) : (
-            <p className="text-sm text-muted-foreground">No childcare costs entered. <Link href="/start" className="font-semibold text-pine">Add them</Link> to get a benefits plan.</p>
+            <p className="text-sm text-muted-foreground">No childcare costs entered. <Link href="/start" className="font-semibold text-brand">Add them</Link> to get a benefits plan.</p>
           )}
         </Section>
 

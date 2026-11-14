@@ -16,13 +16,13 @@ function Toggle({ label, hint, on, set }: { label: string; hint: string; on: boo
       role="switch"
       aria-checked={on}
       onClick={() => set(!on)}
-      className={cn("flex w-full items-center justify-between gap-4 rounded-[12px] border px-4 py-3 text-left transition-colors", on ? "border-pine bg-[#f1f7f5]" : "border-ink/12 bg-white hover:border-pine/40")}
+      className={cn("flex w-full items-center justify-between gap-4 rounded-[12px] border px-4 py-3 text-left transition-colors", on ? "border-brand bg-wash" : "border-ink/12 bg-white hover:border-brand/40")}
     >
       <span>
         <span className="block text-sm font-semibold text-ink">{label}</span>
         <span className="block text-xs text-muted-foreground">{hint}</span>
       </span>
-      <span aria-hidden className={cn("relative h-6 w-10 shrink-0 rounded-full transition-colors", on ? "bg-pine" : "bg-ink/15")}>
+      <span aria-hidden className={cn("relative h-6 w-10 shrink-0 rounded-full transition-colors", on ? "bg-brand" : "bg-ink/15")}>
         <span className={cn("absolute top-0.5 size-5 rounded-full bg-white shadow transition-[left]", on ? "left-[18px]" : "left-0.5")} />
       </span>
     </button>
@@ -65,11 +65,11 @@ export function WhatIf({ profile, baseline }: { profile: Profile; baseline: numb
         <div className="space-y-5" onPointerUp={() => touched && track("what_if_used")}>
           <label className="block">
             <span className="flex justify-between text-sm"><span className="font-medium text-ink/80">Childcare per year</span><span className="font-heading font-bold text-ink tabular">{usd(care)}</span></span>
-            <input type="range" min={0} max={45_000} step={500} value={care} onChange={(e) => setCare(Number(e.target.value))} className="mt-3 w-full accent-[var(--pine)]" />
+            <input type="range" min={0} max={45_000} step={500} value={care} onChange={(e) => setCare(Number(e.target.value))} className="mt-3 w-full accent-[var(--brand)]" />
           </label>
           <label className="block">
             <span className="flex justify-between text-sm"><span className="font-medium text-ink/80">Household pay change</span><span className="font-heading font-bold text-ink tabular">{raise > 0 ? "+" : ""}{raise}%</span></span>
-            <input type="range" min={-20} max={30} step={1} value={raise} onChange={(e) => setRaise(Number(e.target.value))} className="mt-3 w-full accent-[var(--pine)]" />
+            <input type="range" min={-20} max={30} step={1} value={raise} onChange={(e) => setRaise(Number(e.target.value))} className="mt-3 w-full accent-[var(--brand)]" />
           </label>
           <div className="grid gap-2.5 sm:grid-cols-2">
             <Toggle label="A new baby" hint="Adds a child under 1" on={baby} set={setBaby} />
@@ -80,8 +80,8 @@ export function WhatIf({ profile, baseline }: { profile: Profile; baseline: numb
           <div>
             <p className="text-sm text-muted-foreground">Best plan in this scenario</p>
             <p className="mt-1 font-heading text-4xl font-bold tracking-tight text-ink tabular">{usd(best.total)}</p>
-            <p className={cn("mt-1 text-sm font-semibold tabular", best.total >= baseline ? "text-pine" : "text-destructive")}>{signed(best.total - baseline)} vs your plan today</p>
-            <p className="mt-3 text-sm text-ink tabular">Child Tax Credit {usd(result.childTaxCredit)}{result.childTaxCredit !== baseCtc && <span className="font-semibold text-pine"> ({signed(result.childTaxCredit - baseCtc)})</span>}</p>
+            <p className={cn("mt-1 text-sm font-semibold tabular", best.total >= baseline ? "text-brand" : "text-destructive")}>{signed(best.total - baseline)} vs your plan today</p>
+            <p className="mt-3 text-sm text-ink tabular">Child Tax Credit {usd(result.childTaxCredit)}{result.childTaxCredit !== baseCtc && <span className="font-semibold text-brand"> ({signed(result.childTaxCredit - baseCtc)})</span>}</p>
           </div>
           <p className="mt-5 text-sm text-ink">
             {split.length

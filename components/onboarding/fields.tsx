@@ -46,7 +46,7 @@ function Indicator({ on }: { on: boolean }) {
       aria-hidden
       className={cn(
         "flex size-6 shrink-0 items-center justify-center rounded-full border-2 transition-colors",
-        on ? "border-pine bg-pine text-white" : "border-ink/20 bg-white",
+        on ? "border-brand bg-brand text-white" : "border-ink/20 bg-white",
       )}
     >
       {on && <Check className="size-3.5" strokeWidth={3} />}
@@ -70,7 +70,7 @@ export function Choice<T extends string>({ label, value, options, onChange }: { 
               onClick={() => onChange(o.value)}
               className={cn(
                 "tap flex items-center justify-between gap-4 rounded-[14px] border bg-white px-4 py-3.5 text-left transition-[border-color,background-color,box-shadow]",
-                on ? "border-pine bg-[#f1f7f5] shadow-[0_0_0_1px_var(--pine)]" : "border-ink/12 hover:border-pine/45",
+                on ? "border-brand bg-wash shadow-[0_0_0_1px_var(--brand)]" : "border-ink/12 hover:border-brand/45",
               )}
             >
               <span>
@@ -90,7 +90,7 @@ export function YesNo({ label, value, onChange }: { label: string; value: boolea
   return (
     <div className="flex items-center justify-between gap-4">
       <span id={`yn-${label}`} className="text-sm font-semibold text-ink">{label}</span>
-      <div role="radiogroup" aria-labelledby={`yn-${label}`} className="inline-flex shrink-0 rounded-[11px] bg-[#e6eeeb] p-1">
+      <div role="radiogroup" aria-labelledby={`yn-${label}`} className="inline-flex shrink-0 rounded-[11px] bg-wash p-1">
         {[true, false].map((v) => (
           <button
             key={String(v)}
@@ -100,7 +100,7 @@ export function YesNo({ label, value, onChange }: { label: string; value: boolea
             onClick={() => onChange(v)}
             className={cn(
               "h-9 min-w-14 rounded-[8px] px-3 text-sm font-semibold transition-[background-color,color,box-shadow]",
-              value === v ? "bg-white text-pine shadow-[0_1px_2px_rgba(23,42,38,0.12)]" : "text-muted-foreground hover:text-ink",
+              value === v ? "bg-white text-brand shadow-[0_1px_2px_rgba(23,22,31,0.12)]" : "text-muted-foreground hover:text-ink",
             )}
           >
             {v ? "Yes" : "No"}

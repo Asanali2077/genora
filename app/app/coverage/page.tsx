@@ -17,7 +17,7 @@ export default async function CoveragePage() {
   return (
     <>
       <PageHeader title="School breaks" sub="Every day the kids are home while you both work, covered at the lowest cost: spare PTO goes to the most expensive days, the rest to FSA-eligible care." />
-      <div className="max-w-4xl px-5 py-8 md:px-10">
+      <div>
         {pro ? (
           <Radar initialClosures={calendar?.days ?? []} initialResult={result} sample={SAMPLE_CALENDAR} today={today} />
         ) : (

@@ -22,7 +22,7 @@ export function SectionTabs({ sections }: { sections: { id: string; label: strin
   }, [sections]);
 
   return (
-    <nav aria-label="On this page" className="sticky top-14 z-20 -mx-5 border-b border-ink/[0.07] bg-[#f6f8f7]/90 px-5 backdrop-blur md:top-0 md:-mx-10 md:px-10">
+    <nav aria-label="On this page" className="sticky top-14 z-20 -mx-5 border-b border-ink/[0.07] bg-paper/90 px-5 backdrop-blur md:top-0 md:-mx-10 md:px-10">
       <ul className="flex gap-1 overflow-x-auto py-2 [scrollbar-width:none]">
         {sections.map((s) => (
           <li key={s.id} className="shrink-0">
@@ -30,9 +30,9 @@ export function SectionTabs({ sections }: { sections: { id: string; label: strin
               href={`#${s.id}`}
               aria-current={active === s.id ? "location" : undefined}
               onClick={() => setActive(s.id)}
-              className={cn("relative flex h-9 items-center rounded-full px-3.5 text-sm font-semibold transition-colors", active === s.id ? "text-pine" : "text-ink/55 hover:text-ink")}
+              className={cn("relative flex h-9 items-center rounded-full px-3.5 text-sm font-semibold transition-colors", active === s.id ? "text-brand" : "text-ink/55 hover:text-ink")}
             >
-              {active === s.id && <motion.span layoutId="section-tab" className="absolute inset-0 rounded-full bg-pine/[0.09]" transition={{ type: "spring", stiffness: 500, damping: 40 }} />}
+              {active === s.id && <motion.span layoutId="section-tab" className="absolute inset-0 rounded-full bg-brand/[0.09]" transition={{ type: "spring", stiffness: 500, damping: 40 }} />}
               <span className="relative">{s.label}</span>
             </a>
           </li>

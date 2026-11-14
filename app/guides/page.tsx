@@ -20,7 +20,7 @@ export default function GuidesPage() {
           <a key={g.slug} href={`#${g.slug}`} className="panel block p-5 transition-[box-shadow,transform] hover:-translate-y-0.5">
             <p className="font-heading text-lg font-bold leading-snug text-ink">{g.title}</p>
             <p className="mt-2 text-sm text-muted-foreground">{g.summary}</p>
-            <p className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-pine"><Clock className="size-3.5" aria-hidden />{g.minutes} min read</p>
+            <p className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-brand"><Clock className="size-3.5" aria-hidden />{g.minutes} min read</p>
           </a>
         ))}
       </nav>
@@ -29,7 +29,7 @@ export default function GuidesPage() {
         {guides.map((g) => (
           <article key={g.slug} id={g.slug} className="scroll-mt-24 border-t border-ink/[0.08] pt-10 lg:grid lg:grid-cols-[15rem_1fr] lg:gap-12">
             <div>
-              <p className="inline-flex items-center gap-1.5 text-sm font-semibold text-pine"><Clock className="size-4" aria-hidden />{g.minutes} min read</p>
+              <p className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand"><Clock className="size-4" aria-hidden />{g.minutes} min read</p>
             </div>
             <div className="max-w-2xl">
               <h2 className="font-heading text-3xl font-bold leading-tight tracking-[-0.02em] text-ink">{g.title}</h2>
@@ -42,7 +42,7 @@ export default function GuidesPage() {
               <p className="mt-7 text-sm text-muted-foreground">
                 Sources:{" "}
                 {g.sources.map((s, i) => (
-                  <span key={s.url}>{i > 0 && ", "}<a href={s.url} target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-pine">{s.label}</a></span>
+                  <span key={s.url}>{i > 0 && ", "}<a href={s.url} target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-brand">{s.label}</a></span>
                 ))}
               </p>
               <Button className="mt-6" nativeButton={false} render={<Link href="/start" />}>Run my family&apos;s numbers</Button>

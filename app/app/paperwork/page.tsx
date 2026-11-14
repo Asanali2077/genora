@@ -19,7 +19,7 @@ export default async function PaperworkPage() {
   return (
     <>
       <PageHeader title="Letters & forms" sub="Letters written from your family's numbers: send them to HR and your childcare providers in one click." />
-      <div className="px-5 py-8 md:px-10">
+      <div>
         {pro ? (
           <Letters letters={letters} />
         ) : (

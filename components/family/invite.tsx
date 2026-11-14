@@ -14,7 +14,7 @@ export function InviteCard({ link }: { link: string | null }) {
 
   return (
     <div>
-      <div className="field flex items-center gap-2 bg-[#fafcfb] text-sm">
+      <div className="field flex items-center gap-2 bg-wash text-sm">
         <span className="min-w-0 flex-1 truncate text-muted-foreground">{link}</span>
       </div>
       <div className="mt-3 flex flex-wrap gap-2">

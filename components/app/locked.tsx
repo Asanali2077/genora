@@ -18,7 +18,7 @@ export function Locked({ title, body, href }: { title: string; body: string; hre
             <ul className="mt-5 space-y-2.5">
               {item.unlocks.map((u) => (
                 <li key={u} className="flex items-start gap-2.5 text-[15px] text-ink">
-                  <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-pine/10 text-pine"><Check className="size-3.5" aria-hidden /></span>
+                  <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-brand/10 text-brand"><Check className="size-3.5" aria-hidden /></span>
                   {u}
                 </li>
               ))}
@@ -26,9 +26,9 @@ export function Locked({ title, body, href }: { title: string; body: string; hre
           )}
         </div>
       </div>
-      <div className="flex flex-wrap items-center gap-3 border-t border-ink/[0.07] bg-[#fafcfb] px-6 py-4 sm:px-7">
+      <div className="flex flex-wrap items-center gap-3 border-t border-ink/[0.07] bg-wash px-6 py-4 sm:px-7">
         <Button size="lg" nativeButton={false} render={<Link href="/pricing" />}>Unlock for $99 a year</Button>
-        <Link href="/app" className="text-sm font-semibold text-pine hover:underline">Back to Today</Link>
+        <Link href="/app" className="text-sm font-semibold text-brand hover:underline">Back to Today</Link>
         <span className="text-sm text-muted-foreground sm:ml-auto">One plan covers both parents.</span>
       </div>
     </div>
